@@ -1,6 +1,6 @@
 # Búsqueda y Filtrado
 
-La capacidad de encontrar información rápidamente en archivos y datos es crucial para la productividad. Esta sección cubre las herramientas más potentes para búsqueda de texto, filtrado interactivo y procesamiento de datos estructurados.
+La capacidad de encontrar información rápidamente en archivos y datos es crucial para la productividad. Esta sección cubre las herramientas más potentes para búsqueda de texto ultrarrápida, filtrado interactivo y procesamiento de datos estructurados.
 
 ## ripgrep (rg) - Búsqueda ultrarrápida {#sec-ripgrep}
 
