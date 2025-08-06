@@ -1,0 +1,388 @@
+# Gestión de Archivos
+
+La gestión eficiente de archivos va más allá de simples operaciones de copia y movimiento. Esta sección cubre herramientas avanzadas para renombrado masivo, sincronización inteligente y manipulación sofisticada de archivos.
+
+## rename / renameutils - Renombrado masivo {#sec-rename}
+
+Las herramientas de renombrado masivo permiten modificar nombres de múltiples archivos usando expresiones regulares y patrones.
+
+### rename (Perl-based)
+
+```bash
+# Verificar que tienes la versión correcta
+rename --version
+```
+
+### Ejemplos básicos
+
+#### Cambios de extensión
+
+```bash
+# Cambiar .jpeg a .jpg
+rename 's/\.jpeg$/\.jpg/' *.jpeg
+
+# Cambiar .txt a .md
+rename 's/\.txt$/\.md/' *.txt
+
+# Agregar extensión faltante
+rename 's/$/.bak/' archivo1 archivo2
+```
+
+#### Modificaciones de texto
+
+```bash
+# Cambiar espacios por guiones bajos
+rename 's/ /_/g' *.txt
+
+# Cambiar guiones por puntos
+rename 's/-/./g' *.md
+
+# Eliminar caracteres especiales
+rename 's/[^a-zA-Z0-9._-]//g' *
+
+# Cambiar a minúsculas
+rename 'y/A-Z/a-z/' *.TXT
+```
+
+### Ejemplos avanzados
+
+#### Renombrado con fecha
+
+```bash
+# Agregar fecha actual al final
+rename 's/(.*)\.(.*)/$1_$(date +%Y%m%d).$2/e' *.log
+
+# Renombrar fotos con timestamp
+for file in *.jpg; do
+    timestamp=$(date -r "$file" +%Y%m%d_%H%M%S)
+    rename "s/.*/${timestamp}.jpg/" "$file"
+done
+```
+
+#### Renombrado condicional
+
+```bash
+# Solo archivos que contengan "old" en el nombre
+rename 's/old/new/g' *old*
+
+# Renombrar solo si el archivo es mayor a 1MB
+find . -size +1M -name "*.log" -exec rename 's/\.log$/.big.log/' {} \;
+```
+
+### mmv - Renombrado múltiple visual
+
+`mmv` proporciona una interfaz más visual para renombrado masivo.
+
+```bash
+# Renombrar múltiples archivos con patrón
+mmv '*.jpeg' '*.jpg'
+
+# Mover archivos con renombrado
+mmv 'dir1/*.txt' 'dir2/#1.backup'
+
+# Intercambiar extensiones
+mmv '*.{txt,md}' '*.{md,txt}'
+```
+
+### Casos de uso prácticos
+
+#### Organización de fotos
+
+```bash
+# Renombrar fotos por fecha de creación
+#!/bin/bash
+for img in *.jpg *.png; do
+    if [ -f "$img" ]; then
+        # Obtener fecha de creación
+        date_taken=$(exiftool -d "%Y%m%d_%H%M%S" -DateTimeOriginal -s -s -s "$img")
+        if [ ! -z "$date_taken" ]; then
+            ext="${img##*.}"
+            mv "$img" "photo_${date_taken}.${ext}"
+        fi
+    fi
+done
+```
+
+#### Limpieza de downloads
+
+```bash
+# Normalizar nombres de archivos descargados
+rename 's/[^a-zA-Z0-9._-]/_/g' ~/Downloads/*
+rename 's/__+/_/g' ~/Downloads/*  # Eliminar guiones bajos dobles
+rename 's/^_|_$//g' ~/Downloads/*  # Eliminar guiones al inicio/final
+```
+
+---
+
+## rsync - Sincronización avanzada {#sec-rsync}
+
+`rsync` es mucho más que una herramienta de copia; es un sistema completo de sincronización y backup.
+
+### Sintaxis básica
+
+```bash
+rsync [opciones] origen destino
+```
+
+### Opciones esenciales
+
+| Opción | Descripción |
+|--------|-------------|
+| `-a` | Modo archivo (preserva todo) |
+| `-v` | Verboso |
+| `-h` | Formato legible |
+| `-z` | Comprimir durante transferencia |
+| `-P` | Mostrar progreso y permitir resumir |
+| `--delete` | Eliminar archivos extra en destino |
+| `--dry-run` | Solo mostrar qué haría |
+
+### Ejemplos básicos
+
+#### Copia local
+
+```bash
+# Copia básica con progreso
+rsync -avh --progress origen/ destino/
+
+# Nota: la barra final en origen/ es importante
+# Con barra: copia CONTENIDO de origen a destino
+# Sin barra: copia DIRECTORIO origen dentro de destino
+```
+
+#### Sincronización
+
+```bash
+# Sincronizar eliminando archivos extra
+rsync -avh --delete origen/ destino/
+
+# Vista previa de sincronización
+rsync -avh --delete --dry-run origen/ destino/
+
+# Sincronizar solo archivos más nuevos
+rsync -avh --update origen/ destino/
+```
+
+### Ejemplos avanzados
+
+#### Filtros y exclusiones
+
+```bash
+# Excluir archivos específicos
+rsync -avh --exclude='*.log' --exclude='temp/' origen/ destino/
+
+# Usar archivo de exclusiones
+echo "*.log" > exclude.txt
+echo "node_modules/" >> exclude.txt
+rsync -avh --exclude-from=exclude.txt origen/ destino/
+
+# Incluir solo tipos específicos
+rsync -avh --include='*.txt' --exclude='*' origen/ destino/
+```
+
+#### Backup incremental
+
+```bash
+# Backup con hardlinks para ahorrar espacio
+rsync -avh --link-dest=../backup.previous origen/ backup.current/
+
+# Script de backup rotativo
+#!/bin/bash
+BACKUP_DIR="/backups"
+SOURCE="/home/user"
+DATE=$(date +%Y%m%d)
+
+# Crear backup con link a anterior
+rsync -avh --delete --link-dest="$BACKUP_DIR/latest" \
+      "$SOURCE/" "$BACKUP_DIR/backup-$DATE/"
+
+# Actualizar enlace 'latest'
+rm -f "$BACKUP_DIR/latest"
+ln -s "backup-$DATE" "$BACKUP_DIR/latest"
+```
+
+#### Transferencia remota
+
+```bash
+# Subir archivos por SSH
+rsync -avh -e ssh archivo.txt user@server:/ruta/destino/
+
+# Descargar desde servidor
+rsync -avh user@server:/ruta/origen/ ./local/
+
+# Con puerto SSH personalizado
+rsync -avh -e "ssh -p 2222" local/ user@server:/remoto/
+
+# Con compresión adicional
+rsync -avhz local/ user@server:/remoto/
+```
+
+### Casos de uso especializados
+
+#### Sincronización de desarrollo
+
+```bash
+# Sincronizar código excluyendo archivos de build
+rsync -avh --exclude='.git/' --exclude='node_modules/' \
+           --exclude='dist/' --exclude='*.log' \
+           ./proyecto/ servidor:/var/www/proyecto/
+```
+
+#### Backup de bases de datos
+
+```bash
+# Backup de directorio de PostgreSQL
+sudo rsync -avh --delete /var/lib/postgresql/data/ /backup/postgres/
+
+# Con parada y reinicio de servicio
+sudo systemctl stop postgresql
+sudo rsync -avh /var/lib/postgresql/data/ /backup/postgres/
+sudo systemctl start postgresql
+```
+
+#### Monitoreo de cambios
+
+```bash
+# Ver qué cambiaría sin ejecutar
+rsync -avh --delete --dry-run origen/ destino/ | tee cambios.log
+
+# Solo mostrar archivos nuevos/modificados
+rsync -avh --itemize-changes origen/ destino/
+```
+
+---
+
+## Herramientas complementarias
+
+### find - Búsqueda avanzada de archivos
+
+```bash
+# Encontrar archivos para renombrar
+find . -name "*.jpeg" -exec rename 's/\.jpeg$/\.jpg/' {} \;
+
+# Encontrar archivos duplicados por tamaño
+find . -type f -exec du -h {} + | sort -h | uniq -d -w 8
+
+# Encontrar archivos grandes
+find . -type f -size +100M -exec ls -lh {} \;
+```
+
+### xargs - Procesamiento en lotes
+
+```bash
+# Renombrar múltiples archivos encontrados
+find . -name "*.tmp" | xargs -I {} mv {} {}.backup
+
+# Aplicar comando a archivos seleccionados
+ls *.txt | xargs -I {} cp {} backup/{}
+```
+
+### chmod y chown - Permisos masivos
+
+```bash
+# Cambiar permisos recursivamente
+find ./proyecto -type f -name "*.sh" -exec chmod +x {} \;
+
+# Cambiar propietario de archivos específicos
+find ./uploads -name "*.jpg" -exec chown www-data:www-data {} \;
+```
+
+---
+
+## Workflows complejos
+
+### Organización automática de descargas
+
+```bash
+#!/bin/bash
+# Script para organizar Downloads por tipo
+
+DOWNLOADS="$HOME/Downloads"
+cd "$DOWNLOADS"
+
+# Crear directorios si no existen
+mkdir -p {Images,Documents,Videos,Audio,Archives,Code}
+
+# Mover archivos por tipo
+find . -maxdepth 1 -name "*.{jpg,jpeg,png,gif,bmp}" -exec mv {} Images/ \;
+find . -maxdepth 1 -name "*.{pdf,doc,docx,txt,rtf}" -exec mv {} Documents/ \;
+find . -maxdepth 1 -name "*.{mp4,avi,mkv,mov}" -exec mv {} Videos/ \;
+find . -maxdepth 1 -name "*.{mp3,wav,flac,m4a}" -exec mv {} Audio/ \;
+find . -maxdepth 1 -name "*.{zip,tar,gz,rar,7z}" -exec mv {} Archives/ \;
+find . -maxdepth 1 -name "*.{py,js,html,css,json}" -exec mv {} Code/ \;
+
+# Renombrar archivos problemáticos
+rename 's/[^a-zA-Z0-9._-]/_/g' *
+```
+
+### Backup diferencial inteligente
+
+```bash
+#!/bin/bash
+# Backup que solo copia archivos modificados
+
+SOURCE="/home/user/important"
+BACKUP="/backup/incremental"
+LOGFILE="/var/log/backup.log"
+
+# Crear timestamp
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+echo "[$TIMESTAMP] Iniciando backup..." >> "$LOGFILE"
+
+# Backup con checksums para verificar integridad
+rsync -avh --checksum --delete \
+      --backup --backup-dir="../deleted-$TIMESTAMP" \
+      --log-file="$LOGFILE" \
+      "$SOURCE/" "$BACKUP/current/"
+
+# Verificar integridad
+if [ $? -eq 0 ]; then
+    echo "[$TIMESTAMP] Backup completado exitosamente" >> "$LOGFILE"
+else
+    echo "[$TIMESTAMP] ERROR en backup" >> "$LOGFILE"
+    exit 1
+fi
+```
+
+### Sincronización bidireccional
+
+```bash
+#!/bin/bash
+# Sincronizar dos directorios en ambas direcciones
+
+DIR1="/ruta/directorio1"
+DIR2="/ruta/directorio2"
+TEMP="/tmp/sync_temp"
+
+# Crear directorio temporal
+mkdir -p "$TEMP"
+
+# Sincronizar DIR1 -> TEMP
+rsync -avh --delete "$DIR1/" "$TEMP/"
+
+# Sincronizar DIR2 -> DIR1
+rsync -avh --delete "$DIR2/" "$DIR1/"
+
+# Sincronizar TEMP -> DIR2
+rsync -avh --delete "$TEMP/" "$DIR2/"
+
+# Limpiar
+rm -rf "$TEMP"
+```
+
+::: {.callout-warning}
+## Advertencia importante
+- Siempre usa `--dry-run` antes de operaciones destructivas
+- Ten backups antes de renombrados masivos
+- Verifica rutas cuidadosamente con `rsync` (especialmente las barras finales)
+- Prueba scripts en directorios de test antes de aplicar a datos importantes
+:::
+
+::: {.callout-tip}
+## Tips para gestión de archivos
+- Combina `find` con `xargs` para operaciones en lotes eficientes
+- Usa `rsync` en lugar de `cp` para copias grandes o frecuentes
+- Automatiza tareas repetitivas con scripts que usen estas herramientas
+- Mantén logs de operaciones importantes para auditoría
+:::
+
+En el próximo capítulo exploraremos herramientas de búsqueda y filtrado que te permitirán encontrar información rápidamente en grandes volúmenes de datos.

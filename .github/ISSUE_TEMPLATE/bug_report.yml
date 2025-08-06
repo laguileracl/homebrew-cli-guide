@@ -1,0 +1,88 @@
+name: Bug Report
+description: Report a bug in the documentation or examples
+title: "[Bug]: "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! 🐛
+
+  - type: input
+    id: chapter
+    attributes:
+      label: Chapter/Section
+      description: Which chapter or section has the issue?
+      placeholder: e.g., "Navegación y Sistema", "htop examples", etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug. What did you expect to happen?
+      placeholder: Tell us what you see! Include exact error messages if applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to chapter X
+        2. Run command Y
+        3. See error Z
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: What environment are you using?
+      value: |
+        - OS: 
+        - Shell: 
+        - Homebrew version: 
+        - Tool version (if applicable):
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: command-output
+    attributes:
+      label: Command Output
+      description: If applicable, paste the command output or error message
+      render: shell
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this bug?
+      options:
+        - Low (typo, minor issue)
+        - Medium (incorrect example, broken link)
+        - High (example doesn't work, misleading information)
+        - Critical (security issue, data loss potential)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Verification
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have tested this on a clean environment
+          required: false
+        - label: I have the latest version of the mentioned tools
+          required: false

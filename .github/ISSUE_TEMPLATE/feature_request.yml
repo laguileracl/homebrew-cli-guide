@@ -1,0 +1,121 @@
+name: Feature Request
+description: Suggest a new CLI tool or improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement to our CLI guide! 🚀
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature are you requesting?
+      options:
+        - New CLI tool documentation
+        - New workflow or use case
+        - Improvement to existing documentation
+        - New chapter or section
+        - Infrastructure improvement
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: tool-name
+    attributes:
+      label: Tool Name (if applicable)
+      description: If requesting a new tool, what's its name?
+      placeholder: e.g., ripgrep, fzf, bat
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Describe the feature you'd like to see
+      placeholder: |
+        - What should be added/improved?
+        - Why would this be useful?
+        - How would it fit into the existing guide?
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case / Examples
+      description: Provide specific examples or use cases
+      placeholder: |
+        Describe a real-world scenario where this would be helpful:
+        - Who would use this?
+        - What problem does it solve?
+        - How is it better than alternatives?
+
+  - type: input
+    id: homebrew-formula
+    attributes:
+      label: Homebrew Formula (if applicable)
+      description: If it's a tool, what's the brew install command?
+      placeholder: e.g., brew install ripgrep
+
+  - type: textarea
+    id: suggested-chapter
+    attributes:
+      label: Suggested Chapter/Location
+      description: Where should this fit in the guide?
+      placeholder: |
+        Which chapter would be most appropriate?
+        - Navegación y Sistema
+        - Gestión de Archivos  
+        - Búsqueda y Filtros
+        - etc.
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example Commands/Usage
+      description: If you know the tool, provide some example commands
+      render: shell
+      placeholder: |
+        # Basic usage
+        tool --help
+
+        # Common use case
+        tool input.txt --output result.txt
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - Low (nice to have)
+        - Medium (would improve the guide)
+        - High (fills important gap)
+        - Critical (essential missing piece)
+
+  - type: checkboxes
+    id: research
+    attributes:
+      label: Research Done
+      description: What research have you done?
+      options:
+        - label: I've verified the tool is available via Homebrew
+        - label: I've checked it's not already documented
+        - label: I've tested the tool myself
+        - label: I've found good documentation/examples elsewhere
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution Willingness
+      description: Are you willing to help implement this?
+      options:
+        - label: I can help write the documentation
+        - label: I can provide examples and test cases
+        - label: I can help review the implementation
+        - label: I'm just suggesting the idea

@@ -1,0 +1,99 @@
+name: Documentation Improvement
+description: Suggest improvements to existing documentation
+title: "[Docs]: "
+labels: ["documentation"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve our documentation! 📚
+
+  - type: input
+    id: section
+    attributes:
+      label: Section/Chapter
+      description: Which section needs improvement?
+      placeholder: e.g., "htop configuration", "git workflows", etc.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: improvement-type
+    attributes:
+      label: Type of Improvement
+      description: What kind of improvement is needed?
+      options:
+        - Better examples
+        - More detailed explanation
+        - Clearer organization
+        - Additional use cases
+        - Improved formatting
+        - Broken/outdated links
+        - Translation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-issue
+    attributes:
+      label: Current Issue
+      description: What's wrong with the current documentation?
+      placeholder: |
+        Describe what makes the current documentation unclear, incomplete, or unhelpful:
+        - Is it confusing?
+        - Missing important information?
+        - Outdated examples?
+        - Poor organization?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested Improvement
+      description: How would you improve it?
+      placeholder: |
+        Be specific about your suggestions:
+        - What should be added?
+        - What should be changed?
+        - How should it be reorganized?
+        - What examples would be better?
+
+  - type: textarea
+    id: better-examples
+    attributes:
+      label: Better Examples (if applicable)
+      description: Provide improved examples or use cases
+      render: shell
+      placeholder: |
+        # Current example (if problematic):
+        command --old-way
+
+        # Suggested improvement:
+        command --better-way --with-explanation
+
+  - type: dropdown
+    id: target-audience
+    attributes:
+      label: Target Audience
+      description: Who would benefit most from this improvement?
+      options:
+        - Beginners
+        - Intermediate users
+        - Advanced users
+        - Specific profession (developers, sysadmins, etc.)
+        - Everyone
+
+  - type: checkboxes
+    id: validation
+    attributes:
+      label: Validation
+      description: Please confirm
+      options:
+        - label: I have read the current documentation thoroughly
+          required: true
+        - label: I have tested any suggested commands/examples
+        - label: I have checked for similar improvement requests

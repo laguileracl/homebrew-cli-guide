@@ -1,0 +1,479 @@
+# Utilidades Diversas
+
+Esta sección cubre herramientas que mejoran la experiencia general en terminal, desde corrección automática hasta personalización del prompt.
+
+## tldr - Ejemplos prácticos de comandos {#sec-tldr}
+
+tldr proporciona páginas de manual simplificadas con ejemplos prácticos.
+
+### Uso básico
+
+```bash
+# Ver ejemplos de un comando
+tldr git
+tldr curl
+tldr find
+
+# Actualizar base de datos
+tldr --update
+
+# Buscar comando por funcionalidad
+tldr --search "compress"
+tldr --search "network"
+
+# Plataforma específica
+tldr -p linux tar
+tldr -p macos ls
+```
+
+### Configuración
+
+```bash
+# Configurar tema
+tldr --theme base16
+
+# Idioma específico (si está disponible)
+tldr -L es git
+
+# Configuración personalizada en ~/.tldrrc
+{
+    "theme": "base16",
+    "platform": "macos"
+}
+```
+
+---
+
+## thefuck - Corrector automático {#sec-thefuck}
+
+thefuck corrige automáticamente comandos mal escritos.
+
+### Configuración inicial
+
+```bash
+# Agregar a ~/.zshrc o ~/.bashrc
+eval $(thefuck --alias)
+# O crear alias personalizado
+eval $(thefuck --alias fix)
+```
+
+### Ejemplos de uso
+
+```bash
+# Comando mal escrito
+$ gut push
+git: 'gut' is not a git command
+
+$ fuck
+git push [enter/↑/↓/ctrl+c]
+
+# Puerto ocupado
+$ python -m http.server 8000
+OSError: [Errno 48] Address already in use
+
+$ fuck
+python -m http.server 8001 [enter/↑/↓/ctrl+c]
+```
+
+### Configuración avanzada
+
+Archivo `~/.config/thefuck/settings.py`:
+
+```python
+# Configuración personalizada
+rules = ['git_push', 'python_command', 'ls_lah', 'cd_mkdir']
+exclude_rules = ['rm_root']
+require_confirmation = True
+wait_command = 3
+history_limit = 1000
+
+# Alias personalizado
+alias = 'fix'
+```
+
+---
+
+## cowsay - Arte ASCII divertido {#sec-cowsay}
+
+cowsay genera arte ASCII con mensajes personalizados.
+
+### Uso básico
+
+```bash
+# Mensaje básico
+cowsay "Hola mundo"
+
+# Diferentes animales
+cowsay -f dragon "Soy un dragón"
+cowsay -f tux "¡Linux!"
+
+# Listar animales disponibles
+cowsay -l
+```
+
+### Expresiones de la vaca
+
+```bash
+# Diferentes estados de ánimo
+cowsay -b "Ojos de Borg"      # Borg
+cowsay -d "Muerto"            # Dead
+cowsay -g "Codicioso"         # Greedy
+cowsay -p "Paranoico"         # Paranoid
+cowsay -s "Stoned"            # Stoned
+cowsay -t "Cansado"           # Tired
+cowsay -w "Cableado"          # Wired
+cowsay -y "Joven"             # Young
+```
+
+### Integración con otras herramientas
+
+```bash
+# Con fortune (si está instalado)
+fortune | cowsay
+
+# Con fecha
+date | cowsay -f tux
+
+# En MOTD del sistema
+echo "$(whoami), bienvenido a $(hostname)" | cowsay -f dragon
+
+# Pipeline divertido
+curl -s "https://api.quotegarden.com/api/v3/quotes/random" | \
+jq -r '.data.quoteText' | cowsay -f elephant
+```
+
+---
+
+## direnv - Variables de entorno por directorio {#sec-direnv}
+
+direnv carga automáticamente variables de entorno al entrar a directorios.
+
+### Configuración inicial
+
+```bash
+# Agregar a ~/.zshrc
+eval "$(direnv hook zsh)"
+
+# Para bash
+eval "$(direnv hook bash)"
+```
+
+### Uso básico
+
+```bash
+# Crear archivo .envrc en tu proyecto
+echo 'export DATABASE_URL="postgres://localhost/mydb"' > .envrc
+echo 'export DEBUG=true' >> .envrc
+
+# Permitir el archivo
+direnv allow
+
+# Al entrar al directorio, las variables se cargan automáticamente
+# Al salir, se descargan
+```
+
+### Ejemplos avanzados
+
+#### Proyecto Python
+
+```bash
+# .envrc para proyecto Python
+export VIRTUAL_ENV="$PWD/.venv"
+export PATH="$VIRTUAL_ENV/bin:$PATH"
+export PYTHONPATH="$PWD/src:$PYTHONPATH"
+
+# Variables de desarrollo
+export FLASK_ENV=development
+export DATABASE_URL="sqlite:///dev.db"
+
+# Activar virtualenv si existe
+if [ -d "$VIRTUAL_ENV" ]; then
+    source "$VIRTUAL_ENV/bin/activate"
+fi
+```
+
+#### Proyecto Node.js
+
+```bash
+# .envrc para proyecto Node.js
+export NODE_ENV=development
+export PORT=3000
+
+# Usar versión específica de Node con nvm
+use node 18.17.0
+
+# Variables de API
+export API_KEY="dev-api-key"
+export REDIS_URL="redis://localhost:6379"
+```
+
+#### Proyecto con Docker
+
+```bash
+# .envrc para proyecto Docker
+export COMPOSE_PROJECT_NAME="myapp"
+export DOCKER_BUILDKIT=1
+
+# Variables para docker-compose
+export POSTGRES_DB=myapp_dev
+export POSTGRES_USER=developer
+export POSTGRES_PASSWORD=devpass
+
+# Path para herramientas locales
+PATH_add ./scripts
+PATH_add ./node_modules/.bin
+```
+
+---
+
+## starship - Prompt personalizable {#sec-starship}
+
+starship es un prompt de terminal minimalista y rápido.
+
+### Configuración inicial
+
+```bash
+# Agregar a ~/.zshrc
+eval "$(starship init zsh)"
+
+# Para bash
+eval "$(starship init bash)"
+```
+
+### Configuración básica
+
+Archivo `~/.config/starship.toml`:
+
+```toml
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = "🌱 "
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+[nodejs]
+symbol = "⬢ "
+format = "via [$symbol($version )]($style)"
+
+[python]
+symbol = "🐍 "
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = "🦀 "
+format = "via [$symbol($version )]($style)"
+
+[docker_context]
+symbol = "🐳 "
+format = "via [$symbol$context]($style) "
+```
+
+### Presets disponibles
+
+```bash
+# Ver presets disponibles
+starship preset --list
+
+# Aplicar preset
+starship preset nerd-font-symbols -o ~/.config/starship.toml
+starship preset tokyo-night -o ~/.config/starship.toml
+```
+
+---
+
+## Workflows con utilidades
+
+### Script de setup de entorno
+
+```bash
+#!/bin/bash
+# dev-setup.sh - Configurar entorno de desarrollo
+
+setup_git() {
+    echo "🔧 Configurando Git..."
+    
+    # Configuración básica si no existe
+    if ! git config --global user.name >/dev/null 2>&1; then
+        read -p "Nombre para Git: " git_name
+        git config --global user.name "$git_name"
+    fi
+    
+    if ! git config --global user.email >/dev/null 2>&1; then
+        read -p "Email para Git: " git_email
+        git config --global user.email "$git_email"
+    fi
+    
+    # Aliases útiles
+    git config --global alias.st status
+    git config --global alias.co checkout
+    git config --global alias.br branch
+    git config --global alias.ci commit
+    git config --global alias.unstage 'reset HEAD --'
+}
+
+setup_shell() {
+    echo "🐚 Configurando shell..."
+    
+    # Backup de configuración existente
+    [ -f ~/.zshrc ] && cp ~/.zshrc ~/.zshrc.backup
+    
+    # Configurar starship
+    echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+    
+    # Configurar direnv
+    echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+    
+    # Configurar thefuck
+    echo 'eval $(thefuck --alias)' >> ~/.zshrc
+    
+    # Aliases útiles
+    cat >> ~/.zshrc << 'EOF'
+# Aliases útiles
+alias ll='eza -la --git'
+alias cat='bat'
+alias find='fd'
+alias grep='rg'
+
+# Funciones útiles
+help() {
+    tldr "$1" 2>/dev/null || man "$1"
+}
+EOF
+}
+
+setup_project_templates() {
+    echo "📁 Creando templates de proyecto..."
+    
+    TEMPLATES_DIR="$HOME/.project-templates"
+    mkdir -p "$TEMPLATES_DIR"
+    
+    # Template para Python
+    mkdir -p "$TEMPLATES_DIR/python"
+    cat > "$TEMPLATES_DIR/python/.envrc" << 'EOF'
+export PYTHONPATH="$PWD/src:$PYTHONPATH"
+export VIRTUAL_ENV="$PWD/.venv"
+export PATH="$VIRTUAL_ENV/bin:$PATH"
+
+if [ -d "$VIRTUAL_ENV" ]; then
+    source "$VIRTUAL_ENV/bin/activate"
+fi
+EOF
+    
+    # Template para Node.js
+    mkdir -p "$TEMPLATES_DIR/nodejs"
+    cat > "$TEMPLATES_DIR/nodejs/.envrc" << 'EOF'
+export NODE_ENV=development
+export PATH="$PWD/node_modules/.bin:$PATH"
+
+use node 18
+EOF
+    
+    echo "Templates creados en $TEMPLATES_DIR"
+}
+
+# Función principal
+main() {
+    echo "🚀 Configurando entorno de desarrollo..."
+    
+    setup_git
+    setup_shell
+    setup_project_templates
+    
+    echo "✅ Configuración completada!"
+    echo "💡 Reinicia tu terminal para aplicar los cambios"
+    
+    # Mensaje motivacional
+    echo "¡Listo para programar!" | cowsay -f tux
+}
+
+main "$@"
+```
+
+### Sistema de notificaciones inteligente
+
+```bash
+#!/bin/bash
+# smart-notify.sh - Sistema de notificaciones basado en contexto
+
+NOTIFY_FILE="$HOME/.local/notifications"
+LAST_COMMAND_FILE="$HOME/.last_command"
+
+# Función para enviar notificación
+send_notification() {
+    local title="$1"
+    local message="$2"
+    local urgency="${3:-normal}"
+    
+    # macOS
+    if command -v osascript >/dev/null; then
+        osascript -e "display notification \"$message\" with title \"$title\""
+    # Linux
+    elif command -v notify-send >/dev/null; then
+        notify-send -u "$urgency" "$title" "$message"
+    fi
+    
+    # Log para debug
+    echo "[$(date)] $title: $message" >> "$NOTIFY_FILE"
+}
+
+# Notificar cuando comando tarda mucho
+notify_long_command() {
+    local cmd="$1"
+    local duration="$2"
+    
+    if [ "$duration" -gt 30 ]; then
+        send_notification "Comando completado" "\"$cmd\" terminó en ${duration}s"
+    fi
+}
+
+# Hook para .zshrc
+precmd() {
+    local exit_code=$?
+    local end_time=$(date +%s)
+    
+    if [ -f "$LAST_COMMAND_FILE" ]; then
+        local start_time=$(cat "$LAST_COMMAND_FILE")
+        local duration=$((end_time - start_time))
+        
+        if [ $exit_code -ne 0 ]; then
+            send_notification "Error en comando" "Comando falló con código $exit_code" "critical"
+        else
+            notify_long_command "$history[1]" "$duration"
+        fi
+        
+        rm "$LAST_COMMAND_FILE"
+    fi
+}
+
+preexec() {
+    echo $(date +%s) > "$LAST_COMMAND_FILE"
+}
+```
+
+::: {.callout-tip}
+## Tips para utilidades
+- Combina `tldr` con `man` para documentación completa
+- `direnv` es perfecto para proyectos con configuraciones específicas
+- `starship` puede mostrar información contextual del proyecto actual
+- `thefuck` aprende de tus errores comunes
+:::
+
+En el próximo capítulo exploraremos combinaciones avanzadas y workflows complejos.

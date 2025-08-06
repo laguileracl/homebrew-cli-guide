@@ -1,0 +1,344 @@
+# Texto y Documentos
+
+Las herramientas de texto modernas mejoran significativamente la experiencia de lectura y edición de documentos desde la terminal.
+
+## bat - Visualizador con sintaxis {#sec-bat}
+
+bat es un reemplazo de `cat` con resaltado de sintaxis y características avanzadas.
+
+### Uso básico
+
+```bash
+# Ver archivo con sintaxis highlight
+bat archivo.py
+bat package.json
+
+# Múltiples archivos
+bat *.js
+
+# Con números de línea
+bat -n archivo.txt
+
+# Rango específico de líneas
+bat -r 10:20 archivo.py
+```
+
+### Configuración y temas
+
+```bash
+# Listar temas disponibles
+bat --list-themes
+
+# Usar tema específico
+bat --theme="Monokai Extended" archivo.py
+
+# Configurar tema por defecto
+export BAT_THEME="gruvbox-dark"
+
+# Configurar en ~/.config/bat/config
+--theme="gruvbox-dark"
+--style="numbers,changes,header"
+--paging=auto
+```
+
+### Integración con otras herramientas
+
+```bash
+# Como pager para man
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Con find
+find . -name "*.py" -exec bat {} +
+
+# Con fzf para vista previa
+find . -name "*.md" | fzf --preview 'bat --color=always {}'
+```
+
+---
+
+## pandoc - Conversor universal {#sec-pandoc}
+
+pandoc convierte documentos entre múltiples formatos.
+
+### Conversiones básicas
+
+```bash
+# Markdown a HTML
+pandoc documento.md -o documento.html
+
+# Markdown a PDF (requiere LaTeX)
+pandoc documento.md -o documento.pdf
+
+# HTML a Markdown
+pandoc pagina.html -o pagina.md
+
+# Multiple formatos
+pandoc input.md -o output.docx
+pandoc input.md -o output.epub
+```
+
+### Opciones avanzadas
+
+```bash
+# Con tabla de contenidos
+pandoc --toc documento.md -o documento.html
+
+# CSS personalizado
+pandoc -c styles.css documento.md -o documento.html
+
+# Plantilla personalizada
+pandoc --template=mi-plantilla.html documento.md -o documento.html
+
+# Metadatos
+pandoc -M title="Mi Documento" -M author="Tu Nombre" documento.md -o documento.pdf
+```
+
+### Script de conversión masiva
+
+```bash
+#!/bin/bash
+# convert-docs.sh
+
+input_dir="$1"
+output_dir="$2"
+format="$3"
+
+if [ $# -ne 3 ]; then
+    echo "Uso: $0 <input_dir> <output_dir> <format>"
+    echo "Formatos: html, pdf, docx, epub"
+    exit 1
+fi
+
+mkdir -p "$output_dir"
+
+find "$input_dir" -name "*.md" | while read -r file; do
+    filename=$(basename "$file" .md)
+    echo "Converting: $file"
+    
+    case "$format" in
+        html)
+            pandoc --toc -c github.css "$file" -o "$output_dir/${filename}.html"
+            ;;
+        pdf)
+            pandoc --toc "$file" -o "$output_dir/${filename}.pdf"
+            ;;
+        docx)
+            pandoc "$file" -o "$output_dir/${filename}.docx"
+            ;;
+        epub)
+            pandoc --toc "$file" -o "$output_dir/${filename}.epub"
+            ;;
+    esac
+done
+```
+
+---
+
+## glow - Renderizador Markdown {#sec-glow}
+
+glow renderiza archivos Markdown con estilo en la terminal.
+
+### Uso básico
+
+```bash
+# Ver archivo Markdown
+glow README.md
+
+# Buscar y ver archivos .md
+glow .
+
+# Modo pager
+glow -p README.md
+
+# Ancho específico
+glow -w 100 README.md
+```
+
+### Estilos y configuración
+
+```bash
+# Diferentes estilos
+glow -s dark README.md
+glow -s light README.md
+glow -s notty README.md  # Sin colores
+
+# Configuración personalizada
+glow config set style dark
+glow config set width 120
+glow config set mouse true
+```
+
+### Workflow de documentación
+
+```bash
+#!/bin/bash
+# doc-viewer.sh - Navegador de documentación
+
+DOC_DIR="${1:-.}"
+
+# Función para seleccionar y ver documento
+view_docs() {
+    local doc_file
+    doc_file=$(find "$DOC_DIR" -name "*.md" | fzf --preview 'glow {}')
+    
+    if [ -n "$doc_file" ]; then
+        glow "$doc_file"
+        
+        # Preguntar si editar
+        echo -e "\n¿Editar archivo? (y/n)"
+        read -r response
+        if [ "$response" = "y" ]; then
+            ${EDITOR:-vim} "$doc_file"
+        fi
+    fi
+}
+
+view_docs
+```
+
+---
+
+## Herramientas complementarias
+
+### vale - Linter de prosa
+
+```bash
+# Instalar
+brew install vale
+
+# Verificar documento
+vale documento.md
+
+# Con configuración personalizada
+vale --config=.vale.ini documento.md
+```
+
+### mdless - Pager para Markdown
+
+```bash
+# Ver Markdown paginado
+mdless README.md
+
+# Con números de línea
+mdless -l README.md
+```
+
+### Workflow completo de documentación
+
+```bash
+#!/bin/bash
+# doc-workflow.sh
+
+PROJECT_DIR="${1:-.}"
+DOCS_DIR="$PROJECT_DIR/docs"
+BUILD_DIR="$PROJECT_DIR/docs-build"
+
+# Función para crear estructura de documentos
+init_docs() {
+    mkdir -p "$DOCS_DIR"/{guides,api,tutorials}
+    
+    cat > "$DOCS_DIR/README.md" << 'EOF'
+# Project Documentation
+
+## Structure
+
+- [Guides](guides/) - User guides and how-tos
+- [API](api/) - API documentation
+- [Tutorials](tutorials/) - Step-by-step tutorials
+
+## Contributing
+
+Please follow the [documentation style guide](STYLE_GUIDE.md).
+EOF
+
+    echo "📝 Documentation structure created in $DOCS_DIR"
+}
+
+# Función para validar documentos
+validate_docs() {
+    echo "🔍 Validating documentation..."
+    
+    # Verificar links rotos
+    find "$DOCS_DIR" -name "*.md" -exec markdown-link-check {} \;
+    
+    # Linting de prosa (si vale está instalado)
+    if command -v vale &> /dev/null; then
+        vale "$DOCS_DIR"
+    fi
+    
+    # Verificar formato
+    find "$DOCS_DIR" -name "*.md" | while read -r file; do
+        echo "Checking: $file"
+        glow "$file" > /dev/null || echo "❌ Error rendering $file"
+    done
+}
+
+# Función para generar sitio estático
+build_docs() {
+    echo "🏗️ Building documentation site..."
+    
+    mkdir -p "$BUILD_DIR"
+    
+    # Convertir todos los MD a HTML
+    find "$DOCS_DIR" -name "*.md" | while read -r file; do
+        relative_path=${file#$DOCS_DIR/}
+        output_file="$BUILD_DIR/${relative_path%.md}.html"
+        output_dir=$(dirname "$output_file")
+        
+        mkdir -p "$output_dir"
+        
+        pandoc --toc -c "../styles.css" \
+               --template="templates/doc.html" \
+               "$file" -o "$output_file"
+    done
+    
+    # Copiar assets
+    cp -r "$PROJECT_DIR/assets"/* "$BUILD_DIR/" 2>/dev/null || true
+    
+    echo "✅ Documentation built in $BUILD_DIR"
+}
+
+# Función para servir documentos localmente
+serve_docs() {
+    echo "🌐 Serving documentation at http://localhost:8000"
+    cd "$BUILD_DIR" && python3 -m http.server 8000
+}
+
+# Menu principal
+case "${2:-help}" in
+    init)
+        init_docs
+        ;;
+    validate)
+        validate_docs
+        ;;
+    build)
+        build_docs
+        ;;
+    serve)
+        serve_docs
+        ;;
+    all)
+        validate_docs && build_docs && serve_docs
+        ;;
+    *)
+        echo "Uso: $0 <project_dir> <command>"
+        echo "Comandos:"
+        echo "  init     - Crear estructura de documentación"
+        echo "  validate - Validar documentos existentes"
+        echo "  build    - Generar sitio estático"
+        echo "  serve    - Servir documentación localmente"
+        echo "  all      - Validar, construir y servir"
+        ;;
+esac
+```
+
+::: {.callout-tip}
+## Tips para documentación
+- Usa `bat` como reemplazo de `cat` para mejor legibilidad
+- `glow` es perfecto para revisar documentación rápidamente
+- `pandoc` es extremadamente potente para conversiones complejas
+- Combina estas herramientas en scripts para workflows automatizados
+:::
+
+En el próximo capítulo cubriremos las utilidades diversas que mejoran la experiencia general en terminal.

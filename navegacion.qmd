@@ -1,0 +1,486 @@
+# Navegación y Exploración
+
+La navegación eficiente por el sistema de archivos es fundamental para cualquier usuario de terminal. Esta sección cubre las herramientas más poderosas para moverte, explorar y entender la estructura de tus directorios.
+
+## eza - Listado moderno de archivos {#sec-eza}
+
+`eza` es un reemplazo moderno del comando `ls` tradicional, ofreciendo colores, iconos y mejor formato por defecto.
+
+### Instalación y configuración
+
+```bash
+# Ya está instalado con Homebrew
+which eza
+```
+
+### Uso básico
+
+```bash
+# Listado básico con iconos y colores
+eza
+```
+
+::: {.callout-tip}
+## Tip
+`eza` muestra colores e iconos por defecto, making it much more readable than traditional `ls`.
+:::
+
+### Ejemplos prácticos
+
+#### Listado detallado
+
+```bash
+# Equivalente a 'ls -la' pero mucho más visual
+eza -la
+
+# Con fechas en formato legible
+eza -la --time-style=long-iso
+
+# Mostrar tamaños en formato legible (KB, MB, GB)
+eza -lah
+```
+
+#### Vista en árbol
+
+```bash
+# Vista de árbol del directorio actual
+eza --tree
+
+# Limitar profundidad a 2 niveles
+eza --tree --level=2
+
+# Árbol con información detallada
+eza --tree -la
+
+# Ignorar directorios específicos
+eza --tree --ignore-glob="node_modules|.git"
+```
+
+#### Filtrado y ordenamiento
+
+```bash
+# Mostrar solo directorios
+eza -D
+
+# Mostrar solo archivos
+eza -f
+
+# Ordenar por tamaño (mayor a menor)
+eza -la --sort=size --reverse
+
+# Ordenar por fecha de modificación
+eza -la --sort=modified
+
+# Ordenar por extensión
+eza -la --sort=extension
+```
+
+#### Información de Git
+
+```bash
+# Mostrar estado de Git para cada archivo
+eza -la --git
+
+# Solo archivos con cambios en Git
+eza -la --git | grep -E '\s[MAD?]\s'
+```
+
+### Casos de uso avanzados
+
+#### Análisis de proyectos
+
+```bash
+# Ver estructura completa de un proyecto con Git info
+eza --tree --git --ignore-glob="node_modules|.git|dist|build"
+
+# Ver archivos grandes en el proyecto
+eza -la --sort=size --reverse | head -20
+```
+
+#### Alias útiles
+
+Agrega estos a tu `.zshrc` o `.bashrc`:
+
+```bash
+alias ll='eza -la --git'
+alias lt='eza --tree'
+alias llt='eza --tree -la'
+alias ls='eza'
+```
+
+---
+
+## tree - Estructura visual de directorios {#sec-tree}
+
+`tree` genera una representación visual en forma de árbol de la estructura de directorios.
+
+### Uso básico
+
+```bash
+# Árbol básico del directorio actual
+tree
+
+# Limitar a 2 niveles de profundidad
+tree -L 2
+
+# Mostrar archivos ocultos
+tree -a
+```
+
+### Ejemplos prácticos
+
+#### Control de profundidad y filtros
+
+```bash
+# Solo directorios (sin archivos)
+tree -d
+
+# Límite de 3 niveles, solo directorios
+tree -d -L 3
+
+# Ignorar patrones específicos
+tree -I 'node_modules|.git|*.pyc'
+
+# Múltiples patrones de exclusión
+tree -I 'node_modules|.git|dist|build|coverage'
+```
+
+#### Información adicional
+
+```bash
+# Mostrar tamaños de archivos
+tree -s
+
+# Mostrar fechas de modificación
+tree -D
+
+# Mostrar permisos
+tree -p
+
+# Combinación: tamaños, fechas y permisos
+tree -sDp
+```
+
+#### Salida formateada
+
+```bash
+# Solo los nombres de archivos (sin estructura de árbol)
+tree -i
+
+# Mostrar rutas completas
+tree -f
+
+# Colorear salida según tipo de archivo
+tree -C
+```
+
+### Casos de uso avanzados
+
+#### Documentación de proyectos
+
+```bash
+# Generar documentación HTML del proyecto
+tree -H . -o project-structure.html
+
+# Con título personalizado
+tree -H . -T "Mi Proyecto" -o structure.html
+
+# Incluir CSS personalizado
+tree -H . -C -o structure.html
+```
+
+#### Análisis de directorios
+
+```bash
+# Contar archivos por tipo
+tree | grep -E '\.(js|py|md)$' | wc -l
+
+# Ver directorios más profundos
+tree -d | tail -20
+
+# Encontrar directorios vacíos
+tree -d --prune
+```
+
+#### Scripts de backup
+
+```bash
+# Crear lista de archivos para backup
+tree -if > backup-list.txt
+
+# Solo archivos modificados en últimos 7 días
+find . -mtime -7 | tree --fromfile
+```
+
+---
+
+## ranger - Navegador interactivo {#sec-ranger}
+
+`ranger` es un navegador de archivos en terminal con interfaz visual y vista previa.
+
+### Iniciando ranger
+
+```bash
+# Abrir ranger en directorio actual
+ranger
+
+# Abrir en directorio específico
+ranger ~/Documents
+
+# Abrir y ejecutar comando al salir
+ranger --cmd="cd /tmp"
+```
+
+### Navegación básica
+
+| Tecla | Acción |
+|-------|--------|
+| `h,j,k,l` | Navegar (izq, abajo, arriba, der) |
+| `Enter` | Entrar a directorio / abrir archivo |
+| `Backspace` | Directorio padre |
+| `gg` | Ir al inicio |
+| `G` | Ir al final |
+| `H` | Historial hacia atrás |
+| `L` | Historial hacia adelante |
+
+### Comandos esenciales
+
+#### Gestión de archivos
+
+```bash
+# Dentro de ranger:
+yy    # Copiar archivo/directorio
+dd    # Cortar archivo/directorio
+pp    # Pegar
+dD    # Eliminar permanentemente
+:delete # Eliminar con confirmación
+```
+
+#### Búsqueda y filtros
+
+```bash
+# Buscar archivos
+/nombre_archivo
+
+# Búsqueda hacia atrás
+?nombre
+
+# Filtrar archivos mostrados
+zf
+
+# Mostrar archivos ocultos
+zh
+
+# Mostrar solo directorios
+zd
+```
+
+#### Vista previa y configuración
+
+```bash
+# Alternar vista previa
+zv
+
+# Cambiar modo de vista
+zP
+
+# Información del archivo
+=
+```
+
+### Personalización
+
+#### Archivo de configuración
+
+Crea `~/.config/ranger/rc.conf`:
+
+```bash
+# Mostrar archivos ocultos por defecto
+set show_hidden true
+
+# Vista previa activada
+set preview_files true
+
+# Usar colores
+set colorscheme default
+
+# Integración con git
+set vcs_aware true
+```
+
+#### Comandos personalizados
+
+```bash
+# En rc.conf, agregar comandos personalizados:
+map <C-t> shell tmux new-window
+map <C-e> shell code %s
+map <C-g> shell git status
+```
+
+### Casos de uso avanzados
+
+#### Integración con otros programas
+
+```bash
+# Abrir archivo con aplicación específica
+r    # Menú de aplicaciones
+1    # Aplicación por defecto
+2    # Editor de texto
+3    # Visor de imágenes
+```
+
+#### Marcadores y tabs
+
+```bash
+# Crear marcador
+m + letra
+
+# Ir a marcador
+' + letra  (comilla simple)
+
+# Nuevo tab
+Ctrl+n
+
+# Cambiar tab
+Tab / Shift+Tab
+
+# Cerrar tab
+Ctrl+w
+```
+
+---
+
+## zoxide - Navegación inteligente {#sec-zoxide}
+
+`zoxide` es un reemplazo inteligente para `cd` que recuerda los directorios que visitas frecuentemente.
+
+### Configuración inicial
+
+```bash
+# Agregar a tu .zshrc
+eval "$(zoxide init zsh)"
+
+# Para bash
+eval "$(zoxide init bash)"
+
+# Reiniciar shell o ejecutar
+source ~/.zshrc
+```
+
+### Uso básico
+
+```bash
+# Después de la configuración, 'z' reemplaza a 'cd'
+z Documents
+z proj    # Si has visitado ~/Projects antes
+z down    # Para ~/Downloads
+```
+
+### Ejemplos prácticos
+
+#### Navegación rápida
+
+```bash
+# Ir a directorio que contiene "react" en el nombre
+z react
+
+# Si hay múltiples, zoxide elegirá el más frecuente/reciente
+z proj
+
+# Ver todas las opciones disponibles
+zi   # Modo interactivo con fzf
+```
+
+#### Gestión de la base de datos
+
+```bash
+# Ver directorios rastreados con puntuaciones
+zoxide query --list
+
+# Ver estadísticas detalladas
+zoxide query --stats
+
+# Agregar directorio manualmente
+zoxide add /ruta/especial
+
+# Eliminar directorio de la base de datos
+zoxide remove /ruta/vieja
+```
+
+### Casos de uso avanzados
+
+#### Integración con scripts
+
+```bash
+#!/bin/bash
+# Script para navegar a proyecto y activar entorno
+
+PROJECT=$(zoxide query "$1")
+if [ -n "$PROJECT" ]; then
+    cd "$PROJECT"
+    if [ -f ".venv/bin/activate" ]; then
+        source .venv/bin/activate
+    fi
+fi
+```
+
+#### Aliases personalizados
+
+```bash
+# En .zshrc
+alias zz='zi'  # Navegación interactiva
+alias zl='zoxide query --list'  # Listar directorios
+alias zs='zoxide query --stats'  # Estadísticas
+```
+
+---
+
+## Combinaciones poderosas
+
+### Exploración completa de proyectos
+
+```bash
+# 1. Navegar al proyecto
+z myproject
+
+# 2. Ver estructura general
+eza --tree --level=3 --ignore-glob="node_modules|.git"
+
+# 3. Ver archivos modificados recientemente
+eza -la --sort=modified | head -10
+
+# 4. Abrir navegador interactivo para explorar
+ranger
+```
+
+### Análisis rápido de directorios
+
+```bash
+# Pipeline para analizar un directorio desconocido
+z unknown-dir && \
+tree -L 2 && \
+echo "--- Archivos más grandes ---" && \
+eza -la --sort=size --reverse | head -5 && \
+echo "--- Tipos de archivo ---" && \
+find . -type f | sed 's/.*\.//' | sort | uniq -c | sort -nr
+```
+
+### Navegación con contexto
+
+```bash
+# Función para navegar mostrando contexto
+nav() {
+    z "$1" && pwd && eza -la --git | head -20
+}
+
+# Uso: nav myproject
+```
+
+::: {.callout-important}
+## Importante para nuevos usuarios
+- Practica con `eza` antes de crear aliases que reemplacen `ls`
+- `zoxide` necesita tiempo para "aprender" tus patrones de navegación
+- `ranger` tiene una curva de aprendizaje, pero vale la pena la inversión de tiempo
+:::
+
+Estas herramientas de navegación forman la base de un workflow eficiente en terminal. En el siguiente capítulo exploraremos herramientas para la gestión avanzada de archivos.

@@ -1,0 +1,593 @@
+# Búsqueda y Filtrado
+
+La capacidad de encontrar información rápidamente en archivos y datos es crucial para la productividad. Esta sección cubre las herramientas más potentes para búsqueda de texto, filtrado interactivo y procesamiento de datos estructurados.
+
+## ripgrep (rg) - Búsqueda ultrarrápida {#sec-ripgrep}
+
+`ripgrep` es una herramienta de búsqueda que combina la potencia de `grep` con la velocidad moderna y características inteligentes como respeto automático de `.gitignore`.
+
+### Características principales
+
+- 🚀 **Extremadamente rápido** - Hasta 10x más rápido que grep
+- 🎯 **Respeta .gitignore** automáticamente
+- 🌈 **Colores por defecto** para mejor legibilidad
+- 🔍 **Búsqueda recursiva** por defecto
+- 📁 **Filtros por tipo de archivo** inteligentes
+
+### Uso básico
+
+```bash
+# Búsqueda simple en directorio actual
+rg "función"
+
+# Búsqueda ignorando mayúsculas/minúsculas
+rg -i "error"
+
+# Buscar palabra completa
+rg -w "class"
+
+# Búsqueda literal (sin regex)
+rg -F "console.log("
+```
+
+### Ejemplos por tipo de archivo
+
+#### Desarrollo web
+
+```bash
+# Buscar imports en archivos JavaScript
+rg -t js "import.*from"
+
+# Encontrar funciones en TypeScript
+rg -t ts "function\s+\w+" 
+
+# Buscar clases CSS
+rg -t css "\.[\w-]+\s*\{"
+
+# APIs en archivos de configuración
+rg -t json "api.*url"
+```
+
+#### Python
+
+```bash
+# Buscar definiciones de clase
+rg -t py "^class\s+\w+"
+
+# Encontrar imports específicos
+rg -t py "from django import"
+
+# Buscar decoradores
+rg -t py "@\w+"
+
+# Variables de entorno
+rg -t py "os\.environ"
+```
+
+### Filtros avanzados
+
+#### Por ubicación
+
+```bash
+# Buscar solo en archivos de configuración
+rg "database" --glob="*.{conf,cfg,ini,yaml,yml}"
+
+# Excluir directorios específicos
+rg "TODO" --glob="!node_modules/**"
+
+# Buscar en archivos modificados recientemente
+find . -mtime -1 -name "*.py" | xargs rg "import"
+```
+
+#### Por contexto
+
+```bash
+# Mostrar 3 líneas antes y después
+rg -A 3 -B 3 "error"
+
+# Mostrar 5 líneas de contexto
+rg -C 5 "function main"
+
+# Mostrar número de línea
+rg -n "import React"
+
+# Mostrar solo nombres de archivos que contienen el patrón
+rg -l "password"
+```
+
+### Casos de uso avanzados
+
+#### Auditoría de código
+
+```bash
+# Encontrar hardcoded passwords/secrets
+rg -i "(password|secret|key|token)\s*[:=]" --type-not=json
+
+# Buscar código duplicado (funciones similares)
+rg "function \w+\(" -A 10 | grep -A 10 "function.*(" | sort | uniq -d
+
+# Encontrar imports no utilizados en Python
+rg "^import \w+" -t py | cut -d: -f2 | sort | uniq > imports.txt
+# Luego verificar cada import en el código
+
+# URLs hardcodeadas
+rg "https?://[^\s\"']+"
+```
+
+#### Análisis de logs
+
+```bash
+# Errores por severidad
+rg "(ERROR|WARN|INFO)" /var/log/app.log
+
+# IPs sospechosas (muchas peticiones)
+rg -o "\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b" access.log | \
+sort | uniq -c | sort -nr | head -10
+
+# Códigos de error HTTP
+rg " [45]\d{2} " access.log -o | sort | uniq -c
+```
+
+#### Migración de código
+
+```bash
+# Encontrar uso de API deprecated
+rg "\.oldFunction\(" -t js
+
+# Buscar patterns específicos para refactoring
+rg "var\s+\w+\s*=" -t js  # Variables con 'var' para cambiar a 'let/const'
+
+# Encontrar comentarios TODO/FIXME con contexto
+rg -C 2 "(TODO|FIXME|HACK)"
+```
+
+### Configuración personalizada
+
+#### Archivo de configuración
+
+Crear `~/.ripgreprc`:
+
+```bash
+# Siempre mostrar números de línea
+--line-number
+
+# Búsqueda inteligente de mayúsculas
+--smart-case
+
+# Mostrar tipos de archivo soportados
+--type-list
+
+# Colores personalizados
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:green
+--colors=match:fg:red
+--colors=match:style:bold
+```
+
+---
+
+## fzf - Filtro difuso interactivo {#sec-fzf}
+
+`fzf` es un filtro de línea de comandos que permite búsqueda difusa interactiva en cualquier lista de elementos.
+
+### Configuración inicial
+
+```bash
+# Configurar para zsh (agregar a .zshrc)
+source <(fzf --zsh)
+
+# Variables de entorno útiles
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+```
+
+### Uso básico interactivo
+
+```bash
+# Buscar archivos en directorio actual
+find . -type f | fzf
+
+# Buscar en historial de comandos
+history | fzf
+
+# Buscar procesos
+ps aux | fzf
+```
+
+### Ejemplos prácticos
+
+#### Navegación de archivos
+
+```bash
+# Editar archivo seleccionado
+vim $(find . -type f | fzf)
+
+# Abrir en VS Code
+code $(find . -name "*.py" | fzf)
+
+# Ver contenido de archivo seleccionado
+cat $(find . -name "*.md" | fzf)
+
+# Ir a directorio seleccionado
+cd $(find . -type d | fzf)
+```
+
+#### Git workflow
+
+```bash
+# Checkout a branch
+git checkout $(git branch | fzf | tr -d ' ')
+
+# Ver commit específico
+git show $(git log --oneline | fzf | cut -d' ' -f1)
+
+# Agregar archivos selectivamente
+git add $(git status --porcelain | fzf -m | cut -c4-)
+
+# Ver diff de archivo
+git diff $(git status --porcelain | fzf | cut -c4-)
+```
+
+#### Gestión de procesos
+
+```bash
+# Matar proceso seleccionado
+kill $(ps aux | fzf | awk '{print $2}')
+
+# Ver logs de servicio systemd
+journalctl -u $(systemctl list-units --type=service | fzf | awk '{print $1}')
+
+# Conectar por SSH
+ssh $(grep "^Host " ~/.ssh/config | cut -d' ' -f2 | fzf)
+```
+
+### Integración avanzada
+
+#### Funciones de shell personalizadas
+
+```bash
+# Función para buscar y editar archivos
+fe() {
+    local files
+    files=$(find . -type f | fzf --multi --preview 'bat --color=always {}')
+    [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+
+# Función para navegar a directorio frecuente
+fd() {
+    local dir
+    dir=$(find ${1:-.} -type d 2>/dev/null | fzf +m) && cd "$dir"
+}
+
+# Función para ver historia de comandos y ejecutar
+fh() {
+    eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+}
+
+# Función para matar procesos interactivamente
+fkill() {
+    local pid
+    pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    if [ "x$pid" != "x" ]; then
+        echo $pid | xargs kill -${1:-9}
+    fi
+}
+```
+
+#### Vista previa avanzada
+
+```bash
+# Buscar archivos con vista previa
+fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
+
+# Buscar en git commits con vista previa
+git log --oneline | fzf --preview 'git show --color=always {1}'
+
+# Buscar archivos de código con vista previa y números de línea
+rg --files | fzf --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' --delimiter ':'
+```
+
+---
+
+## jq - Procesador JSON {#sec-jq}
+
+`jq` es como `sed` pero para datos JSON, permitiendo consultar, filtrar y transformar datos JSON de manera elegante.
+
+### Sintaxis básica
+
+```bash
+# Pretty print JSON
+curl -s https://api.github.com/users/octocat | jq .
+
+# Extraer campo específico
+echo '{"name":"Juan","age":30}' | jq .name
+
+# Extraer campo anidado
+echo '{"user":{"name":"Juan"}}' | jq .user.name
+```
+
+### Filtros básicos
+
+#### Acceso a datos
+
+```bash
+# Array de objetos - extraer campo de todos
+jq '.[].name' users.json
+
+# Filtrar por condición
+jq '.[] | select(.age > 25)' users.json
+
+# Extraer múltiples campos
+jq '.[] | {name: .name, email: .email}' users.json
+
+# Contar elementos
+jq '. | length' array.json
+```
+
+#### Transformaciones
+
+```bash
+# Crear nuevo objeto
+jq '{full_name: (.first_name + " " + .last_name), age: .age}' person.json
+
+# Agregar campo
+jq '. + {timestamp: now}' data.json
+
+# Eliminar campo
+jq 'del(.password)' user.json
+
+# Renombrar campo
+jq '{username: .name, years: .age}' user.json
+```
+
+### Casos de uso con APIs
+
+#### GitHub API
+
+```bash
+# Listar repositorios públicos de un usuario
+curl -s https://api.github.com/users/octocat/repos | \
+jq '.[] | {name: .name, stars: .stargazers_count, language: .language}'
+
+# Top 5 repos por estrellas
+curl -s https://api.github.com/users/octocat/repos | \
+jq 'sort_by(.stargazers_count) | reverse | .[0:5] | .[] | .name'
+
+# Repos por lenguaje
+curl -s https://api.github.com/users/octocat/repos | \
+jq 'group_by(.language) | .[] | {language: .[0].language, count: length}'
+```
+
+#### Análisis de logs JSON
+
+```bash
+# Logs de aplicación en formato JSON
+cat app.log | jq 'select(.level == "ERROR")' 
+
+# Agrupar errores por tipo
+cat app.log | jq 'select(.level == "ERROR") | .error_type' | sort | uniq -c
+
+# Estadísticas por hora
+cat app.log | jq -r '.timestamp[0:13]' | sort | uniq -c
+```
+
+### Operaciones avanzadas
+
+#### Agregaciones y estadísticas
+
+```bash
+# Promedio de edades
+jq '[.[] | .age] | add / length' users.json
+
+# Valor máximo
+jq '[.[] | .score] | max' scores.json
+
+# Agrupar y contar
+jq 'group_by(.category) | .[] | {category: .[0].category, count: length}' items.json
+
+# Crear histograma de frecuencias
+jq '[.[] | .status] | group_by(.) | .[] | {status: .[0], count: length}' requests.json
+```
+
+#### Transformaciones complejas
+
+```bash
+# Convertir array de objetos a objeto indexado
+jq 'map({(.id|tostring): .}) | add' items.json
+
+# Pivot de datos
+jq 'group_by(.category) | map({category: .[0].category, items: map(.name)})' products.json
+
+# Merge de múltiples objetos
+jq '. as $root | .users[] | . + {company: $root.company}' company.json
+```
+
+#### Validación y filtrado
+
+```bash
+# Verificar estructura requerida
+jq 'if has("name") and has("email") then . else empty end' user.json
+
+# Filtros complejos con múltiples condiciones
+jq '.[] | select(.age > 18 and .status == "active" and (.roles | contains(["admin"])))' users.json
+
+# Validar emails
+jq '.[] | select(.email | test("^[^@]+@[^@]+\\.[^@]+$"))' contacts.json
+```
+
+### Integración con otras herramientas
+
+#### Con curl para APIs
+
+```bash
+# Script para monitorear API
+#!/bin/bash
+API_URL="https://api.example.com/status"
+while true; do
+    status=$(curl -s "$API_URL" | jq -r '.status')
+    if [ "$status" != "ok" ]; then
+        echo "ALERT: API status is $status"
+        # Enviar notificación
+    fi
+    sleep 60
+done
+```
+
+#### Con fzf para selección interactiva
+
+```bash
+# Seleccionar usuario de API y ver detalles
+user_id=$(curl -s https://api.example.com/users | \
+          jq -r '.[] | "\(.id): \(.name)"' | \
+          fzf | cut -d: -f1)
+
+curl -s "https://api.example.com/users/$user_id" | jq .
+```
+
+#### Conversion de formatos
+
+```bash
+# JSON a CSV
+jq -r '.[] | [.name, .age, .email] | @csv' users.json
+
+# JSON a tabla HTML
+jq -r '.[] | "<tr><td>\(.name)</td><td>\(.age)</td></tr>"' users.json
+
+# JSON a variables de entorno
+jq -r 'to_entries[] | "export \(.key)=\(.value)"' config.json
+```
+
+---
+
+## Workflows complejos combinando herramientas
+
+### Análisis completo de código base
+
+```bash
+#!/bin/bash
+# Script para analizar un proyecto completo
+
+echo "=== ANÁLISIS DEL PROYECTO ==="
+
+# 1. Estadísticas generales
+echo "Archivos por tipo:"
+find . -type f | grep -E '\.[a-z]+$' | sed 's/.*\.//' | sort | uniq -c | sort -nr
+
+# 2. Funciones más utilizadas
+echo -e "\nFunciones más referenciadas:"
+rg -o '\w+\(' --type js | sed 's/(//' | sort | uniq -c | sort -nr | head -10
+
+# 3. TODOs y FIXMEs
+echo -e "\nTareas pendientes:"
+rg -C 1 "(TODO|FIXME|HACK)" | head -20
+
+# 4. Archivos grandes
+echo -e "\nArchivos más grandes:"
+find . -type f -exec du -h {} + | sort -rh | head -10
+
+# 5. Dependencias externas (JS/Python)
+echo -e "\nImports externos más comunes:"
+rg "^(import|from).*['\"]([^./].*)['\"]" -o --type py --type js | \
+cut -d'"' -f2 | cut -d"'" -f2 | sort | uniq -c | sort -nr | head -10
+```
+
+### Pipeline de procesamiento de datos
+
+```bash
+#!/bin/bash
+# Procesar logs de servidor web y generar reporte
+
+LOG_FILE="/var/log/nginx/access.log"
+
+echo "=== REPORTE DE ACCESO WEB ==="
+
+# 1. Top 10 IPs
+echo "Top 10 IPs por número de requests:"
+rg -o '^\S+' "$LOG_FILE" | sort | uniq -c | sort -nr | head -10
+
+# 2. Páginas más visitadas
+echo -e "\nPáginas más visitadas:"
+rg -o '"GET ([^"]*)"' "$LOG_FILE" | cut -d' ' -f2 | sort | uniq -c | sort -nr | head -10
+
+# 3. Códigos de error
+echo -e "\nCódigos de respuesta:"
+rg -o '" \d{3} ' "$LOG_FILE" | tr -d ' "' | sort | uniq -c | sort -nr
+
+# 4. User agents más comunes
+echo -e "\nNavigadores/bots más comunes:"
+rg -o '"[^"]*" "[^"]*" "([^"]*)"$' "$LOG_FILE" | \
+cut -d'"' -f6 | sort | uniq -c | sort -nr | head -10
+
+# 5. Generar JSON para dashboard
+echo -e "\nGenerando reporte JSON..."
+{
+    echo '{'
+    echo '  "timestamp": "'$(date -Iseconds)'",'
+    echo '  "total_requests": '$(wc -l < "$LOG_FILE")','
+    echo '  "unique_ips": '$(rg -o '^\S+' "$LOG_FILE" | sort -u | wc -l)','
+    echo '  "top_pages": ['
+    rg -o '"GET ([^"]*)"' "$LOG_FILE" | cut -d' ' -f2 | sort | uniq -c | sort -nr | head -5 | \
+    jq -R '. | split(" ") | {count: .[0]|tonumber, page: .[1]}' | jq -s .
+    echo '  ]'
+    echo '}'
+} > web_report.json
+
+echo "Reporte guardado en web_report.json"
+```
+
+### Búsqueda interactiva universal
+
+```bash
+#!/bin/bash
+# Función para búsqueda universal con vista previa
+
+universal_search() {
+    local search_term="$1"
+    
+    if [ -z "$search_term" ]; then
+        echo "Uso: universal_search <término>"
+        return 1
+    fi
+    
+    # Buscar en archivos de código
+    echo "=== Archivos de código ==="
+    rg -l "$search_term" --type-add 'code:*.{py,js,ts,go,rs,java,cpp,c,h}' -t code | \
+    fzf --preview "rg --color=always '$search_term' {}" \
+        --preview-window=right:60% \
+        --header="Archivos de código que contienen '$search_term'"
+    
+    # Buscar en documentación
+    echo -e "\n=== Documentación ==="
+    rg -l "$search_term" --type-add 'docs:*.{md,txt,rst,org}' -t docs | \
+    fzf --preview "bat --color=always {}" \
+        --preview-window=right:60% \
+        --header="Documentación que contiene '$search_term'"
+    
+    # Buscar en configuración
+    echo -e "\n=== Archivos de configuración ==="
+    rg -l "$search_term" --type-add 'config:*.{yaml,yml,json,toml,ini,conf}' -t config | \
+    fzf --preview "bat --color=always {}" \
+        --preview-window=right:60% \
+        --header="Configuración que contiene '$search_term'"
+}
+
+# Uso: universal_search "database"
+```
+
+::: {.callout-tip}
+## Tips para búsqueda eficiente
+- Combina `rg` con `fzf` para búsqueda interactiva con vista previa
+- Usa `jq` con `-r` para output raw (sin comillas) cuando necesites procesar más
+- Configura aliases para combinaciones que uses frecuentemente
+- `ripgrep` respeta `.gitignore` automáticamente, úsalo en proyectos de código
+:::
+
+::: {.callout-important}
+## Rendimiento
+- `ripgrep` es extremadamente rápido, pero en directorios muy grandes considera usar `--max-depth`
+- `jq` puede consumir mucha memoria con archivos JSON grandes, usa streaming con `--stream` si es necesario
+- `fzf` es rápido, pero la vista previa puede ser lenta con archivos grandes
+:::
+
+En el próximo capítulo exploraremos herramientas esenciales para desarrollo y control de versiones con Git.

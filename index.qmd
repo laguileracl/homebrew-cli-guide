@@ -1,0 +1,145 @@
+# Guía Práctica de Herramientas CLI con Homebrew {.unnumbered}
+
+¡Bienvenido a la guía más completa de herramientas de línea de comandos instaladas con Homebrew!
+
+## Acerca de este libro
+
+Este libro es una guía práctica que documenta todas las herramientas de línea de comandos (CLI) instaladas en tu sistema mediante Homebrew. Cada herramienta incluye:
+
+- ✅ **Descripción clara** de su propósito y funcionalidad
+- ✅ **Ejemplos prácticos** listos para usar
+- ✅ **Casos de uso reales** del día a día
+- ✅ **Combinaciones avanzadas** con otras herramientas
+- ✅ **Tips y trucos** para máxima productividad
+
+## Estructura del libro
+
+El libro está organizado en **9 secciones principales**:
+
+### 🧭 [Navegación y Exploración](navegacion.qmd)
+Herramientas para moverte y explorar tu sistema de archivos de manera eficiente.
+
+- **`eza`** - Listado de archivos moderno y colorido
+- **`tree`** - Visualización de estructura de directorios
+- **`ranger`** - Navegador de archivos interactivo
+- **`zoxide`** - Navegación inteligente con memoria
+
+### 📁 [Gestión de Archivos](archivos.qmd)
+Manipulación, organización y sincronización de archivos y directorios.
+
+- **`rename`** / **`renameutils`** - Renombrado masivo de archivos
+- **`rsync`** - Sincronización y copia avanzada
+- **`mmv`** - Movimiento múltiple de archivos
+
+### 🔍 [Búsqueda y Filtrado](busqueda.qmd)
+Herramientas para encontrar información rápidamente en archivos y datos.
+
+- **`ripgrep`** (rg) - Búsqueda ultrarrápida en texto
+- **`fzf`** - Filtro difuso interactivo
+- **`jq`** - Procesador y consultor JSON
+
+### 💻 [Desarrollo y Git](desarrollo.qmd)
+Herramientas esenciales para desarrollo de software y control de versiones.
+
+- **`git`** - Control de versiones distribuido
+- **`gh`** - CLI oficial de GitHub
+- **`node`** - Runtime de JavaScript
+
+### 🎵 [Multimedia](multimedia.qmd)
+Procesamiento de archivos de video, audio e imágenes desde la línea de comandos.
+
+- **`ffmpeg`** - Suite completa de procesamiento multimedia
+- **`yt-dlp`** - Descargador de videos de múltiples sitios
+- **`imagemagick`** - Manipulación avanzada de imágenes
+
+### 🌐 [Red y Descargas](red.qmd)
+Herramientas para transferencia de datos, APIs y descargas de internet.
+
+- **`curl`** - Cliente HTTP versátil
+- **`wget`** - Descargador web no interactivo
+- **`aria2`** - Descargador multihilo avanzado
+- **`httpie`** - Cliente HTTP amigable
+
+### 📊 [Monitoreo del Sistema](monitoreo.qmd)
+Supervisión del rendimiento y estado del sistema.
+
+- **`htop`** - Monitor de procesos interactivo
+- **`neofetch`** - Información del sistema con estilo
+
+### 📝 [Texto y Documentos](texto.qmd)
+Herramientas para visualización, edición y conversión de documentos.
+
+- **`bat`** - Visualizador de código con sintaxis
+- **`pandoc`** - Conversor universal de documentos
+- **`glow`** - Renderizador de Markdown
+
+### 🛠️ [Utilidades Diversas](utilidades.qmd)
+Herramientas que mejoran la experiencia general en la terminal.
+
+- **`tldr`** - Páginas de manual simplificadas
+- **`thefuck`** - Corrector automático de comandos
+- **`cowsay`** - Arte ASCII divertido
+- **`direnv`** - Variables de entorno por directorio
+- **`starship`** - Prompt personalizable
+
+## Recursos adicionales
+
+- **[Combinaciones Útiles](combinaciones.qmd)** - Workflows avanzados combinando múltiples herramientas
+- **[Configuración](configuracion.qmd)** - Tips de configuración y personalización
+
+## Cómo usar este libro
+
+### Para principiantes
+- Comienza con la sección de **Navegación y Exploración**
+- Experimenta con cada comando en un directorio de prueba
+- Lee los ejemplos paso a paso
+
+### Para usuarios intermedios
+- Ve directamente a las secciones que te interesen
+- Prueba las **combinaciones avanzadas**
+- Adapta los ejemplos a tus casos de uso
+
+### Para usuarios avanzados
+- Usa el libro como **referencia rápida**
+- Explora las secciones de **configuración** y **combinaciones**
+- Contribuye con tus propios workflows
+
+## Convenciones
+
+::: {.callout-note}
+## Nota
+Las notas contienen información adicional útil.
+:::
+
+::: {.callout-tip}
+## Tip
+Los tips incluyen trucos y atajos para ser más productivo.
+:::
+
+::: {.callout-warning}
+## Advertencia
+Las advertencias indican comandos que pueden ser destructivos o requerir precaución.
+:::
+
+::: {.callout-important}
+## Importante
+Información crítica que debes recordar.
+:::
+
+### Ejemplos de código
+
+```bash
+# Los comentarios explican qué hace cada comando
+comando --opcion archivo.txt
+```
+
+```bash
+# Ejemplo de salida esperada
+$ ls -la
+total 8
+drwxr-xr-x  3 usuario  staff   96 Aug  6 16:00 .
+drwxr-xr-x  4 usuario  staff  128 Aug  6 15:59 ..
+-rw-r--r--  1 usuario  staff  151 Aug  6 16:00 archivo.txt
+```
+
+¡Comencemos a explorar el poder de las herramientas CLI! 🚀

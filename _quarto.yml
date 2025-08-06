@@ -1,0 +1,70 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Guía Práctica de Herramientas CLI con Homebrew"
+  subtitle: "Manual completo de herramientas de línea de comandos"
+  author: "Generado automáticamente desde instalación Homebrew"
+  date: today
+  
+  chapters:
+    - index.qmd
+    - part: "Navegación y Exploración"
+      chapters:
+        - navegacion.qmd
+    - part: "Gestión de Archivos"
+      chapters:
+        - archivos.qmd
+    - part: "Búsqueda y Filtrado"
+      chapters:
+        - busqueda.qmd
+    - part: "Desarrollo y Git"
+      chapters:
+        - desarrollo.qmd
+    - part: "Multimedia"
+      chapters:
+        - multimedia.qmd
+    - part: "Red y Descargas"
+      chapters:
+        - red.qmd
+    - part: "Monitoreo del Sistema"
+      chapters:
+        - monitoreo.qmd
+    - part: "Texto y Documentos"
+      chapters:
+        - texto.qmd
+    - part: "Utilidades Diversas"
+      chapters:
+        - utilidades.qmd
+    - part: "Recursos Adicionales"
+      chapters:
+        - combinaciones.qmd
+        - configuracion.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    toc-expand: 2
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+    link-external-newwindow: true
+  pdf:
+    documentclass: scrbook
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    
+execute:
+  freeze: auto

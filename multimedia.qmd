@@ -1,0 +1,445 @@
+# Multimedia
+
+El procesamiento de archivos multimedia desde la línea de comandos es extremadamente potente. Esta sección cubre herramientas para manipular video, audio e imágenes con precisión profesional.
+
+## ffmpeg - Suite multimedia completa {#sec-ffmpeg}
+
+FFmpeg es la herramienta más potente para procesamiento multimedia, capaz de manejar prácticamente cualquier formato de video y audio.
+
+### Conversión básica
+
+```bash
+# Convertir formato de video
+ffmpeg -i input.mov output.mp4
+ffmpeg -i input.avi output.mkv
+
+# Conversión con codec específico
+ffmpeg -i input.mp4 -c:v libx264 -c:a aac output.mp4
+
+# Conversión rápida (solo cambiar contenedor)
+ffmpeg -i input.mkv -c copy output.mp4
+```
+
+### Manipulación de video
+
+#### Redimensionamiento y calidad
+
+```bash
+# Cambiar resolución
+ffmpeg -i input.mp4 -vf scale=1280:720 output.mp4
+ffmpeg -i input.mp4 -vf scale=1920:-1 output.mp4  # Mantener aspecto
+
+# Comprimir video
+ffmpeg -i input.mp4 -crf 23 output.mp4  # CRF 18-28 (menor = mejor calidad)
+
+# Cambiar bitrate
+ffmpeg -i input.mp4 -b:v 1M -b:a 128k output.mp4
+```
+
+#### Edición temporal
+
+```bash
+# Cortar video (desde segundo 30, duración 60s)
+ffmpeg -i input.mp4 -ss 30 -t 60 output.mp4
+
+# Cortar desde inicio hasta minuto 2
+ffmpeg -i input.mp4 -t 120 output.mp4
+
+# Cortar desde minuto 1 hasta el final
+ffmpeg -i input.mp4 -ss 60 output.mp4
+```
+
+#### Efectos y filtros
+
+```bash
+# Rotar video
+ffmpeg -i input.mp4 -vf "transpose=1" output.mp4  # 90° horario
+
+# Espejo horizontal
+ffmpeg -i input.mp4 -vf hflip output.mp4
+
+# Acelerar/desacelerar
+ffmpeg -i input.mp4 -vf "setpts=0.5*PTS" output.mp4  # 2x velocidad
+ffmpeg -i input.mp4 -vf "setpts=2*PTS" output.mp4   # 0.5x velocidad
+
+# Agregar watermark
+ffmpeg -i video.mp4 -i logo.png -filter_complex "overlay=10:10" output.mp4
+```
+
+### Audio processing
+
+```bash
+# Extraer audio de video
+ffmpeg -i video.mp4 -vn -acodec copy audio.aac
+ffmpeg -i video.mp4 -vn audio.mp3
+
+# Cambiar volumen
+ffmpeg -i input.mp3 -af "volume=0.5" output.mp3  # 50% volumen
+ffmpeg -i input.mp3 -af "volume=10dB" output.mp3  # +10dB
+
+# Normalizar audio
+ffmpeg -i input.mp3 -af loudnorm output.mp3
+
+# Combinar audio y video
+ffmpeg -i video.mp4 -i audio.mp3 -c:v copy -c:a aac output.mp4
+```
+
+### Casos avanzados
+
+#### Crear GIF desde video
+
+```bash
+# GIF básico
+ffmpeg -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" output.gif
+
+# GIF optimizado con paleta
+ffmpeg -i input.mp4 -vf "fps=15,scale=480:-1:flags=lanczos,palettegen" palette.png
+ffmpeg -i input.mp4 -i palette.png -filter_complex "fps=15,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif
+```
+
+#### Streaming y transmisión
+
+```bash
+# Stream a YouTube Live
+ffmpeg -re -i input.mp4 -c:v libx264 -preset fast -maxrate 3000k -bufsize 6000k \
+-pix_fmt yuv420p -g 50 -c:a aac -b:a 160k -ac 2 -ar 44100 \
+-f flv rtmp://a.rtmp.youtube.com/live2/STREAM_KEY
+
+# Crear HLS stream
+ffmpeg -i input.mp4 -profile:v baseline -level 3.0 -s 640x360 -start_number 0 \
+-hls_time 10 -hls_list_size 0 -f hls output.m3u8
+```
+
+---
+
+## yt-dlp - Descargador universal {#sec-yt-dlp}
+
+Sucesor mejorado de youtube-dl, capaz de descargar de cientos de sitios.
+
+### Descarga básica
+
+```bash
+# Descargar video en mejor calidad
+yt-dlp "https://youtube.com/watch?v=VIDEO_ID"
+
+# Solo audio en MP3
+yt-dlp -x --audio-format mp3 "URL"
+
+# Calidad específica
+yt-dlp -f "best[height<=720]" "URL"
+yt-dlp -f "worst" "URL"  # Menor calidad
+```
+
+### Opciones avanzadas
+
+#### Listas y canales
+
+```bash
+# Playlist completa
+yt-dlp "https://youtube.com/playlist?list=PLAYLIST_ID"
+
+# Solo videos nuevos de playlist
+yt-dlp --download-archive downloaded.txt "PLAYLIST_URL"
+
+# Canal completo
+yt-dlp "https://youtube.com/c/CHANNEL_NAME/videos"
+
+# Últimos N videos de canal
+yt-dlp --playlist-end 10 "CHANNEL_URL"
+```
+
+#### Filtros y selección
+
+```bash
+# Ver formatos disponibles
+yt-dlp -F "URL"
+
+# Seleccionar formato específico
+yt-dlp -f 137+140 "URL"  # Video 1080p + audio
+
+# Filtros complejos
+yt-dlp -f "best[ext=mp4][height<=1080]" "URL"
+yt-dlp -f "bestvideo[height<=720]+bestaudio/best[height<=720]" "URL"
+```
+
+#### Metadata y organización
+
+```bash
+# Con subtítulos
+yt-dlp --write-subs --sub-lang es,en "URL"
+yt-dlp --write-auto-subs --sub-lang es "URL"
+
+# Con thumbnail
+yt-dlp --write-thumbnail "URL"
+
+# Template de nombres de archivo
+yt-dlp -o "%(uploader)s/%(title)s.%(ext)s" "URL"
+yt-dlp -o "%(upload_date)s-%(title)s.%(ext)s" "URL"
+```
+
+### Scripts automatizados
+
+#### Descargador de podcast
+
+```bash
+#!/bin/bash
+# podcast-downloader.sh
+
+PODCAST_URL="$1"
+DOWNLOAD_DIR="$HOME/Podcasts"
+
+if [ -z "$PODCAST_URL" ]; then
+    echo "Uso: $0 <URL_del_podcast>"
+    exit 1
+fi
+
+mkdir -p "$DOWNLOAD_DIR"
+cd "$DOWNLOAD_DIR"
+
+# Descargar solo audio, organizados por canal
+yt-dlp \
+    --extract-flat \
+    --download-archive podcast-archive.txt \
+    -x --audio-format mp3 \
+    --audio-quality 192K \
+    -o "%(uploader)s/%(upload_date)s - %(title)s.%(ext)s" \
+    "$PODCAST_URL"
+
+echo "Podcasts descargados en $DOWNLOAD_DIR"
+```
+
+---
+
+## ImageMagick - Manipulación de imágenes {#sec-imagemagick}
+
+Suite completa para edición de imágenes desde línea de comandos.
+
+### Conversión y redimensionamiento
+
+```bash
+# Convertir formato
+convert image.png image.jpg
+convert image.tiff image.webp
+
+# Redimensionar imagen
+convert image.jpg -resize 50% small.jpg
+convert image.jpg -resize 800x600 resized.jpg
+convert image.jpg -resize 800x600! forced.jpg  # Forzar dimensiones exactas
+```
+
+### Edición básica
+
+#### Rotación y volteo
+
+```bash
+# Rotar imagen
+convert image.jpg -rotate 90 rotated.jpg
+convert image.jpg -rotate -45 rotated.jpg
+
+# Espejo
+convert image.jpg -flop horizontal.jpg  # Horizontal
+convert image.jpg -flip vertical.jpg    # Vertical
+```
+
+#### Efectos y filtros
+
+```bash
+# Blur
+convert image.jpg -blur 0x8 blurred.jpg
+
+# Sharpen
+convert image.jpg -sharpen 0x1 sharp.jpg
+
+# Sepia
+convert image.jpg -sepia-tone 80% sepia.jpg
+
+# Blanco y negro
+convert image.jpg -colorspace gray bw.jpg
+```
+
+### Procesamiento por lotes
+
+#### mogrify para múltiples archivos
+
+```bash
+# Redimensionar todas las imágenes JPG
+mogrify -resize 50% *.jpg
+
+# Convertir PNG a JPG
+mogrify -format jpg *.png
+
+# Agregar borde a todas las imágenes
+mogrify -border 10x10 -bordercolor black *.jpg
+```
+
+#### Scripts de procesamiento masivo
+
+```bash
+#!/bin/bash
+# optimize-images.sh - Optimizar imágenes para web
+
+input_dir="$1"
+output_dir="$2"
+
+if [ ! -d "$input_dir" ]; then
+    echo "Directorio de entrada no existe: $input_dir"
+    exit 1
+fi
+
+mkdir -p "$output_dir"
+
+# Procesar cada imagen
+find "$input_dir" -type f \( -iname "*.jpg" -o -iname "*.png" \) | while read -r img; do
+    filename=$(basename "$img")
+    name="${filename%.*}"
+    
+    echo "Procesando: $filename"
+    
+    # Crear versiones optimizadas
+    convert "$img" -resize 1920x1920\> -quality 85 "$output_dir/${name}_large.jpg"
+    convert "$img" -resize 800x800\> -quality 80 "$output_dir/${name}_medium.jpg"
+    convert "$img" -resize 400x400\> -quality 75 "$output_dir/${name}_small.jpg"
+    convert "$img" -resize 150x150^ -gravity center -extent 150x150 -quality 70 "$output_dir/${name}_thumb.jpg"
+done
+
+echo "Optimización completada. Archivos en: $output_dir"
+```
+
+### Casos avanzados
+
+#### Crear montajes y collages
+
+```bash
+# Montage simple
+montage *.jpg -tile 3x3 -geometry +2+2 collage.jpg
+
+# Montage con labels
+montage *.jpg -tile 2x2 -geometry 300x300+10+10 -pointsize 20 -label '%t' labeled_montage.jpg
+```
+
+#### Procesamiento de imágenes con texto
+
+```bash
+# Agregar texto
+convert image.jpg -pointsize 30 -fill white -gravity south \
+-annotate +0+10 "Mi texto" output.jpg
+
+# Crear imagen con solo texto
+convert -size 800x600 xc:white -pointsize 72 -fill black \
+-gravity center -annotate +0+0 "Hello World" text_image.jpg
+```
+
+---
+
+## Workflows multimedia complejos
+
+### Pipeline completo de video
+
+```bash
+#!/bin/bash
+# video-pipeline.sh - Procesamiento completo de video
+
+input_video="$1"
+output_dir="./processed"
+
+if [ ! -f "$input_video" ]; then
+    echo "Archivo no encontrado: $input_video"
+    exit 1
+fi
+
+mkdir -p "$output_dir"
+filename=$(basename "$input_video" .mp4)
+
+echo "🎬 Procesando: $input_video"
+
+# 1. Extraer frames para análisis
+ffmpeg -i "$input_video" -vf fps=1 "$output_dir/frames/frame_%04d.png"
+
+# 2. Crear thumbnail
+ffmpeg -i "$input_video" -ss 00:00:05 -vframes 1 -vf scale=320:180 "$output_dir/${filename}_thumb.jpg"
+
+# 3. Versiones en diferentes calidades
+ffmpeg -i "$input_video" -c:v libx264 -crf 23 -vf scale=1920:1080 "$output_dir/${filename}_1080p.mp4"
+ffmpeg -i "$input_video" -c:v libx264 -crf 28 -vf scale=1280:720 "$output_dir/${filename}_720p.mp4"
+ffmpeg -i "$input_video" -c:v libx264 -crf 32 -vf scale=854:480 "$output_dir/${filename}_480p.mp4"
+
+# 4. Extraer audio
+ffmpeg -i "$input_video" -vn -acodec libmp3lame -ab 192k "$output_dir/${filename}_audio.mp3"
+
+# 5. Crear GIF preview
+ffmpeg -i "$input_video" -ss 00:00:10 -t 5 -vf "fps=10,scale=480:-1:flags=lanczos" "$output_dir/${filename}_preview.gif"
+
+echo "✅ Procesamiento completado en: $output_dir"
+```
+
+### Optimización automática de medios
+
+```bash
+#!/bin/bash
+# media-optimizer.sh - Optimizar medios para web
+
+process_images() {
+    local dir="$1"
+    echo "📸 Optimizando imágenes en: $dir"
+    
+    find "$dir" -type f \( -iname "*.jpg" -o -iname "*.png" \) | while read -r img; do
+        # Optimizar sin perder calidad visible
+        if [[ "$img" == *.jpg ]]; then
+            convert "$img" -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "$img.optimized"
+            mv "$img.optimized" "$img"
+        elif [[ "$img" == *.png ]]; then
+            convert "$img" -strip "$img.optimized"
+            mv "$img.optimized" "$img"
+        fi
+    done
+}
+
+process_videos() {
+    local dir="$1"
+    echo "🎬 Optimizando videos en: $dir"
+    
+    find "$dir" -type f \( -iname "*.mp4" -o -iname "*.mov" \) | while read -r video; do
+        filename="${video%.*}"
+        ext="${video##*.}"
+        
+        # Crear versión optimizada
+        ffmpeg -i "$video" -c:v libx264 -crf 23 -preset slow -c:a aac -b:a 128k "${filename}_optimized.mp4"
+        
+        # Comparar tamaños
+        original_size=$(stat -f%z "$video")
+        optimized_size=$(stat -f%z "${filename}_optimized.mp4")
+        
+        if [ "$optimized_size" -lt "$original_size" ]; then
+            mv "${filename}_optimized.mp4" "$video"
+            echo "✅ $video optimizado ($(echo "$original_size - $optimized_size" | bc) bytes ahorrados)"
+        else
+            rm "${filename}_optimized.mp4"
+            echo "ℹ️ $video ya está optimizado"
+        fi
+    done
+}
+
+# Procesar directorio especificado
+target_dir="${1:-.}"
+process_images "$target_dir"
+process_videos "$target_dir"
+
+echo "🎉 Optimización completada!"
+```
+
+::: {.callout-tip}
+## Tips para multimedia
+- Usa `ffprobe` para analizar archivos multimedia antes de procesar
+- FFmpeg puede procesar múltiples archivos en paralelo con GNU parallel
+- ImageMagick's `identify` te da información detallada de imágenes
+- Mantén siempre respaldos antes de procesamiento destructivo
+:::
+
+::: {.callout-warning}
+## Consideraciones de rendimiento
+- FFmpeg es intensivo en CPU, especialmente con video HD/4K
+- ImageMagick puede usar mucha RAM con imágenes grandes
+- yt-dlp respeta rate limits, pero algunos sitios pueden bloquear por uso excesivo
+:::
+
+En el próximo capítulo exploraremos herramientas de red y descargas para transferencia de datos e interacción con APIs.

@@ -1,0 +1,229 @@
+# Monitoreo del Sistema
+
+Las herramientas de monitoreo te permiten supervisar el rendimiento, recursos y estado general del sistema en tiempo real.
+
+## htop - Monitor interactivo de procesos {#sec-htop}
+
+htop es una versión mejorada de `top` con interfaz colorida e interactiva.
+
+### Navegación básica
+
+```bash
+# Ejecutar htop
+htop
+
+# Comandos dentro de htop:
+# F1: Ayuda
+# F2: Configuración
+# F3: Buscar proceso
+# F4: Filtrar procesos
+# F5: Vista de árbol
+# F6: Ordenar por columna
+# F9: Matar proceso
+# F10: Salir
+```
+
+### Funciones útiles
+
+#### Gestión de procesos
+
+- **Space**: Marcar proceso
+- **U**: Mostrar solo procesos de un usuario
+- **t**: Vista de árbol de procesos
+- **H**: Mostrar/ocultar hilos de usuario
+- **K**: Mostrar/ocultar hilos del kernel
+
+#### Filtros y búsqueda
+
+```bash
+# Dentro de htop:
+# F4 + "python" - Filtrar solo procesos de Python
+# F3 + "nginx" - Buscar proceso nginx
+# \ - Filtro incremental
+```
+
+### Configuración personalizada
+
+Archivo `~/.config/htop/htoprc`:
+
+```ini
+# Campos a mostrar
+fields=0 48 17 18 38 39 40 2 46 47 49 1
+# Opciones
+hide_kernel_threads=1
+hide_userland_threads=1
+show_thread_names=0
+show_program_path=1
+highlight_base_name=1
+tree_view=1
+```
+
+---
+
+## neofetch - Información del sistema {#sec-neofetch}
+
+neofetch muestra información del sistema de manera visualmente atractiva.
+
+### Uso básico
+
+```bash
+# Información completa del sistema
+neofetch
+
+# Solo información específica
+neofetch --disable packages shell resolution de wm theme icons cursor
+
+# Con imagen personalizada
+neofetch --image /path/to/image.png
+
+# ASCII distro específico
+neofetch --ascii_distro arch
+```
+
+### Configuración personalizada
+
+Archivo `~/.config/neofetch/config.conf`:
+
+```bash
+# Información a mostrar
+print_info() {
+    info title
+    info underline
+    info "OS" distro
+    info "Host" model
+    info "Kernel" kernel
+    info "Uptime" uptime
+    info "Packages" packages
+    info "Shell" shell
+    info "Resolution" resolution
+    info "Terminal" term
+    info "CPU" cpu
+    info "GPU" gpu
+    info "Memory" memory
+}
+
+# Configuraciones
+image_backend="ascii"
+ascii_distro="auto"
+ascii_colors=(distro)
+image_size="auto"
+```
+
+### Scripts con neofetch
+
+#### System info script
+
+```bash
+#!/bin/bash
+# system-report.sh
+
+echo "=== SYSTEM REPORT $(date) ==="
+neofetch --stdout
+
+echo -e "\n=== DISK USAGE ==="
+df -h | grep -E '^(/dev/)'
+
+echo -e "\n=== TOP PROCESSES ==="
+ps aux --sort=-%cpu | head -6
+
+echo -e "\n=== NETWORK INTERFACES ==="
+ip addr show | grep -E '^[0-9]+:|inet '
+
+echo -e "\n=== RECENT LOGINS ==="
+last -n 5
+
+echo -e "\n=== SYSTEM LOAD ==="
+uptime
+```
+
+---
+
+## Herramientas complementarias
+
+### iotop - Monitor de I/O
+
+```bash
+# Monitorear I/O por proceso
+sudo iotop
+
+# Solo procesos activos
+sudo iotop -o
+
+# Acumulativo
+sudo iotop -a
+```
+
+### nethogs - Monitor de red por proceso
+
+```bash
+# Monitor de ancho de banda
+sudo nethogs
+
+# Interfaz específica
+sudo nethogs eth0
+```
+
+### Monitoring script completo
+
+```bash
+#!/bin/bash
+# system-monitor.sh
+
+LOG_FILE="/var/log/system-monitor.log"
+ALERT_THRESHOLD_CPU=80
+ALERT_THRESHOLD_MEM=85
+ALERT_THRESHOLD_DISK=90
+
+log_message() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+check_cpu() {
+    cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | awk -F'%' '{print $1}')
+    cpu_usage=${cpu_usage%.*}  # Remove decimal
+    
+    if [ "$cpu_usage" -gt "$ALERT_THRESHOLD_CPU" ]; then
+        log_message "ALERT: CPU usage is ${cpu_usage}%"
+        return 1
+    fi
+    return 0
+}
+
+check_memory() {
+    mem_usage=$(free | grep Mem | awk '{printf("%.0f", $3/$2 * 100.0)}')
+    
+    if [ "$mem_usage" -gt "$ALERT_THRESHOLD_MEM" ]; then
+        log_message "ALERT: Memory usage is ${mem_usage}%"
+        return 1
+    fi
+    return 0
+}
+
+check_disk() {
+    disk_usage=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+    
+    if [ "$disk_usage" -gt "$ALERT_THRESHOLD_DISK" ]; then
+        log_message "ALERT: Disk usage is ${disk_usage}%"
+        return 1
+    fi
+    return 0
+}
+
+# Ejecutar verificaciones
+log_message "Starting system check..."
+
+check_cpu && log_message "CPU: OK"
+check_memory && log_message "Memory: OK"
+check_disk && log_message "Disk: OK"
+
+log_message "System check completed"
+```
+
+::: {.callout-tip}
+## Tips de monitoreo
+- Usa htop para debugging de rendimiento en tiempo real
+- neofetch es útil para screenshots y reportes de sistema
+- Combina estas herramientas con scripts para monitoreo automatizado
+:::
+
+En el próximo capítulo cubriremos herramientas de texto y documentos.

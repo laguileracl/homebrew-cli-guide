@@ -1,0 +1,625 @@
+# Combinaciones Útiles
+
+Este capítulo explora workflows avanzados que combinan múltiples herramientas CLI para crear soluciones potentes y automatizadas.
+
+## Workflows de desarrollo
+
+### Pipeline completo de código
+
+```bash
+#!/bin/bash
+# dev-pipeline.sh - Pipeline completo de desarrollo
+
+analyze_project() {
+    echo "🔍 Analizando proyecto..."
+    
+    # Estructura del proyecto
+    echo "=== ESTRUCTURA ==="
+    tree -L 3 -I 'node_modules|.git|dist|build'
+    
+    # Estadísticas de código
+    echo -e "\n=== ESTADÍSTICAS ==="
+    echo "Archivos por tipo:"
+    find . -type f | grep -E '\.[a-z]+$' | sed 's/.*\.//' | sort | uniq -c | sort -nr
+    
+    # TODOs y FIXMEs
+    echo -e "\n=== TAREAS PENDIENTES ==="
+    rg -C 1 "(TODO|FIXME|HACK)" --type-add 'code:*.{js,ts,py,go,rs,java}' -t code
+    
+    # Dependencias no utilizadas (Node.js)
+    if [ -f "package.json" ]; then
+        echo -e "\n=== DEPENDENCIAS ==="
+        npm list --depth=0 2>/dev/null | tail -n +2
+    fi
+}
+
+lint_and_format() {
+    echo "🧹 Limpiando código..."
+    
+    # JavaScript/TypeScript
+    if [ -f "package.json" ]; then
+        npm run lint:fix 2>/dev/null || echo "No lint script found"
+        npm run format 2>/dev/null || echo "No format script found"
+    fi
+    
+    # Python
+    if find . -name "*.py" | head -1 >/dev/null; then
+        black . 2>/dev/null || echo "black not installed"
+        isort . 2>/dev/null || echo "isort not installed"
+    fi
+    
+    # Go
+    if find . -name "*.go" | head -1 >/dev/null; then
+        go fmt ./...
+        goimports -w . 2>/dev/null || echo "goimports not installed"
+    fi
+}
+
+run_tests() {
+    echo "🧪 Ejecutando tests..."
+    
+    if [ -f "package.json" ]; then
+        npm test
+    elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
+        python -m pytest
+    elif [ -f "go.mod" ]; then
+        go test ./...
+    elif [ -f "Cargo.toml" ]; then
+        cargo test
+    fi
+}
+
+security_scan() {
+    echo "🔒 Escaneando seguridad..."
+    
+    # Node.js
+    if [ -f "package.json" ]; then
+        npm audit
+    fi
+    
+    # Python
+    if [ -f "requirements.txt" ]; then
+        safety check 2>/dev/null || echo "safety not installed"
+    fi
+    
+    # Secretos hardcodeados
+    echo "Buscando secretos potenciales:"
+    rg -i "(password|secret|key|token)\s*[:=]\s*['\"][^'\"]{8,}" --type-add 'code:*.{js,ts,py,go,rs}' -t code
+}
+
+# Ejecutar pipeline completo
+main() {
+    echo "🚀 Iniciando pipeline de desarrollo..."
+    
+    analyze_project
+    lint_and_format
+    run_tests
+    security_scan
+    
+    echo "✅ Pipeline completado"
+}
+
+main "$@"
+```
+
+### Workflow de Git avanzado
+
+```bash
+#!/bin/bash
+# git-workflow.sh - Workflow avanzado de Git
+
+smart_commit() {
+    local message="$1"
+    
+    if [ -z "$message" ]; then
+        echo "Uso: smart_commit <mensaje>"
+        return 1
+    fi
+    
+    # Verificar que hay cambios
+    if git diff --quiet && git diff --cached --quiet; then
+        echo "No hay cambios para commitear"
+        return 1
+    fi
+    
+    # Mostrar qué se va a commitear
+    echo "Cambios a commitear:"
+    git status --short
+    
+    # Verificar tests antes de commit
+    if [ -f "package.json" ]; then
+        echo "Ejecutando tests..."
+        npm test || {
+            echo "Tests fallan. ¿Continuar? (y/n)"
+            read -r response
+            [ "$response" != "y" ] && return 1
+        }
+    fi
+    
+    # Agregar archivos y commitear
+    git add .
+    git commit -m "$message"
+    
+    # Sugerir push si hay commits pendientes
+    if [ "$(git rev-list @{u}..HEAD 2>/dev/null | wc -l)" -gt 0 ]; then
+        echo "¿Push a origin? (y/n)"
+        read -r response
+        [ "$response" = "y" ] && git push
+    fi
+}
+
+interactive_rebase() {
+    local commits="${1:-5}"
+    
+    echo "Commits recientes:"
+    git log --oneline -n "$commits"
+    
+    echo -e "\n¿Hacer rebase interactivo de últimos $commits commits? (y/n)"
+    read -r response
+    
+    if [ "$response" = "y" ]; then
+        git rebase -i "HEAD~$commits"
+    fi
+}
+
+cleanup_branches() {
+    echo "Branches locales:"
+    git branch
+    
+    echo -e "\nBranches remotos ya mergeados:"
+    git branch -r --merged | grep -v '\->' | grep -v main | grep -v master
+    
+    echo -e "\n¿Limpiar branches mergeados? (y/n)"
+    read -r response
+    
+    if [ "$response" = "y" ]; then
+        # Limpiar branches locales mergeados
+        git branch --merged | grep -v '\*\|main\|master' | xargs -n 1 git branch -d
+        
+        # Limpiar referencias remotas
+        git remote prune origin
+    fi
+}
+
+release_workflow() {
+    local version="$1"
+    
+    if [ -z "$version" ]; then
+        echo "Uso: release_workflow <version>"
+        return 1
+    fi
+    
+    # Verificar que estamos en main/master
+    current_branch=$(git branch --show-current)
+    if [ "$current_branch" != "main" ] && [ "$current_branch" != "master" ]; then
+        echo "Cambia a main/master antes de crear release"
+        return 1
+    fi
+    
+    # Actualizar desde origin
+    git pull origin "$current_branch"
+    
+    # Crear tag
+    git tag -a "v$version" -m "Release v$version"
+    
+    # Push tag
+    git push origin "v$version"
+    
+    # Crear release en GitHub (si gh está disponible)
+    if command -v gh >/dev/null; then
+        gh release create "v$version" --generate-notes
+    fi
+    
+    echo "Release v$version creado exitosamente"
+}
+
+# Función principal con menú
+case "${1:-menu}" in
+    commit)
+        shift
+        smart_commit "$*"
+        ;;
+    rebase)
+        interactive_rebase "$2"
+        ;;
+    cleanup)
+        cleanup_branches
+        ;;
+    release)
+        release_workflow "$2"
+        ;;
+    *)
+        echo "Git Workflow Tool"
+        echo "Uso: $0 <comando> [argumentos]"
+        echo ""
+        echo "Comandos:"
+        echo "  commit <mensaje>  - Commit inteligente con verificaciones"
+        echo "  rebase [n]        - Rebase interactivo de últimos n commits"
+        echo "  cleanup           - Limpiar branches mergeados"
+        echo "  release <version> - Crear release con tag"
+        ;;
+esac
+```
+
+## Análisis de datos con CLI
+
+### Pipeline de análisis de logs
+
+```bash
+#!/bin/bash
+# log-analyzer.sh - Análisis completo de logs
+
+LOG_FILE="$1"
+OUTPUT_DIR="./analysis-$(date +%Y%m%d)"
+
+if [ ! -f "$LOG_FILE" ]; then
+    echo "Uso: $0 <archivo_log>"
+    exit 1
+fi
+
+mkdir -p "$OUTPUT_DIR"
+
+echo "📊 Analizando: $LOG_FILE"
+echo "📁 Resultados en: $OUTPUT_DIR"
+
+# 1. Estadísticas generales
+analyze_general() {
+    echo "=== ESTADÍSTICAS GENERALES ===" > "$OUTPUT_DIR/general.txt"
+    echo "Total de líneas: $(wc -l < "$LOG_FILE")" >> "$OUTPUT_DIR/general.txt"
+    echo "Tamaño del archivo: $(du -h "$LOG_FILE" | cut -f1)" >> "$OUTPUT_DIR/general.txt"
+    echo "Primer entrada: $(head -1 "$LOG_FILE" | cut -d' ' -f1-2)" >> "$OUTPUT_DIR/general.txt"
+    echo "Última entrada: $(tail -1 "$LOG_FILE" | cut -d' ' -f1-2)" >> "$OUTPUT_DIR/general.txt"
+}
+
+# 2. Análisis de errores
+analyze_errors() {
+    echo "🚨 Analizando errores..."
+    
+    rg -i "(error|exception|fatal|critical)" "$LOG_FILE" > "$OUTPUT_DIR/errors.txt"
+    
+    echo "=== TOP ERRORES ===" > "$OUTPUT_DIR/error_summary.txt"
+    rg -i -o "(error|exception|fatal|critical).*" "$LOG_FILE" | \
+    sort | uniq -c | sort -nr | head -20 >> "$OUTPUT_DIR/error_summary.txt"
+}
+
+# 3. Análisis de IPs (si es log web)
+analyze_ips() {
+    echo "🌐 Analizando IPs..."
+    
+    # Top IPs
+    rg -o '^[0-9.]+' "$LOG_FILE" | sort | uniq -c | sort -nr | head -20 > "$OUTPUT_DIR/top_ips.txt"
+    
+    # IPs sospechosas (muchas peticiones)
+    rg -o '^[0-9.]+' "$LOG_FILE" | sort | uniq -c | sort -nr | \
+    awk '$1 > 1000 {print $2 " (" $1 " requests)"}' > "$OUTPUT_DIR/suspicious_ips.txt"
+}
+
+# 4. Análisis temporal
+analyze_timeline() {
+    echo "⏰ Analizando timeline..."
+    
+    # Actividad por hora
+    rg -o '^\S+ \S+' "$LOG_FILE" | cut -d: -f1-2 | sort | uniq -c | sort -nr > "$OUTPUT_DIR/hourly_activity.txt"
+    
+    # Actividad por día
+    rg -o '^\S+' "$LOG_FILE" | sort | uniq -c | sort -nr > "$OUTPUT_DIR/daily_activity.txt"
+}
+
+# 5. Generar dashboard HTML
+generate_dashboard() {
+    echo "📈 Generando dashboard..."
+    
+    cat > "$OUTPUT_DIR/dashboard.html" << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Analysis Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .error { color: red; }
+        .warning { color: orange; }
+        .info { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Log Analysis Dashboard</h1>
+    
+    <div class="section">
+        <h2>General Statistics</h2>
+        <pre id="general"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Top Errors</h2>
+        <pre id="errors"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Top IPs</h2>
+        <pre id="ips"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Timeline Analysis</h2>
+        <pre id="timeline"></pre>
+    </div>
+    
+    <script>
+        // Cargar datos desde archivos de texto
+        fetch('./general.txt').then(r => r.text()).then(data => {
+            document.getElementById('general').textContent = data;
+        });
+        // Similar para otros archivos...
+    </script>
+</body>
+</html>
+EOF
+}
+
+# Ejecutar análisis completo
+main() {
+    analyze_general
+    analyze_errors
+    analyze_ips
+    analyze_timeline
+    generate_dashboard
+    
+    echo "✅ Análisis completado"
+    echo "📊 Dashboard: $OUTPUT_DIR/dashboard.html"
+    echo "📁 Archivos: $OUTPUT_DIR/"
+}
+
+main
+```
+
+## Automatización de sistemas
+
+### Monitor y alertas inteligentes
+
+```bash
+#!/bin/bash
+# smart-monitor.sh - Sistema de monitoreo inteligente
+
+CONFIG_FILE="$HOME/.config/smart-monitor/config.json"
+ALERT_LOG="$HOME/.local/log/alerts.log"
+
+# Crear configuración por defecto
+init_config() {
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    mkdir -p "$(dirname "$ALERT_LOG")"
+    
+    cat > "$CONFIG_FILE" << 'EOF'
+{
+    "thresholds": {
+        "cpu": 80,
+        "memory": 85,
+        "disk": 90,
+        "load": 5.0
+    },
+    "checks": {
+        "services": ["nginx", "postgresql", "redis"],
+        "ports": [80, 443, 5432, 6379],
+        "urls": ["https://example.com", "https://api.example.com/health"]
+    },
+    "alerts": {
+        "webhook": "https://hooks.slack.com/your/webhook",
+        "email": "admin@example.com"
+    }
+}
+EOF
+    
+    echo "Configuración creada en: $CONFIG_FILE"
+}
+
+# Función de logging
+log_alert() {
+    local level="$1"
+    local message="$2"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $message" | tee -a "$ALERT_LOG"
+}
+
+# Verificaciones del sistema
+check_system_resources() {
+    local cpu_threshold=$(jq -r '.thresholds.cpu' "$CONFIG_FILE")
+    local mem_threshold=$(jq -r '.thresholds.memory' "$CONFIG_FILE")
+    local disk_threshold=$(jq -r '.thresholds.disk' "$CONFIG_FILE")
+    
+    # CPU
+    cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | cut -d'%' -f1)
+    if (( $(echo "$cpu_usage > $cpu_threshold" | bc -l) )); then
+        log_alert "CRITICAL" "CPU usage is ${cpu_usage}%"
+        send_alert "🚨 High CPU Usage" "CPU usage: ${cpu_usage}%"
+    fi
+    
+    # Memory
+    mem_usage=$(free | grep Mem | awk '{printf("%.1f", $3/$2 * 100.0)}')
+    if (( $(echo "$mem_usage > $mem_threshold" | bc -l) )); then
+        log_alert "CRITICAL" "Memory usage is ${mem_usage}%"
+        send_alert "🚨 High Memory Usage" "Memory usage: ${mem_usage}%"
+    fi
+    
+    # Disk
+    disk_usage=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+    if [ "$disk_usage" -gt "$disk_threshold" ]; then
+        log_alert "CRITICAL" "Disk usage is ${disk_usage}%"
+        send_alert "🚨 High Disk Usage" "Disk usage: ${disk_usage}%"
+    fi
+}
+
+check_services() {
+    jq -r '.checks.services[]' "$CONFIG_FILE" | while read -r service; do
+        if ! systemctl is-active "$service" >/dev/null 2>&1; then
+            log_alert "ERROR" "Service $service is not running"
+            send_alert "❌ Service Down" "$service is not running"
+        fi
+    done
+}
+
+check_urls() {
+    jq -r '.checks.urls[]' "$CONFIG_FILE" | while read -r url; do
+        response_code=$(curl -o /dev/null -s -w "%{http_code}" "$url")
+        response_time=$(curl -o /dev/null -s -w "%{time_total}" "$url")
+        
+        if [ "$response_code" != "200" ]; then
+            log_alert "ERROR" "$url returned $response_code"
+            send_alert "🌐 Website Issue" "$url returned $response_code"
+        elif (( $(echo "$response_time > 5" | bc -l) )); then
+            log_alert "WARNING" "$url is slow (${response_time}s)"
+        fi
+    done
+}
+
+send_alert() {
+    local title="$1"
+    local message="$2"
+    local webhook=$(jq -r '.alerts.webhook' "$CONFIG_FILE")
+    
+    if [ "$webhook" != "null" ]; then
+        curl -X POST -H 'Content-type: application/json' \
+             --data "{\"text\":\"$title: $message\"}" \
+             "$webhook"
+    fi
+}
+
+# Función principal
+monitor() {
+    log_alert "INFO" "Starting system monitoring"
+    
+    check_system_resources
+    check_services
+    check_urls
+    
+    log_alert "INFO" "Monitoring cycle completed"
+}
+
+# Menú principal
+case "${1:-monitor}" in
+    init)
+        init_config
+        ;;
+    monitor)
+        [ ! -f "$CONFIG_FILE" ] && init_config
+        monitor
+        ;;
+    logs)
+        tail -f "$ALERT_LOG"
+        ;;
+    *)
+        echo "Smart Monitor"
+        echo "Uso: $0 <comando>"
+        echo ""
+        echo "Comandos:"
+        echo "  init     - Crear configuración inicial"
+        echo "  monitor  - Ejecutar verificaciones"
+        echo "  logs     - Ver logs de alertas"
+        ;;
+esac
+```
+
+## Workflows creativos
+
+### Generador de reportes automático
+
+```bash
+#!/bin/bash
+# report-generator.sh - Generador automático de reportes
+
+PROJECT_DIR="${1:-.}"
+REPORT_DIR="$PROJECT_DIR/reports/$(date +%Y%m%d)"
+
+generate_project_report() {
+    mkdir -p "$REPORT_DIR"
+    
+    echo "📋 Generando reporte del proyecto..."
+    
+    # Reporte principal en Markdown
+    cat > "$REPORT_DIR/project_report.md" << EOF
+# Project Report - $(date '+%Y-%m-%d')
+
+## Overview
+
+**Project:** $(basename "$PROJECT_DIR")  
+**Generated:** $(date)  
+**Directory:** $PROJECT_DIR
+
+## Code Statistics
+
+\`\`\`
+$(find "$PROJECT_DIR" -type f -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.go" | xargs wc -l | tail -1)
+\`\`\`
+
+### Files by Type
+\`\`\`
+$(find "$PROJECT_DIR" -type f | grep -E '\.[a-z]+$' | sed 's/.*\.//' | sort | uniq -c | sort -nr | head -10)
+\`\`\`
+
+## Git Activity
+
+### Recent Commits
+\`\`\`
+$(cd "$PROJECT_DIR" && git log --oneline -10)
+\`\`\`
+
+### Contributors
+\`\`\`
+$(cd "$PROJECT_DIR" && git shortlog -sn | head -10)
+\`\`\`
+
+## Issues and TODOs
+
+$(rg -C 1 "(TODO|FIXME|HACK)" "$PROJECT_DIR" 2>/dev/null || echo "No issues found")
+
+## Dependencies
+
+EOF
+
+    # Agregar info específica por tecnología
+    if [ -f "$PROJECT_DIR/package.json" ]; then
+        echo "### Node.js Dependencies" >> "$REPORT_DIR/project_report.md"
+        echo '```json' >> "$REPORT_DIR/project_report.md"
+        jq '.dependencies // {}' "$PROJECT_DIR/package.json" >> "$REPORT_DIR/project_report.md"
+        echo '```' >> "$REPORT_DIR/project_report.md"
+    fi
+    
+    if [ -f "$PROJECT_DIR/requirements.txt" ]; then
+        echo "### Python Dependencies" >> "$REPORT_DIR/project_report.md"
+        echo '```' >> "$REPORT_DIR/project_report.md"
+        cat "$PROJECT_DIR/requirements.txt" >> "$REPORT_DIR/project_report.md"
+        echo '```' >> "$REPORT_DIR/project_report.md"
+    fi
+    
+    # Convertir a HTML con pandoc
+    if command -v pandoc >/dev/null; then
+        pandoc --toc -c github.css "$REPORT_DIR/project_report.md" -o "$REPORT_DIR/project_report.html"
+    fi
+    
+    # Generar visualización con glow
+    if command -v glow >/dev/null; then
+        glow -o "$REPORT_DIR/project_report.pdf" "$REPORT_DIR/project_report.md" 2>/dev/null || true
+    fi
+    
+    echo "✅ Reporte generado en: $REPORT_DIR"
+}
+
+generate_project_report
+```
+
+::: {.callout-tip}
+## Tips para workflows avanzados
+- Combina herramientas complementarias para crear pipelines potentes
+- Usa JSON para configuraciones complejas que puedas procesar con `jq`
+- Implementa logging y error handling en scripts de producción
+- Crea interfaces de línea de comandos consistentes para tus scripts
+:::
+
+::: {.callout-important}
+## Consideraciones para automatización
+- Siempre incluye validación de entrada en scripts automatizados
+- Implementa timeouts y rate limiting para operaciones de red
+- Mantén logs detallados para debugging y auditoría
+- Considera la seguridad al manejar credenciales y datos sensibles
+:::
+
+En el último capítulo exploraremos configuraciones avanzadas y personalización del entorno de trabajo.

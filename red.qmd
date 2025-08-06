@@ -1,0 +1,436 @@
+# Red y Descargas
+
+Las herramientas de red son esenciales para interactuar con APIs, descargar archivos y transferir datos. Esta sección cubre las herramientas más potentes para comunicación HTTP y transferencia de archivos.
+
+## curl - Cliente HTTP versátil {#sec-curl}
+
+curl es la herramienta universal para transferir datos con URLs, soportando múltiples protocolos.
+
+### GET básico
+
+```bash
+# Petición simple
+curl https://api.github.com/users/octocat
+
+# Guardar respuesta en archivo
+curl -o response.json https://api.github.com/users/octocat
+curl -O https://example.com/file.zip  # Usar nombre del archivo
+
+# Seguir redirects
+curl -L https://git.io/shortened-url
+
+# Mostrar headers de respuesta
+curl -I https://google.com
+curl -i https://api.github.com/users/octocat  # Headers + body
+```
+
+### POST y datos
+
+```bash
+# POST con datos JSON
+curl -X POST -H "Content-Type: application/json" \
+     -d '{"name":"Juan","email":"juan@example.com"}' \
+     https://api.example.com/users
+
+# POST con archivo
+curl -X POST -H "Content-Type: application/json" \
+     -d @data.json https://api.example.com/users
+
+# Form data
+curl -X POST -d "name=Juan&email=juan@example.com" \
+     https://api.example.com/users
+
+# Multipart form (subir archivo)
+curl -X POST -F "file=@documento.pdf" -F "description=Mi archivo" \
+     https://upload.example.com
+```
+
+### Autenticación
+
+```bash
+# Basic Auth
+curl -u username:password https://api.example.com/protected
+
+# Bearer Token
+curl -H "Authorization: Bearer your_token_here" \
+     https://api.example.com/protected
+
+# API Key en header
+curl -H "X-API-Key: your_api_key" https://api.example.com/data
+
+# OAuth2
+curl -H "Authorization: Bearer $(cat token.txt)" \
+     https://api.example.com/user
+```
+
+### Debugging y análisis
+
+```bash
+# Verbose output
+curl -v https://api.github.com/users/octocat
+
+# Solo headers de request
+curl -D headers.txt https://api.example.com
+
+# Tiempo de respuesta
+curl -w "@curl-format.txt" -o /dev/null -s https://example.com
+
+# curl-format.txt:
+#      time_namelookup:  %{time_namelookup}s\n
+#         time_connect:  %{time_connect}s\n
+#      time_appconnect:  %{time_appconnect}s\n
+#     time_pretransfer:  %{time_pretransfer}s\n
+#        time_redirect:  %{time_redirect}s\n
+#   time_starttransfer:  %{time_starttransfer}s\n
+#                     ----------\n
+#           time_total:  %{time_total}s\n
+```
+
+### Casos avanzados
+
+#### Monitoreo de APIs
+
+```bash
+#!/bin/bash
+# api-monitor.sh
+
+API_URL="https://api.example.com/health"
+THRESHOLD=2  # segundos
+
+while true; do
+    response_time=$(curl -w "%{time_total}" -o /dev/null -s "$API_URL")
+    status_code=$(curl -w "%{http_code}" -o /dev/null -s "$API_URL")
+    
+    if (( $(echo "$response_time > $THRESHOLD" | bc -l) )); then
+        echo "$(date): SLOW - $response_time s (Status: $status_code)"
+    elif [ "$status_code" != "200" ]; then
+        echo "$(date): ERROR - Status: $status_code"
+    else
+        echo "$(date): OK - $response_time s"
+    fi
+    
+    sleep 30
+done
+```
+
+---
+
+## httpie - Cliente HTTP amigable {#sec-httpie}
+
+HTTPie es una alternativa más amigable a curl con sintaxis intuitiva.
+
+### Sintaxis básica
+
+```bash
+# GET simple
+http GET httpbin.org/json
+
+# POST con JSON (automático)
+http POST httpbin.org/post name=Juan age:=30 married:=true
+
+# Headers personalizados
+http GET example.com Authorization:"Bearer token" User-Agent:"MyApp/1.0"
+
+# Query parameters
+http GET httpbin.org/get search=="python tutorial" limit:=10
+```
+
+### Tipos de datos
+
+```bash
+# String (por defecto)
+http POST httpbin.org/post name=Juan
+
+# Números y booleanos
+http POST httpbin.org/post age:=30 active:=true
+
+# Arrays
+http POST httpbin.org/post items:='["a","b","c"]'
+
+# Objetos anidados
+http POST httpbin.org/post user:='{"name":"Juan","age":30}'
+
+# Raw JSON
+http POST httpbin.org/post < data.json
+```
+
+### Archivos y forms
+
+```bash
+# Subir archivo
+http --form POST httpbin.org/post file@document.pdf description="Mi archivo"
+
+# Form data tradicional
+http --form POST httpbin.org/post name=Juan email=juan@example.com
+
+# Múltiples archivos
+http --form POST httpbin.org/post file1@file1.txt file2@file2.txt
+```
+
+### Casos prácticos
+
+#### Testing de APIs
+
+```bash
+#!/bin/bash
+# test-api.sh
+
+BASE_URL="https://api.example.com"
+TOKEN=$(http POST "$BASE_URL/auth/login" username=admin password=secret | jq -r .token)
+
+# Test endpoints
+echo "Testing GET /users"
+http GET "$BASE_URL/users" Authorization:"Bearer $TOKEN"
+
+echo "Testing POST /users"
+http POST "$BASE_URL/users" Authorization:"Bearer $TOKEN" \
+     name="Test User" email="test@example.com"
+
+echo "Testing PUT /users/1"
+http PUT "$BASE_URL/users/1" Authorization:"Bearer $TOKEN" \
+     name="Updated User"
+
+echo "Testing DELETE /users/1"
+http DELETE "$BASE_URL/users/1" Authorization:"Bearer $TOKEN"
+```
+
+---
+
+## wget - Descargador web {#sec-wget}
+
+wget es un descargador no interactivo ideal para automatización y descargas masivas.
+
+### Descarga básica
+
+```bash
+# Descargar archivo
+wget https://example.com/file.zip
+
+# Continuar descarga interrumpida
+wget -c https://example.com/large-file.zip
+
+# Descargar en background
+wget -b https://example.com/file.zip
+
+# Limitar velocidad
+wget --limit-rate=200k https://example.com/file.zip
+```
+
+### Descargas recursivas
+
+```bash
+# Descargar sitio completo
+wget -r -p -k https://example.com
+
+# Opciones útiles para sitios:
+# -r: recursivo
+# -p: descargar imágenes, CSS, etc.
+# -k: convertir links a locales
+# -np: no subir a directorio padre
+# -l 2: máximo 2 niveles de profundidad
+
+# Espejo completo de sitio
+wget --mirror --convert-links --adjust-extension \
+     --page-requisites --no-parent https://example.com
+```
+
+### Filtros y restricciones
+
+```bash
+# Solo ciertos tipos de archivo
+wget -r -A "*.pdf,*.doc" https://example.com/documents/
+
+# Excluir tipos
+wget -r -R "*.gif,*.jpg" https://example.com/
+
+# Limitar por tamaño
+wget --quota=100m -r https://example.com/
+
+# User agent personalizado
+wget --user-agent="Mozilla/5.0 (compatible; MyBot/1.0)" https://example.com
+```
+
+---
+
+## aria2 - Descargador avanzado {#sec-aria2}
+
+aria2 es un descargador multihilo que soporta HTTP, FTP, BitTorrent y más.
+
+### Descarga acelerada
+
+```bash
+# Múltiples conexiones
+aria2c -x 16 https://example.com/large-file.zip
+
+# Múltiples servidores
+aria2c https://mirror1.com/file.zip https://mirror2.com/file.zip
+
+# Continuar descargas
+aria2c -c https://example.com/file.zip
+
+# Limitar velocidad
+aria2c --max-download-limit=1M https://example.com/file.zip
+```
+
+### Descargas por lotes
+
+```bash
+# Desde archivo de URLs
+echo "https://example.com/file1.zip" > urls.txt
+echo "https://example.com/file2.zip" >> urls.txt
+aria2c -i urls.txt
+
+# Con configuración avanzada
+aria2c -i urls.txt -x 8 -s 8 --max-download-limit=2M
+```
+
+### BitTorrent y magnet
+
+```bash
+# Descargar torrent
+aria2c file.torrent
+
+# Magnet link
+aria2c "magnet:?xt=urn:btih:..."
+
+# Configuración para torrents
+aria2c --seed-time=60 --max-upload-limit=100K file.torrent
+```
+
+---
+
+## Workflows de red complejos
+
+### Script de backup remoto
+
+```bash
+#!/bin/bash
+# remote-backup.sh
+
+REMOTE_SERVER="backup.example.com"
+BACKUP_DIR="/backups/$(date +%Y%m%d)"
+LOCAL_DIRS=("$HOME/Documents" "$HOME/Projects")
+
+# Crear directorio de backup remoto
+ssh "$REMOTE_SERVER" "mkdir -p $BACKUP_DIR"
+
+# Backup de cada directorio
+for dir in "${LOCAL_DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+        echo "Backing up: $dir"
+        tar czf - "$dir" | \
+        curl -X POST \
+             -H "Content-Type: application/gzip" \
+             -H "X-Backup-Path: $(basename "$dir")" \
+             --data-binary @- \
+             "https://$REMOTE_SERVER/api/backup/upload"
+    fi
+done
+
+echo "Backup completed to $REMOTE_SERVER:$BACKUP_DIR"
+```
+
+### Monitor de sitios web
+
+```bash
+#!/bin/bash
+# website-monitor.sh
+
+SITES=(
+    "https://example.com"
+    "https://api.example.com/health"
+    "https://blog.example.com"
+)
+
+WEBHOOK_URL="https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+
+check_site() {
+    local url="$1"
+    local response_code=$(curl -o /dev/null -s -w "%{http_code}" "$url")
+    local response_time=$(curl -o /dev/null -s -w "%{time_total}" "$url")
+    
+    if [ "$response_code" != "200" ]; then
+        # Enviar alerta
+        curl -X POST -H 'Content-type: application/json' \
+             --data "{\"text\":\"🚨 $url is DOWN (Status: $response_code)\"}" \
+             "$WEBHOOK_URL"
+        return 1
+    elif (( $(echo "$response_time > 5" | bc -l) )); then
+        curl -X POST -H 'Content-type: application/json' \
+             --data "{\"text\":\"⚠️ $url is SLOW (${response_time}s)\"}" \
+             "$WEBHOOK_URL"
+    fi
+    
+    echo "$url: OK ($response_time s)"
+}
+
+# Verificar todos los sitios
+for site in "${SITES[@]}"; do
+    check_site "$site"
+done
+```
+
+### Sincronización de APIs
+
+```bash
+#!/bin/bash
+# api-sync.sh - Sincronizar datos entre APIs
+
+SOURCE_API="https://source.example.com/api"
+TARGET_API="https://target.example.com/api"
+SOURCE_TOKEN=$(cat ~/.tokens/source_api)
+TARGET_TOKEN=$(cat ~/.tokens/target_api)
+
+# Obtener datos de origen
+echo "Fetching data from source API..."
+http GET "$SOURCE_API/users" Authorization:"Bearer $SOURCE_TOKEN" > source_users.json
+
+# Procesar y transformar datos
+echo "Processing data..."
+jq '.users[] | {
+    id: .id,
+    name: .full_name,
+    email: .email_address,
+    active: .status == "active"
+}' source_users.json > transformed_users.json
+
+# Enviar a API destino
+echo "Syncing to target API..."
+jq -c '.[]' transformed_users.json | while read -r user; do
+    user_id=$(echo "$user" | jq -r '.id')
+    
+    # Verificar si usuario existe
+    existing=$(http GET "$TARGET_API/users/$user_id" \
+               Authorization:"Bearer $TARGET_TOKEN" 2>/dev/null)
+    
+    if [ $? -eq 0 ]; then
+        # Actualizar usuario existente
+        echo "$user" | http PUT "$TARGET_API/users/$user_id" \
+                       Authorization:"Bearer $TARGET_TOKEN"
+    else
+        # Crear nuevo usuario
+        echo "$user" | http POST "$TARGET_API/users" \
+                       Authorization:"Bearer $TARGET_TOKEN"
+    fi
+done
+
+echo "Sync completed!"
+```
+
+::: {.callout-tip}
+## Tips para herramientas de red
+- Usa `jq` para procesar respuestas JSON de APIs
+- Combina `curl` con `fzf` para testing interactivo de endpoints
+- `httpie` es más legible para testing manual, `curl` mejor para scripts
+- Siempre maneja rate limiting en scripts automatizados
+:::
+
+::: {.callout-important}
+## Seguridad en red
+- Nunca hardcodees tokens o passwords en scripts
+- Usa variables de entorno o archivos de configuración seguros
+- Verifica certificados SSL con `curl --cacert` en producción
+- Implementa timeouts apropiados para evitar scripts colgados
+:::
+
+En los próximos capítulos completaremos el libro con herramientas de monitoreo, texto, utilidades y workflows avanzados.
