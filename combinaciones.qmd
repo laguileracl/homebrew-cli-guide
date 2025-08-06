@@ -1,6 +1,6 @@
 # Combinaciones Útiles
 
-Este capítulo explora workflows avanzados que combinan múltiples herramientas CLI para crear soluciones potentes y automatizadas.
+Este capítulo explora workflows avanzados que combinan múltiples herramientas CLI para crear soluciones potentes, automatizadas y altamente eficientes.
 
 ## Workflows de desarrollo
 
