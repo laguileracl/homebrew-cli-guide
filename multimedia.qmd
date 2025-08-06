@@ -1,6 +1,6 @@
 # Multimedia
 
-El procesamiento de archivos multimedia desde la línea de comandos es extremadamente potente. Esta sección cubre herramientas para manipular video, audio e imágenes con precisión profesional.
+El procesamiento de archivos multimedia desde la línea de comandos es extremadamente potente y versátil. Esta sección cubre herramientas para manipular video, audio e imágenes con precisión profesional.
 
 ## ffmpeg - Suite multimedia completa {#sec-ffmpeg}
 
