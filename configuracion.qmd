@@ -1,6 +1,6 @@
 # Configuración y Personalización
 
-Este capítulo final cubre la configuración avanzada del entorno de trabajo, personalización de herramientas y creación de un sistema productivo y eficiente.
+Este capítulo final cubre la configuración avanzada del entorno de trabajo, personalización profunda de herramientas y creación de un sistema altamente productivo y eficiente.
 
 ## Configuración del Shell
 
