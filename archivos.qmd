@@ -1,6 +1,6 @@
 # Gestión de Archivos
 
-La gestión eficiente de archivos va más allá de simples operaciones de copia y movimiento. Esta sección cubre herramientas avanzadas para renombrado masivo, sincronización inteligente y manipulación sofisticada de archivos.
+La gestión eficiente de archivos va más allá de simples operaciones de copia y movimiento. Esta sección cubre herramientas avanzadas para renombrado masivo, sincronización inteligente y manipulación sofisticada de archivos y directorios.
 
 ## rename / renameutils - Renombrado masivo {#sec-rename}
 
