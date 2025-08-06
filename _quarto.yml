@@ -7,8 +7,8 @@ project:
     watch-inputs: true
 
 book:
-  title: "🚀 Guía Práctica de Herramientas CLI con Homebrew"
-  subtitle: "Manual interactivo y completo de herramientas de línea de comandos"
+  title: "Guía Práctica de Herramientas CLI con Homebrew"
+  subtitle: "Manual completo de herramientas de línea de comandos"
   author: 
     - name: "Luis Aguilera"
       url: "https://github.com/laguileracl"
@@ -18,25 +18,16 @@ book:
   
   # Configuración del libro
   downloads: [pdf, epub, docx]
-  tools: 
-    - edit
-    - source
-  sharing: [twitter, facebook, linkedin]
   
   # Sidebar y navegación
   sidebar:
-    style: "floating"
     search: true
-    collapse-level: 1
     
-  # Footer personalizado
+  # Footer limpio
   page-footer:
-    left: |
-      <span class="faux-block">📚 **CLI Tools Guide** - Guía interactiva de herramientas de línea de comandos</span>
-    center: |
-      <span class="faux-block">🔧 **Generado con [Quarto](https://quarto.org/)**</span>
-    right: |
-      <span class="faux-block">⭐ [**Star en GitHub**](https://github.com/laguileracl/homebrew-cli-guide)</span>
+    left: "CLI Tools Guide - Guía de herramientas de línea de comandos"
+    center: "Generado con [Quarto](https://quarto.org/)"
+    right: "[GitHub](https://github.com/laguileracl/homebrew-cli-guide)"
       
   # Navegación
   repo-url: "https://github.com/laguileracl/homebrew-cli-guide"
@@ -45,34 +36,34 @@ book:
   chapters:
     - index.qmd
     - interactive-playground.qmd
-    - part: "🧭 Navegación y Exploración"
+    - part: "Navegación y Exploración"
       chapters:
         - navegacion.qmd
-    - part: "📁 Gestión de Archivos"
+    - part: "Gestión de Archivos"
       chapters:
         - archivos.qmd
-    - part: "🔍 Búsqueda y Filtrado"
+    - part: "Búsqueda y Filtrado"
       chapters:
         - busqueda.qmd
-    - part: "💻 Desarrollo y Git"
+    - part: "Desarrollo y Git"
       chapters:
         - desarrollo.qmd
-    - part: "🎵 Multimedia"
+    - part: "Multimedia"
       chapters:
         - multimedia.qmd
-    - part: "🌐 Red y Descargas"
+    - part: "Red y Descargas"
       chapters:
         - red.qmd
-    - part: "📊 Monitoreo del Sistema"
+    - part: "Monitoreo del Sistema"
       chapters:
         - monitoreo.qmd
-    - part: "📝 Texto y Documentos"
+    - part: "Texto y Documentos"
       chapters:
         - texto.qmd
-    - part: "🔧 Utilidades Diversas"
+    - part: "Utilidades Diversas"
       chapters:
         - utilidades.qmd
-    - part: "🎯 Recursos Adicionales"
+    - part: "Recursos Adicionales"
       chapters:
         - combinaciones.qmd
         - configuracion.qmd
@@ -82,43 +73,27 @@ bibliography: references.bib
 
 format:
   html:
-    theme: 
-      light: [flatly, styles.css]
-      dark: [darkly, styles.css]
+    theme: cosmo
     css: 
       - styles.css
       - custom-interactive.css
-    mainfont: "Inter"
-    monofont: "JetBrains Mono"
     
     # Navegación y estructura
     toc: true
-    toc-depth: 4
-    toc-expand: 3
-    toc-location: left
+    toc-depth: 3
+    toc-expand: 2
     number-sections: true
-    number-depth: 3
     
-    # Características interactivas
+    # Características básicas
     code-copy: true
-    code-fold: false
     code-overflow: wrap
-    code-line-numbers: true
-    code-block-bg: true
-    code-block-border-left: "#31BAE9"
-    highlight-style: github-dark
+    code-line-numbers: false
+    highlight-style: github
     
     # Enlaces y navegación
     link-external-newwindow: true
-    link-external-icon: true
-    smooth-scroll: true
     
-    # Funcionalidades avanzadas
-    citations-hover: true
-    crossrefs-hover: true
-    fig-responsive: true
-    
-    # Incluir scripts al final del body
+    # Incluir elementos interactivos
     include-after-body: include-after.html
       
   pdf:

@@ -93,20 +93,24 @@ th {
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-/* CLI Tools Guide - Enhanced Styles */
+/* CLI Tools Guide - Clean & Professional Styles */
 
-/* Hero banner */
+/* Clean hero section */
 .hero-banner {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  color: white;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
   padding: 2rem;
-  text-align: center;
   margin: 2rem 0;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
 }
 
-/* Feature grid */
+.hero-banner h1 {
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+/* Simple feature grid */
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -115,25 +119,24 @@ th {
 }
 
 .feature-card {
-  background: white;
-  border: 1px solid #e1e5e9;
-  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .feature-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  transform: translateY(-4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feature-card h3 {
-  color: #31BAE9;
+  color: #495057;
   margin-top: 0;
+  font-size: 1.1rem;
 }
 
-/* Download options */
+/* Clean download options */
 .download-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -142,90 +145,97 @@ th {
 }
 
 .download-card {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  border-radius: 8px;
-  color: white;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
   padding: 1.5rem;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 .download-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-color: #adb5bd;
 }
 
 .download-card h3 {
   margin-top: 0;
-  color: white;
+  color: #495057;
+  font-size: 1rem;
 }
 
-/* Ecosystem quick access */
+/* Clean table styling */
 .ecosystem-quick-access table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
   overflow: hidden;
 }
 
 .ecosystem-quick-access th {
-  background: #31BAE9;
-  color: white;
-  padding: 1rem;
+  background: #f8f9fa;
+  color: #495057;
+  padding: 0.75rem;
   text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .ecosystem-quick-access td {
-  padding: 1rem;
-  border-bottom: 1px solid #e1e5e9;
+  padding: 0.75rem;
+  border-bottom: 1px solid #f1f3f4;
 }
 
 .ecosystem-quick-access tr:hover {
-  background: rgba(49, 186, 233, 0.05);
+  background: #f8f9fa;
 }
 
-/* Enhanced code blocks */
+/* Clean code blocks */
 pre {
   background: #f8f9fa;
-  border: 1px solid #e1e5e9;
+  border: 1px solid #e9ecef;
   border-radius: 6px;
   padding: 1rem;
   overflow-x: auto;
-  position: relative;
+  font-size: 0.9rem;
 }
 
 code {
-  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-  font-size: 0.9em;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-size: 0.875rem;
 }
 
-/* Improved callouts */
+/* Simplified callouts */
 .callout {
-  border-left: 4px solid #31BAE9;
-  border-radius: 6px;
+  border-left: 3px solid #6c757d;
+  border-radius: 0 4px 4px 0;
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
-  background: rgba(49, 186, 233, 0.05);
+  background: #f8f9fa;
 }
 
 .callout-tip {
-  border-left-color: #28a745;
-  background: rgba(40, 167, 69, 0.05);
+  border-left-color: #198754;
+  background: #f8fff8;
 }
 
 .callout-important {
-  border-left-color: #ffc107;
-  background: rgba(255, 193, 7, 0.05);
+  border-left-color: #fd7e14;
+  background: #fffdf8;
 }
 
 .callout-note {
-  border-left-color: #17a2b8;
-  background: rgba(23, 162, 184, 0.05);
+  border-left-color: #0dcaf0;
+  background: #f8fdff;
 }
 
-/* Responsive improvements */
+.callout-warning {
+  border-left-color: #ffc107;
+  background: #fffef8;
+}
+
+/* Clean responsive design */
 @media (max-width: 768px) {
   .feature-grid {
     grid-template-columns: 1fr;
@@ -240,36 +250,44 @@ code {
   }
   
   .ecosystem-quick-access table {
-    font-size: 0.9em;
+    font-size: 0.85rem;
   }
 }
 
-/* Dark theme support */
+/* Clean dark theme */
 @media (prefers-color-scheme: dark) {
+  .hero-banner {
+    background: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
+  }
+  
   .feature-card {
-    background: #2d3748;
-    border-color: #4a5568;
-    color: #e2e8f0;
+    background: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
   }
   
-  .feature-card h3 {
-    color: #63b3ed;
+  .download-card {
+    background: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
   }
   
-  pre {
-    background: #1a202c;
-    border-color: #4a5568;
-    color: #e2e8f0;
+  .ecosystem-quick-access th {
+    background: #495057;
+    color: #f8f9fa;
   }
   
   .ecosystem-quick-access td {
-    border-color: #4a5568;
-    background: #2d3748;
-    color: #e2e8f0;
+    background: #343a40;
+    color: #f8f9fa;
+    border-color: #495057;
   }
   
-  .ecosystem-quick-access tr:hover {
-    background: rgba(99, 179, 237, 0.1);
+  .callout {
+    background: #343a40;
+    color: #f8f9fa;
   }
 }
 
