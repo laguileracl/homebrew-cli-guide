@@ -1,6 +1,6 @@
 # Monitoreo del Sistema
 
-Las herramientas de monitoreo te permiten supervisar el rendimiento, recursos y estado general del sistema en tiempo real.
+Las herramientas de monitoreo te permiten supervisar el rendimiento, recursos y estado general del sistema en tiempo real con visualizaciones modernas.
 
 ## htop - Monitor interactivo de procesos {#sec-htop}
 
