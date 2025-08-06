@@ -53,7 +53,7 @@ jobs:
       - name: Build Quarto book
         run: |
           quarto render --to html
-          
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

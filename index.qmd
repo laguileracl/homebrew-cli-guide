@@ -1,31 +1,29 @@
-# Guía Práctica de Herramientas CLI con Homebrew {.unnumbered}
+# Welcome {.unnumbered}
 
-Bienvenido a la guía completa de herramientas de línea de comandos instaladas con Homebrew.
+This is the website for "Guía Práctica de Herramientas CLI con Homebrew". This book will teach you how to use powerful command-line tools to enhance your development workflow and system administration tasks. I wrote it for developers and system administrators who want to harness the full potential of the command line.
 
-## Acerca de esta guía
+You'll learn how to install, configure, and master essential CLI tools using Homebrew. Throughout the book, you'll discover tools for file navigation, text processing, development workflows, system monitoring, and much more. Each tool comes with practical examples and real-world use cases.
 
-Esta guía documenta herramientas de línea de comandos (CLI) instaladas mediante Homebrew, con:
+If you are new to command-line tools, this book provides a gentle introduction. If you're already familiar with some CLI tools, you'll discover new ones and learn advanced techniques to improve your productivity.
 
-- **Descripciones claras** de cada herramienta
-- **Ejemplos prácticos** listos para usar
-- **Casos de uso reales** del día a día
-- **Combinaciones útiles** entre herramientas
-- **Funcionalidad interactiva** para experimentar
+## What You'll Learn
 
-## Características interactivas
+This book covers five main areas of command-line tools:
 
-::: {.callout-note}
-Esta guía incluye funcionalidades interactivas que te permiten:
+**Navigation & File Management**  
+Learn to navigate your file system efficiently and manage files with modern alternatives to traditional Unix tools.
 
-- Editar código directamente en el navegador
-- Probar comandos de forma simulada
-- Guardar tus snippets favoritos
-- Conectar con API local para funciones avanzadas
-:::
+**Search & Development**  
+Discover powerful search tools and essential development utilities that will speed up your coding workflow.
 
-## Contenido de la guía
+**Media & Network**  
+Master tools for processing multimedia files and managing network connections and downloads.
 
-Esta guía está organizada en secciones temáticas:
+**System & Text**  
+Monitor your system performance and process text files with advanced filtering and transformation tools.
+
+**Advanced Topics**  
+Explore tool combinations, configuration management, and ecosystem integration for maximum productivity.
 
 ### Navegación y Exploración
 Herramientas para moverte y explorar tu sistema de archivos de manera eficiente.

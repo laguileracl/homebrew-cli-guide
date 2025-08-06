@@ -8,7 +8,7 @@ project:
 
 book:
   title: "Guía Práctica de Herramientas CLI con Homebrew"
-  subtitle: "Manual completo de herramientas de línea de comandos"
+  subtitle: "Manual completo de herramientas de línea de comandos para desarrolladores"
   author: 
     - name: "Luis Aguilera"
       url: "https://github.com/laguileracl"
@@ -18,53 +18,48 @@ book:
   
   # Configuración del libro
   downloads: [pdf, epub, docx]
+  cover-image: cover.png
   
-  # Sidebar y navegación
+  # Sidebar y navegación limpia
   sidebar:
     search: true
+    collapse-level: 1
     
-  # Footer limpio
+  # Footer profesional
   page-footer:
-    left: "CLI Tools Guide - Guía de herramientas de línea de comandos"
-    center: "Generado con [Quarto](https://quarto.org/)"
-    right: "[GitHub](https://github.com/laguileracl/homebrew-cli-guide)"
+    left: "© 2025 CLI Tools Guide"
+    center: "Construido con [Quarto](https://quarto.org/)"
+    right: "[Editar esta página]({{< meta params.github_edit >}})"
       
-  # Navegación
+  # Navegación GitHub
   repo-url: "https://github.com/laguileracl/homebrew-cli-guide"
   repo-actions: [edit, source, issue]
   
+  # Estructura de capítulos numerados
   chapters:
     - index.qmd
-    - interactive-playground.qmd
-    - part: "Navegación y Exploración"
+    - part: "Getting Started"
+      chapters:
+        - interactive-playground.qmd
+    - part: "Part I: Navigation & File Management"
       chapters:
         - navegacion.qmd
-    - part: "Gestión de Archivos"
-      chapters:
         - archivos.qmd
-    - part: "Búsqueda y Filtrado"
+    - part: "Part II: Search & Development"
       chapters:
         - busqueda.qmd
-    - part: "Desarrollo y Git"
-      chapters:
         - desarrollo.qmd
-    - part: "Multimedia"
+    - part: "Part III: Media & Network"
       chapters:
         - multimedia.qmd
-    - part: "Red y Descargas"
-      chapters:
         - red.qmd
-    - part: "Monitoreo del Sistema"
+    - part: "Part IV: System & Text"
       chapters:
         - monitoreo.qmd
-    - part: "Texto y Documentos"
-      chapters:
         - texto.qmd
-    - part: "Utilidades Diversas"
+    - part: "Part V: Advanced Topics"
       chapters:
         - utilidades.qmd
-    - part: "Recursos Adicionales"
-      chapters:
         - combinaciones.qmd
         - configuracion.qmd
         - ecosystem-integration.qmd
@@ -73,28 +68,43 @@ bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
-    css: 
+    theme: 
+      - cosmo
       - styles.css
-      - custom-interactive.css
+    css: custom-interactive.css
     
-    # Navegación y estructura
+    # Navegación y estructura profesional
     toc: true
-    toc-depth: 3
-    toc-expand: 2
+    toc-depth: 2
+    toc-expand: 1
     number-sections: true
+    number-depth: 2
     
-    # Características básicas
+    # Diseño limpio
+    grid:
+      sidebar-width: 250px
+      body-width: 900px
+      margin-width: 300px
+    
+    # Características de código
     code-copy: true
     code-overflow: wrap
     code-line-numbers: false
+    code-block-bg: "#f8f9fa"
+    code-block-border-left: "#e9ecef"
     highlight-style: github
     
-    # Enlaces y navegación
+    # Navegación y enlaces
     link-external-newwindow: true
+    link-external-icon: true
     
-    # Incluir elementos interactivos
+    # Elementos interactivos
     include-after-body: include-after.html
+    
+    # Tipografía profesional
+    mainfont: "system-ui"
+    fontsize: "1.1em"
+    linestretch: 1.6
       
   pdf:
     documentclass: scrbook
@@ -171,5 +181,6 @@ filters:
 params:
   version: "2.0.0"
   github_url: "https://github.com/laguileracl/homebrew-cli-guide"
+  github_edit: "https://github.com/laguileracl/homebrew-cli-guide/edit/main"
   api_url: "http://localhost:3000"
   interactive_mode: true
