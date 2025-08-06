@@ -6,7 +6,7 @@
 Esta sección te permite **experimentar directamente** con las herramientas CLI sin salir del navegador. Aquí puedes:
 
 - ✏️ **Editar código** en tiempo real
-- ▶️ **Ejecutar comandos** de forma simulada
+- ▶️ **Ejecutar comandos** de forma simulada  
 - 💾 **Guardar snippets** para uso posterior
 - 🔗 **Conectar con API local** para funcionalidades avanzadas
 :::
