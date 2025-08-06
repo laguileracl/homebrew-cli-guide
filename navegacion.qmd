@@ -1,6 +1,6 @@
 # Navegación y Exploración
 
-La navegación eficiente por el sistema de archivos es fundamental para cualquier usuario de terminal. Esta sección cubre las herramientas más poderosas para moverte, explorar y entender la estructura de tus directorios.
+La navegación eficiente por el sistema de archivos es fundamental para cualquier usuario de terminal. Esta sección cubre las herramientas más poderosas para moverte, explorar y entender la estructura de tus directorios de forma productiva.
 
 ## eza - Listado moderno de archivos {#sec-eza}
 
