@@ -1,6 +1,6 @@
 # Utilidades Diversas
 
-Esta sección cubre herramientas que mejoran la experiencia general en terminal, desde corrección automática hasta personalización del prompt.
+Esta sección cubre herramientas que mejoran significativamente la experiencia general en terminal, desde corrección automática hasta personalización avanzada del prompt.
 
 ## tldr - Ejemplos prácticos de comandos {#sec-tldr}
 
