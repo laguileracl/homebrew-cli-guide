@@ -4,54 +4,54 @@ on:
   pull_request:
     types: [opened, synchronize]
     paths:
-      - '**.qmd'
-      - 'tools-index.json'
-      - 'scripts/**'
+      - "**.qmd"
+      - "tools-index.json"
+      - "scripts/**"
 
 jobs:
   validate-contribution:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-      
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y jq shellcheck
-      
+
       - name: Validate JSON structure
         if: contains(github.event.pull_request.changed_files, 'tools-index.json')
         run: |
           echo "Validating tools-index.json structure..."
           jq empty tools-index.json
-          
+
           # Validar estructura requerida
           jq -e '.metadata' tools-index.json > /dev/null
           jq -e '.tools | type == "array"' tools-index.json > /dev/null
           jq -e '.categories | type == "object"' tools-index.json > /dev/null
-          
+
           # Validar que cada tool tenga campos requeridos
           jq -e '.tools[] | has("name") and has("category") and has("description") and has("installation")' tools-index.json > /dev/null
-          
+
           echo "✅ JSON structure is valid"
-      
+
       - name: Validate shell scripts
         run: |
           echo "Validating shell scripts..."
           find scripts/ -name "*.sh" -exec shellcheck {} \;
           echo "✅ Shell scripts are valid"
-      
+
       - name: Test tool installations
         if: contains(github.event.pull_request.changed_files, 'tools-index.json')
         run: |
           echo "Testing installation commands..."
-          
+
           # Extraer comandos de instalación únicos
           jq -r '.tools[].installation | select(startswith("brew install"))' tools-index.json | sort -u > install_commands.txt
-          
+
           # Verificar que las fórmulas existan en Homebrew
           while read -r install_cmd; do
             if [[ $install_cmd =~ brew\ install\ (.+) ]]; then
@@ -68,23 +68,23 @@ jobs:
               echo "✅ Verified: $formula"
             fi
           done < install_commands.txt
-      
+
       - name: Build book to test
         run: |
           echo "Testing book build..."
           quarto render --to html
           echo "✅ Book builds successfully"
-      
+
       - name: Generate contribution report
         run: |
           echo "## 📊 Contribution Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Estadísticas de archivos modificados
           echo "### 📁 Files Changed" >> $GITHUB_STEP_SUMMARY
           echo "- \`$(echo '${{ github.event.pull_request.changed_files }}' | jq length)\` files modified" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Si se modificó tools-index.json
           if echo '${{ github.event.pull_request.changed_files }}' | jq -e '.[] | select(. == "tools-index.json")' > /dev/null; then
             echo "### 🛠️ Tools Index Changes" >> $GITHUB_STEP_SUMMARY
@@ -100,7 +100,7 @@ jobs:
               echo "  - $category: $count" >> $GITHUB_STEP_SUMMARY
             done
           fi
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### ✅ Validation Results" >> $GITHUB_STEP_SUMMARY
           echo "- JSON structure: ✅ Valid" >> $GITHUB_STEP_SUMMARY
@@ -145,7 +145,7 @@ jobs:
               pull_number: context.issue.number,
               reviewers: ['laguileracl'], // Agregar más maintainers aquí
             });
-            
+
             // Agregar labels apropiados
             const labels = ['new-tool', 'needs-review'];
             await github.rest.issues.addLabels({
@@ -161,7 +161,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'tools-index.json')
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Update metadata
         run: |
           # Actualizar timestamp y estadísticas en metadata
@@ -170,9 +170,9 @@ jobs:
              --argjson categories "$(jq '.categories | length' tools-index.json)" \
              '.metadata.generated = $date | .metadata.total_tools = $tools | .metadata.categories = $categories' \
              tools-index.json > tools-index-updated.json
-          
+
           mv tools-index-updated.json tools-index.json
-      
+
       - name: Commit metadata update
         run: |
           git config --local user.email "action@github.com"
@@ -196,30 +196,30 @@ jobs:
               state: 'all',
               creator: context.payload.pull_request.user.login
             });
-            
+
             if (pullRequests.length === 1) {
               // Primera contribución
               const welcomeMessage = `
             🎉 **Welcome to the CLI Tools Guide community!** 
-            
+
             Thank you for your first contribution! Here's what happens next:
-            
+
             ### ✅ Automated Checks
             - JSON structure validation
             - Installation command verification  
             - Book build test
             - Shell script linting
-            
+
             ### 👥 Review Process
             ${pullRequests[0].changed_files.includes('tools-index.json') ? 
               '- A maintainer will review your tool addition\n- We verify the tool is useful and well-documented' : 
               '- Documentation changes are often auto-approved if they pass validation'}
-            
+
             ### 🚀 After Merge
             - Your changes will be deployed to the live site
             - You'll be added to our contributors list
             - Your tools will be searchable in our CLI interface
-            
+
             Questions? Feel free to ask in the comments or join our [Discussions](../../discussions)!
             `;
               

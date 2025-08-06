@@ -1,4 +1,4 @@
-name: Build and Deploy Book
+name: 🚀 Build and Deploy Enhanced Book
 
 on:
   push:
@@ -6,6 +6,21 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      build_formats:
+        description: 'Formatos a construir (html,pdf,epub,docx)'
+        required: false
+        default: 'html'
+        type: string
+      deploy_mode:
+        description: 'Modo de despliegue'
+        required: false
+        default: 'pages'
+        type: choice
+        options:
+        - pages
+        - full
+        - test
 
 permissions:
   contents: read
@@ -16,75 +31,386 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  QUARTO_VERSION: "1.4.550"
+  NODE_VERSION: "18"
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      formats-built: ${{ steps.build-summary.outputs.formats }}
+      build-success: ${{ steps.build-summary.outputs.success }}
 
     steps:
-      - name: Checkout
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para obtener toda la historia
 
-      - name: Install Quarto
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'api-server/package-lock.json'
+
+      - name: 📦 Install API dependencies
+        run: |
+          cd api-server
+          npm ci --only=production
+
+      - name: 🎯 Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: release
+          version: ${{ env.QUARTO_VERSION }}
 
-      - name: Verify Quarto installation
-        run: quarto check
+      - name: 🐍 Setup Python for Quarto
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-      - name: Build book
+      - name: 📚 Install additional dependencies
         run: |
-          quarto render --to html
+          # Instalar dependencias para formatos adicionales
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra
+          
+          # Instalar herramientas de optimización
+          npm install -g terser
+          
+          # Verificar instalaciones
+          echo "✅ Quarto version: $(quarto --version)"
+          echo "✅ Pandoc version: $(pandoc --version | head -1)"
+          echo "✅ Node.js version: $(node --version)"
 
-      - name: Setup Pages
-        if: github.ref == 'refs/heads/main'
+      - name: 🔍 Validate content and dependencies
+        run: |
+          # Verificar que todos los archivos QMD existen
+          echo "📋 Verificando archivos de contenido..."
+          
+          missing_files=()
+          for file in index.qmd interactive-playground.qmd navegacion.qmd archivos.qmd busqueda.qmd desarrollo.qmd multimedia.qmd red.qmd monitoreo.qmd texto.qmd utilidades.qmd combinaciones.qmd configuracion.qmd ecosystem-integration.qmd; do
+            if [ ! -f "$file" ]; then
+              missing_files+=("$file")
+            fi
+          done
+          
+          if [ ${#missing_files[@]} -ne 0 ]; then
+            echo "❌ Archivos faltantes: ${missing_files[*]}"
+            exit 1
+          fi
+          
+          # Verificar configuración de Quarto
+          echo "🔧 Verificando configuración de Quarto..."
+          quarto check
+          
+          echo "✅ Validación completada"
+
+      - name: 🏗️ Build book formats
+        id: build-book
+        run: |
+          # Determinar qué formatos construir
+          FORMATS="${{ github.event.inputs.build_formats || 'html' }}"
+          echo "📚 Construyendo formatos: $FORMATS"
+          
+          # Crear directorio de assets si no existe
+          mkdir -p assets
+          
+          # Construir cada formato solicitado
+          BUILT_FORMATS=""
+          
+          if [[ "$FORMATS" == *"html"* ]]; then
+            echo "🌐 Construyendo HTML..."
+            quarto render --to html
+            
+            # Copiar archivos interactivos adicionales
+            cp tools-explorer.html _book/ 2>/dev/null || echo "⚠️ tools-explorer.html no encontrado"
+            cp tools-index.json _book/ 2>/dev/null || echo "⚠️ tools-index.json no encontrado"
+            cp interactive-features.js _book/ 2>/dev/null || echo "⚠️ interactive-features.js no encontrado"
+            cp custom-interactive.css _book/ 2>/dev/null || echo "⚠️ custom-interactive.css no encontrado"
+            
+            # Minificar JavaScript si existe
+            if [ -f "_book/interactive-features.js" ] && command -v terser &> /dev/null; then
+              terser _book/interactive-features.js -o _book/interactive-features.min.js
+              echo "✅ JavaScript minificado"
+            fi
+            
+            BUILT_FORMATS="${BUILT_FORMATS},html"
+            echo "✅ HTML construido exitosamente"
+          fi
+          
+          if [[ "$FORMATS" == *"pdf"* ]]; then
+            echo "📄 Construyendo PDF..."
+            if quarto render --to pdf; then
+              BUILT_FORMATS="${BUILT_FORMATS},pdf"
+              echo "✅ PDF construido exitosamente"
+            else
+              echo "⚠️ Error construyendo PDF (puede requerir configuración adicional de LaTeX)"
+            fi
+          fi
+          
+          if [[ "$FORMATS" == *"epub"* ]]; then
+            echo "📱 Construyendo EPUB..."
+            if quarto render --to epub; then
+              BUILT_FORMATS="${BUILT_FORMATS},epub"
+              echo "✅ EPUB construido exitosamente"
+            else
+              echo "⚠️ Error construyendo EPUB"
+            fi
+          fi
+          
+          if [[ "$FORMATS" == *"docx"* ]]; then
+            echo "📝 Construyendo DOCX..."
+            if quarto render --to docx; then
+              BUILT_FORMATS="${BUILT_FORMATS},docx"
+              echo "✅ DOCX construido exitosamente"
+            else
+              echo "⚠️ Error construyendo DOCX"
+            fi
+          fi
+          
+          # Guardar formatos construidos
+          echo "formats=${BUILT_FORMATS#,}" >> $GITHUB_OUTPUT
+
+      - name: 📊 Generate build manifest
+        run: |
+          # Crear manifiesto del build
+          cat > _book/build-manifest.json << EOF
+          {
+            "version": "2.0.0",
+            "build_date": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "build_system": "GitHub Actions - ${{ runner.os }}",
+            "commit_sha": "${{ github.sha }}",
+            "commit_ref": "${{ github.ref }}",
+            "quarto_version": "$(quarto --version)",
+            "pandoc_version": "$(pandoc --version | head -1)",
+            "formats_built": "${{ steps.build-book.outputs.formats }}",
+            "interactive_features": {
+              "code_editing": true,
+              "simulated_execution": true,
+              "snippet_management": true,
+              "api_integration": true,
+              "responsive_design": true,
+              "dark_mode": true
+            },
+            "ecosystem_components": {
+              "dashboard": $([ -f "_book/tools-explorer.html" ] && echo "true" || echo "false"),
+              "api_server": true,
+              "cli_tool": true,
+              "vscode_extension": true,
+              "docker_support": true
+            }
+          }
+          EOF
+          
+          echo "✅ Manifiesto generado"
+
+      - name: 🔍 Build summary
+        id: build-summary
+        run: |
+          # Verificar qué se construyó exitosamente
+          formats_built="${{ steps.build-book.outputs.formats }}"
+          
+          echo "📋 Resumen del build:"
+          echo "   Formatos solicitados: ${{ github.event.inputs.build_formats || 'html' }}"
+          echo "   Formatos construidos: $formats_built"
+          
+          # Verificar archivos generados
+          echo "📁 Archivos en _book/:"
+          ls -la _book/ || echo "❌ Directorio _book no encontrado"
+          
+          # Calcular tamaño del build
+          if [ -d "_book" ]; then
+            size_mb=$(du -sm _book | cut -f1)
+            echo "📏 Tamaño del build: ${size_mb}MB"
+          fi
+          
+          # Guardar estado del build
+          if [ -f "_book/index.html" ]; then
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "formats=$formats_built" >> $GITHUB_OUTPUT
+
+      - name: 🗜️ Optimize output
+        if: steps.build-summary.outputs.success == 'true'
+        run: |
+          cd _book
+          
+          # Generar checksums para archivos importantes
+          if command -v sha256sum &> /dev/null; then
+            find . -name "*.pdf" -o -name "*.epub" -o -name "*.docx" -o -name "*.html" | \
+              xargs sha256sum > checksums.sha256 2>/dev/null || echo "⚠️ No se pudieron generar checksums"
+          fi
+          
+          echo "✅ Optimización completada"
+
+      - name: 📤 Setup GitHub Pages
+        if: github.ref == 'refs/heads/main' && steps.build-summary.outputs.success == 'true'
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
-        if: github.ref == 'refs/heads/main'
+      - name: 📦 Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && steps.build-summary.outputs.success == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_book
 
+      - name: 📊 Upload build artifacts (additional formats)
+        if: steps.build-summary.outputs.success == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-tools-guide-all-formats
+          path: |
+            _book/*.pdf
+            _book/*.epub
+            _book/*.docx
+            _book/build-manifest.json
+            _book/checksums.sha256
+          retention-days: 30
+
   # Deploy job
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.build.outputs.build-success == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      - name: 📊 Deployment summary
+        run: |
+          echo "✅ Despliegue completado exitosamente"
+          echo "🌐 URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "📦 Formatos desplegados: ${{ needs.build.outputs.formats-built }}"
 
-  # Test examples job (only on PRs)
+  # Test examples job (only on PRs and workflow_dispatch)
   test-examples:
     runs-on: macos-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
 
     steps:
-      - name: Checkout
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Homebrew
+      - name: 🍺 Setup Homebrew
         run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          # Homebrew should already be installed on GitHub's macOS runners
+          brew --version || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Install common tools for testing
+      - name: 🔧 Install CLI tools for testing
         run: |
-          brew install fd ripgrep bat exa jq
-
-      - name: Test basic examples
-        run: |
-          # Test some basic examples from the book
+          # Instalar herramientas comunes mencionadas en el libro
+          brew install fd ripgrep bat eza jq fzf tree htop
+          
+          # Verificar instalaciones
+          echo "✅ Herramientas instaladas:"
           fd --version
           rg --version
           bat --version
+          eza --version
           jq --version
+          fzf --version
 
-      - name: Build book for testing
+      - name: 🧪 Test CLI examples from book
         run: |
-          brew install quarto
+          # Crear archivos de prueba
+          mkdir -p test-workspace
+          cd test-workspace
+          echo "Hello World" > test.txt
+          echo '{"name": "CLI Guide", "version": "2.0.0"}' > package.json
+          
+          # Probar comandos del libro
+          echo "🔍 Probando búsqueda con ripgrep..."
+          rg "Hello" test.txt
+          
+          echo "📁 Probando listado con eza..."
+          eza -la
+          
+          echo "🎯 Probando procesamiento JSON con jq..."
+          jq '.name' package.json
+          
+          echo "🌳 Probando visualización con tree..."
+          tree .
+          
+          echo "✅ Todos los ejemplos funcionan correctamente"
+
+      - name: 🏗️ Test book build
+        run: |
+          # Instalar Quarto para pruebas
+          cd /tmp
+          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.550/quarto-1.4.550-linux-amd64.tar.gz
+          tar -xzf quarto-1.4.550-linux-amd64.tar.gz
+          sudo cp quarto-1.4.550/bin/quarto /usr/local/bin/
+          
+          # Volver al directorio del proyecto y probar build
+          cd $GITHUB_WORKSPACE
+          quarto check
+          
+          # Build de prueba (solo HTML para velocidad)
           quarto render --to html
+          
+          echo "✅ Build de prueba exitoso"
+
+  # Notification job
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    if: always() && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📱 Notify build status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const buildSuccess = '${{ needs.build.outputs.build-success }}' === 'true';
+            const deploySuccess = '${{ needs.deploy.result }}' === 'success';
+            const formatsBuilt = '${{ needs.build.outputs.formats-built }}';
+            
+            const status = buildSuccess && deploySuccess ? '✅ ÉXITO' : '❌ FALLO';
+            const emoji = buildSuccess && deploySuccess ? '🚀' : '💥';
+            
+            const body = `
+            ${emoji} **CLI Tools Guide - Build Report**
+            
+            **Estado:** ${status}
+            **Commit:** ${context.sha.substring(0, 7)}
+            **Rama:** ${context.ref.replace('refs/heads/', '')}
+            **Formatos construidos:** ${formatsBuilt || 'ninguno'}
+            
+            **Resultados:**
+            - Build: ${buildSuccess ? '✅' : '❌'}
+            - Deploy: ${deploySuccess ? '✅' : '❌'}
+            
+            **Enlaces:**
+            - [Ver sitio](https://laguileracl.github.io/homebrew-cli-guide/)
+            - [Ver commit](${context.payload.repository.html_url}/commit/${context.sha})
+            - [Ver workflow](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            `;
+            
+            // Create or update issue comment for continuous deployment tracking
+            const issue_number = 1; // Assuming issue #1 for deployment tracking
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number,
+                body: body
+              });
+            } catch (error) {
+              console.log('No se pudo crear comentario de seguimiento:', error.message);
+            }
+            
+            console.log('📊 Build completado:', {
+              buildSuccess,
+              deploySuccess,
+              formatsBuilt,
+              sha: context.sha.substring(0, 7)
+            });

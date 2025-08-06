@@ -1,0 +1,176 @@
+# 🚀 Playground Interactivo
+
+::: {.callout-tip}
+## ¡Bienvenido al Playground Interactivo!
+
+Esta sección te permite **experimentar directamente** con las herramientas CLI sin salir del navegador. Aquí puedes:
+
+- ✏️ **Editar código** en tiempo real
+- ▶️ **Ejecutar comandos** de forma simulada
+- 💾 **Guardar snippets** para uso posterior
+- 🔗 **Conectar con API local** para funcionalidades avanzadas
+:::
+
+## Funcionalidades Interactivas
+
+### 🎯 Toolbar Flotante
+
+En la parte derecha de la pantalla encontrarás un **toolbar flotante** con estas opciones:
+
+| Botón | Función | Atajo |
+|-------|---------|-------|
+| <i class="fas fa-edit"></i> | Editar código en línea | `Ctrl/Cmd + E` |
+| <i class="fas fa-play"></i> | Ejecutar código simulado | `Ctrl/Cmd + R` |
+| <i class="fas fa-save"></i> | Guardar snippet | `Ctrl/Cmd + S` |
+| <i class="fas fa-cloud"></i> | Probar con API local | - |
+
+### 📝 Edición de Código
+
+Cada bloque de código en esta guía es **completamente editable**. Simplemente:
+
+1. Haz clic en el botón <i class="fas fa-edit"></i> de cualquier bloque de código
+2. Modifica el código según tus necesidades
+3. Haz clic en "Aplicar" para ver los cambios
+
+**Ejemplo interactivo:**
+
+```bash
+# Lista archivos con eza (modificable)
+eza -la --icons --git
+```
+
+### ⚡ Ejecución Simulada
+
+Puedes ejecutar comandos de forma simulada para ver su estructura y salida esperada:
+
+```bash
+# Buscar archivos con ripgrep
+rg "función" --type py
+```
+
+### 💾 Gestión de Snippets
+
+Guarda tus comandos favoritos y configuraciones personalizadas:
+
+```bash
+# Tu configuración personalizada de git
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu.email@ejemplo.com"
+```
+
+## 🔗 Integración con el Ecosistema
+
+### API Local
+
+Si tienes el servidor API ejecutándose (`npm run start` en `api-server/`), podrás:
+
+- 🔍 Buscar herramientas en tiempo real
+- 📊 Ver estadísticas de uso
+- 🎯 Obtener recomendaciones personalizadas
+
+**Iniciar API:**
+
+```bash
+cd api-server
+npm install
+npm start
+```
+
+### CLI Offline
+
+Usa la herramienta CLI local para consultas rápidas:
+
+```bash
+# Buscar herramientas de desarrollo
+./scripts/cli-guide search desarrollo
+
+# Modo interactivo con fzf
+./scripts/cli-guide interactive
+```
+
+### Dashboard Web
+
+Accede al dashboard interactivo:
+
+```bash
+# Abrir dashboard en el navegador
+open tools-explorer.html
+```
+
+## 🎨 Ejemplos Interactivos Avanzados
+
+### Combinaciones Poderosas
+
+```bash
+# Pipeline complejo: buscar, filtrar y procesar
+rg "export" --type js | fzf --preview 'head -20 {}' | xargs -I {} head -5 {}
+```
+
+### Configuración de Desarrollo
+
+```bash
+# Setup completo de entorno de desarrollo
+brew install node python@3.11 git gh
+gh auth login
+npm config set prefix ~/.npm-global
+```
+
+### Análisis de Sistema
+
+```bash
+# Monitoreo completo del sistema
+btop & 
+du -h ~ | head -20
+df -h
+```
+
+## 🎯 Consejos de Uso
+
+::: {.callout-note}
+### Mejores Prácticas
+
+1. **Experimenta libremente** - todos los cambios son temporales
+2. **Guarda snippets útiles** - para reutilizar configuraciones
+3. **Usa atajos de teclado** - para mayor productividad
+4. **Conecta la API** - para funcionalidades completas
+:::
+
+### Personalización
+
+Puedes personalizar la experiencia:
+
+- **Temas**: Cambia entre modo claro y oscuro
+- **Fuentes**: Optimizadas para programación
+- **Atajos**: Personaliza según tus preferencias
+
+### Resolución de Problemas
+
+Si algo no funciona:
+
+1. Recarga la página
+2. Verifica que JavaScript esté habilitado
+3. Comprueba la consola del navegador
+4. Asegúrate de que la API local esté ejecutándose
+
+## 🚀 Próximos Pasos
+
+Una vez que domines el playground:
+
+1. **Explora las secciones temáticas** del libro
+2. **Prueba combinaciones avanzadas** de herramientas
+3. **Contribuye** con tus propios ejemplos
+4. **Comparte** configuraciones útiles con la comunidad
+
+---
+
+::: {.callout-important}
+### ¡Importante!
+
+Este playground funciona mejor con:
+
+- **Navegadores modernos** (Chrome, Firefox, Safari)
+- **JavaScript habilitado**
+- **API local ejecutándose** (opcional pero recomendado)
+:::
+
+¡Disfruta explorando y experimentando con las herramientas CLI! 🎉

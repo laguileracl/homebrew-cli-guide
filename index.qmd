@@ -1,30 +1,62 @@
-# Guía Práctica de Herramientas CLI con Homebrew {.unnumbered}
+# 🚀 Guía Práctica de Herramientas CLI con Homebrew {.unnumbered}
 
-¡Bienvenido a la guía más completa de herramientas de línea de comandos instaladas con Homebrew!
+::: {.hero-banner}
+¡Bienvenido a la **guía más completa e interactiva** de herramientas de línea de comandos instaladas con Homebrew!
 
-## Acerca de este libro
+🎯 **Libro interactivo** • 🔍 **Búsqueda inteligente** • ⚡ **Código editable** • 🌐 **Ecosistema completo**
+:::
 
-Este libro es una guía práctica que documenta todas las herramientas de línea de comandos (CLI) instaladas en tu sistema mediante Homebrew. Cada herramienta incluye:
+## 🌟 ¿Qué hace especial esta guía?
 
-- ✅ **Descripción clara** de su propósito y funcionalidad
-- ✅ **Ejemplos prácticos** listos para usar
-- ✅ **Casos de uso reales** del día a día
-- ✅ **Combinaciones avanzadas** con otras herramientas
-- ✅ **Tips y trucos** para máxima productividad
+::: {.feature-grid}
+:::: {.feature-card}
+### ✏️ **Código Editable**
+Modifica y experimenta con **todos los comandos** directamente en el navegador
+::::
 
-## Estructura del libro
+:::: {.feature-card}
+### ⚡ **Ejecución Simulada**
+Prueba comandos de forma segura con **resultados realistas**
+::::
 
-El libro está organizado en **9 secciones principales**:
+:::: {.feature-card}
+### 💾 **Snippets Personalizados**
+Guarda tus configuraciones favoritas y **reutilízalas fácilmente**
+::::
+
+:::: {.feature-card}
+### 🔗 **Ecosistema Integrado**
+**6 formas diferentes** de acceder a la información: web, CLI, API, VS Code, Docker y dashboard
+::::
+:::
+
+## 🚀 Comenzar Rápidamente
+
+### 📖 Lectura Básica
+Simplemente navega por los capítulos para aprender sobre herramientas CLI
+
+### 🎮 Modo Interactivo  
+1. Haz clic en cualquier bloque de código
+2. Modifícalo según tus necesidades  
+3. Ejecútalo de forma simulada
+4. Guarda tus snippets favoritos
+
+### 🔧 Configuración Avanzada
+Para funcionalidades completas, configura el [ecosistema integrado](ecosystem-integration.qmd)
+
+## 📚 Contenido del Libro
+
+Esta guía documenta **200+ herramientas CLI** organizadas en **9 categorías principales**:
 
 ### 🧭 [Navegación y Exploración](navegacion.qmd)
 Herramientas para moverte y explorar tu sistema de archivos de manera eficiente.
 
-- **`eza`** - Listado de archivos moderno y colorido
+- **`eza`** - Listado de archivos moderno y colorido 
 - **`tree`** - Visualización de estructura de directorios
-- **`ranger`** - Navegador de archivos interactivo
+- **`ranger`** - Navegador de archivos interactivo  
 - **`zoxide`** - Navegación inteligente con memoria
 
-### 📁 [Gestión de Archivos](archivos.qmd)
+### 📁 [Gestión de Archivos](archivos.qmd)  
 Manipulación, organización y sincronización de archivos y directorios.
 
 - **`rename`** / **`renameutils`** - Renombrado masivo de archivos
@@ -42,14 +74,14 @@ Herramientas para encontrar información rápidamente en archivos y datos.
 Herramientas esenciales para desarrollo de software y control de versiones.
 
 - **`git`** - Control de versiones distribuido
-- **`gh`** - CLI oficial de GitHub
+- **`gh`** - CLI oficial de GitHub  
 - **`node`** - Runtime de JavaScript
 
 ### 🎵 [Multimedia](multimedia.qmd)
 Procesamiento de archivos de video, audio e imágenes desde la línea de comandos.
 
 - **`ffmpeg`** - Suite completa de procesamiento multimedia
-- **`yt-dlp`** - Descargador de videos de múltiples sitios
+- **`yt-dlp`** - Descargador de videos de múltiples sitios  
 - **`imagemagick`** - Manipulación avanzada de imágenes
 
 ### 🌐 [Red y Descargas](red.qmd)
@@ -65,6 +97,148 @@ Supervisión del rendimiento y estado del sistema.
 
 - **`htop`** - Monitor de procesos interactivo
 - **`neofetch`** - Información del sistema con estilo
+- **`btop`** - Monitor moderno con visualizaciones avanzadas
+
+### 📝 [Texto y Documentos](texto.qmd)
+Herramientas para procesamiento, edición y análisis de texto.
+
+- **`bat`** - Visualizador de archivos con sintaxis highlighting
+- **`pandoc`** - Conversor universal de documentos
+- **`vale`** - Linter de escritura y estilo
+
+### 🔧 [Utilidades Diversas](utilidades.qmd)  
+Herramientas útiles que no encajan en otras categorías.
+
+- **`thefuck`** - Corrector de comandos inteligente
+- **`tldr`** - Páginas de manual simplificadas
+- **`navi`** - Hoja de comandos interactiva
+
+## 🎯 Funcionalidades Especiales
+
+### 🚀 [Playground Interactivo](interactive-playground.qmd)
+Experimenta con código editable, ejecución simulada y gestión de snippets.
+
+### 🌐 [Integración del Ecosistema](ecosystem-integration.qmd)  
+Descubre las 6 formas diferentes de acceder a esta guía: web, CLI, API, VS Code, Docker y dashboard.
+
+### 🎯 [Combinaciones Avanzadas](combinaciones.qmd)
+Aprende a combinar herramientas para crear flujos de trabajo poderosos.
+
+### ⚙️ [Configuración y Mantenimiento](configuracion.qmd)
+Optimiza tu instalación de Homebrew y mantén tus herramientas actualizadas.
+
+## 📖 Formatos Disponibles
+
+Esta guía está disponible en múltiples formatos para diferentes necesidades:
+
+::: {.download-options}
+:::: {.download-card}
+### 🌐 **Web Interactiva**
+**Acceso:** [homebrew-cli-guide.github.io](https://laguileracl.github.io/homebrew-cli-guide/)
+
+✅ Código editable en tiempo real  
+✅ Búsqueda avanzada  
+✅ Temas claro/oscuro  
+✅ Snippets personalizados
+::::
+
+:::: {.download-card}  
+### 📄 **PDF Descargable**
+**Acceso:** [Descargar PDF](./homebrew-cli-guide.pdf)
+
+✅ Formato profesional  
+✅ Optimizado para impresión  
+✅ Índice navegable  
+✅ Referencias cruzadas
+::::
+
+:::: {.download-card}
+### 📱 **EPUB/eBook**  
+**Acceso:** [Descargar EPUB](./homebrew-cli-guide.epub)
+
+✅ Compatible con lectores de eBooks  
+✅ Formato responsive  
+✅ Marcadores y notas  
+✅ Búsqueda offline
+::::
+
+:::: {.download-card}
+### 📝 **Microsoft Word**
+**Acceso:** [Descargar DOCX](./homebrew-cli-guide.docx)
+
+✅ Editable y personalizable  
+✅ Comentarios y revisiones  
+✅ Formato profesional  
+✅ Fácil impresión
+::::
+:::
+
+## 🚀 Acceso Rápido al Ecosistema
+
+::: {.ecosystem-quick-access}
+| Herramienta | Descripción | Acceso |
+|-------------|-------------|---------|
+| 🌐 **Libro Web** | Versión interactiva completa | [Ver online](https://laguileracl.github.io/homebrew-cli-guide/) |
+| 📱 **Dashboard** | Búsqueda y exploración visual | `open tools-explorer.html` |
+| 💻 **CLI Offline** | Herramienta de consulta rápida | `./scripts/cli-guide search <término>` |
+| 🔗 **API REST** | Integración programática | `curl http://localhost:3000/tools` |
+| 🛠️ **VS Code** | Extensión para el editor | `code --install-extension ./vscode-extension` |
+| 🐳 **Docker** | Despliegue completo | `docker-compose up -d` |
+:::
+
+## 💡 Casos de Uso Principales
+
+### 👨‍💻 Para Desarrolladores
+- **Descubrimiento** de nuevas herramientas de desarrollo
+- **Referencia rápida** de sintaxis y opciones
+- **Automatización** de tareas repetitivas
+- **Integración** en flujos de trabajo existentes
+
+### 👨‍💼 Para Administradores de Sistema  
+- **Monitoreo** y diagnóstico del sistema
+- **Gestión** eficiente de archivos y procesos
+- **Automatización** de tareas administrativas
+- **Optimización** del rendimiento del sistema
+
+### 🎓 Para Estudiantes y Principiantes
+- **Aprendizaje interactivo** con ejemplos prácticos
+- **Experimentación segura** con código editable
+- **Progresión gradual** desde básico a avanzado
+- **Recursos** de referencia siempre disponibles
+
+### 🏢 Para Equipos de Trabajo
+- **Estandarización** de herramientas y procesos
+- **Documentación** compartida y actualizada
+- **Onboarding** de nuevos miembros del equipo
+- **Best practices** y convenciones del equipo
+
+## 🎯 Próximos Pasos
+
+1. **🚀 [Comienza con el Playground](interactive-playground.qmd)** - Experimenta con código interactivo
+2. **📖 Explora las categorías** - Encuentra herramientas para tus necesidades específicas  
+3. **🔧 Configura el ecosistema** - Instala componentes adicionales según tus preferencias
+4. **🤝 Contribuye** - Añade tus herramientas favoritas y mejoras
+
+---
+
+::: {.callout-important}
+### 🌟 **¿Nuevo en CLI?**
+
+Si eres nuevo en herramientas de línea de comandos:
+
+1. Comienza con [**Navegación y Exploración**](navegacion.qmd)
+2. Prueba el [**Playground Interactivo**](interactive-playground.qmd)  
+3. Instala herramientas básicas con `brew install eza tree fzf`
+4. Experimenta con ejemplos seguros en el navegador
+
+¡La línea de comandos puede parecer intimidante al principio, pero con esta guía interactiva aprenderás de forma gradual y práctica! 🚀
+:::
+
+---
+
+**📝 Última actualización:** `r Sys.Date()`  
+**🌟 Versión:** {{< meta params.version >}}  
+**🔗 GitHub:** [laguileracl/homebrew-cli-guide]({{< meta params.github_url >}})
 
 ### 📝 [Texto y Documentos](texto.qmd)
 Herramientas para visualización, edición y conversión de documentos.

@@ -1,70 +1,200 @@
 project:
   type: book
   output-dir: _book
+  preview:
+    port: 4200
+    browser: true
+    watch-inputs: true
 
 book:
-  title: "Guía Práctica de Herramientas CLI con Homebrew"
-  subtitle: "Manual completo de herramientas de línea de comandos"
-  author: "Generado automáticamente desde instalación Homebrew"
+  title: "🚀 Guía Práctica de Herramientas CLI con Homebrew"
+  subtitle: "Manual interactivo y completo de herramientas de línea de comandos"
+  author: 
+    - name: "Luis Aguilera"
+      url: "https://github.com/laguileracl"
+      affiliation: "CLI Tools Guide Project"
   date: today
+  date-format: "D MMMM YYYY"
+  
+  # Configuración del libro
+  downloads: [pdf, epub, docx]
+  tools: 
+    - edit
+    - source
+  sharing: [twitter, facebook, linkedin]
+  
+  # Sidebar y navegación
+  sidebar:
+    style: "floating"
+    search: true
+    collapse-level: 1
+    
+  # Footer personalizado
+  page-footer:
+    left: |
+      <span class="faux-block">📚 **CLI Tools Guide** - Guía interactiva de herramientas de línea de comandos</span>
+    center: |
+      <span class="faux-block">🔧 **Generado con [Quarto](https://quarto.org/)**</span>
+    right: |
+      <span class="faux-block">⭐ [**Star en GitHub**](https://github.com/laguileracl/homebrew-cli-guide)</span>
+      
+  # Navegación
+  repo-url: "https://github.com/laguileracl/homebrew-cli-guide"
+  repo-actions: [edit, source, issue]
   
   chapters:
     - index.qmd
-    - part: "Navegación y Exploración"
+    - interactive-playground.qmd
+    - part: "🧭 Navegación y Exploración"
       chapters:
         - navegacion.qmd
-    - part: "Gestión de Archivos"
+    - part: "📁 Gestión de Archivos"
       chapters:
         - archivos.qmd
-    - part: "Búsqueda y Filtrado"
+    - part: "🔍 Búsqueda y Filtrado"
       chapters:
         - busqueda.qmd
-    - part: "Desarrollo y Git"
+    - part: "💻 Desarrollo y Git"
       chapters:
         - desarrollo.qmd
-    - part: "Multimedia"
+    - part: "🎵 Multimedia"
       chapters:
         - multimedia.qmd
-    - part: "Red y Descargas"
+    - part: "🌐 Red y Descargas"
       chapters:
         - red.qmd
-    - part: "Monitoreo del Sistema"
+    - part: "📊 Monitoreo del Sistema"
       chapters:
         - monitoreo.qmd
-    - part: "Texto y Documentos"
+    - part: "📝 Texto y Documentos"
       chapters:
         - texto.qmd
-    - part: "Utilidades Diversas"
+    - part: "🔧 Utilidades Diversas"
       chapters:
         - utilidades.qmd
-    - part: "Recursos Adicionales"
+    - part: "🎯 Recursos Adicionales"
       chapters:
         - combinaciones.qmd
         - configuracion.qmd
+        - ecosystem-integration.qmd
 
 bibliography: references.bib
 
 format:
   html:
     theme: 
-      light: flatly
-      dark: darkly
-    css: styles.css
+      light: [flatly, styles.css]
+      dark: [darkly, styles.css]
+    css: 
+      - styles.css
+      - custom-interactive.css
+    mainfont: "Inter"
+    monofont: "JetBrains Mono"
+    
+    # Navegación y estructura
     toc: true
-    toc-depth: 3
-    toc-expand: 2
+    toc-depth: 4
+    toc-expand: 3
+    toc-location: left
     number-sections: true
+    number-depth: 3
+    
+    # Características interactivas
     code-copy: true
+    code-fold: false
     code-overflow: wrap
-    highlight-style: github
-    link-external-newwindow: true
-  pdf:
-    documentclass: scrbook
-    toc: true
-    toc-depth: 3
-    number-sections: true
+    code-line-numbers: true
     code-block-bg: true
     code-block-border-left: "#31BAE9"
+    highlight-style: github-dark
+    
+    # Enlaces y navegación
+    link-external-newwindow: true
+    link-external-icon: true
+    smooth-scroll: true
+    
+    # Funcionalidades avanzadas
+    citations-hover: true
+    crossrefs-hover: true
+    fig-responsive: true
+    
+    # Incluir scripts al final del body
+    include-after-body: include-after.html
+      
+  pdf:
+    documentclass: scrbook
+    classoption: [oneside, openany]
+    geometry: 
+      - margin=1in
+      - heightrounded
+    fontfamily: libertinus
+    fontsize: 11pt
+    linestretch: 1.2
+    
+    # Configuración del PDF
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 3
+    colorlinks: true
+    urlcolor: blue
+    linkcolor: black
+    citecolor: gray
+    
+    # Elementos visuales
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: github
+    fig-pos: "H"
+    fig-align: center
+    
+    # Metadatos del PDF
+    pdf-engine: pdflatex
+    keep-tex: false
+    include-in-header: |
+      \usepackage{fancyhdr}
+      \usepackage{graphicx}
+      \usepackage{xcolor}
+      \usepackage{listings}
+      \usepackage{fontawesome5}
+      \pagestyle{fancy}
+      \fancyhead[LE,RO]{\thepage}
+      \fancyhead[LO]{\rightmark}
+      \fancyhead[RE]{\leftmark}
+      \fancyfoot[C]{🚀 CLI Tools Guide - Homebrew}
+      
+  epub:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: github
+    epub-cover-image: cover.png
+    epub-metadata: |
+      <dc:subject>Command Line Tools</dc:subject>
+      <dc:subject>Homebrew</dc:subject>
+      <dc:subject>CLI</dc:subject>
+      <dc:subject>macOS</dc:subject>
+      <dc:subject>Development Tools</dc:subject>
+      
+  docx:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: github
+    reference-doc: template.docx
     
 execute:
   freeze: auto
+  cache: true
+  keep-md: false
+  
+# Configuración de filtros y extensiones
+filters:
+  - quarto
+  
+# Variables globales
+params:
+  version: "2.0.0"
+  github_url: "https://github.com/laguileracl/homebrew-cli-guide"
+  api_url: "http://localhost:3000"
+  interactive_mode: true
