@@ -35,7 +35,9 @@ book:
   
   chapters:
     - index.qmd
-    - interactive-playground.qmd
+    - part: "Primeros Pasos"
+      chapters:
+        - interactive-playground.qmd
     - part: "Navegación y Exploración"
       chapters:
         - navegacion.qmd
@@ -126,17 +128,6 @@ format:
     # Metadatos del PDF
     pdf-engine: pdflatex
     keep-tex: false
-    include-in-header: |
-      \usepackage{fancyhdr}
-      \usepackage{graphicx}
-      \usepackage{xcolor}
-      \usepackage{listings}
-      \usepackage{fontawesome5}
-      \pagestyle{fancy}
-      \fancyhead[LE,RO]{\thepage}
-      \fancyhead[LO]{\rightmark}
-      \fancyhead[RE]{\leftmark}
-      \fancyfoot[C]{🚀 CLI Tools Guide - Homebrew}
       
   epub:
     toc: true
