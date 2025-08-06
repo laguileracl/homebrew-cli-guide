@@ -1,6 +1,6 @@
 # Desarrollo y Git
 
-El desarrollo moderno requiere herramientas potentes para control de versiones, gestión de repositorios y ejecución de código. Esta sección cubre las herramientas esenciales para cualquier desarrollador.
+El desarrollo moderno requiere herramientas potentes para control de versiones, gestión de repositorios y ejecución de código. Esta sección cubre las herramientas esenciales para cualquier desarrollador profesional.
 
 ## git - Control de versiones distribuido {#sec-git}
 
