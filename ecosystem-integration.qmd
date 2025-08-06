@@ -1,7 +1,7 @@
 # 🌐 Integración del Ecosistema
 
 ::: {.callout-tip}
-## Un Ecosistema Completo
+## Un Ecosistema Completo y Conectado
 
 La **Guía CLI de Homebrew** es más que un libro - es un ecosistema completo de herramientas interconectadas que puedes usar de múltiples formas según tus necesidades.
 :::
