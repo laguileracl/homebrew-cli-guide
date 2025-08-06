@@ -1,6 +1,6 @@
 # Texto y Documentos
 
-Las herramientas de texto modernas mejoran significativamente la experiencia de lectura y edición de documentos desde la terminal.
+Las herramientas de texto modernas mejoran significativamente la experiencia de lectura, edición y conversión de documentos desde la terminal.
 
 ## bat - Visualizador con sintaxis {#sec-bat}
 
