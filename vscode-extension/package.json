@@ -1,0 +1,164 @@
+{
+  "name": "homebrew-cli-guide",
+  "displayName": "Homebrew CLI Guide",
+  "description": "Browse and install CLI tools from the Homebrew CLI Guide directly in VS Code",
+  "version": "1.0.0",
+  "publisher": "homebrew-cli-guide",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laguileracl/homebrew-cli-guide"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "homebrew",
+    "cli",
+    "tools",
+    "terminal",
+    "developer-tools"
+  ],
+  "activationEvents": [
+    "onCommand:homebrew-cli-guide.searchTools",
+    "onCommand:homebrew-cli-guide.openGuide",
+    "onView:homebrewTools"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "homebrew-cli-guide.searchTools",
+        "title": "Search CLI Tools",
+        "category": "Homebrew CLI"
+      },
+      {
+        "command": "homebrew-cli-guide.openGuide",
+        "title": "Open Full Guide",
+        "category": "Homebrew CLI"
+      },
+      {
+        "command": "homebrew-cli-guide.installTool",
+        "title": "Install Tool",
+        "category": "Homebrew CLI",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "homebrew-cli-guide.showExamples",
+        "title": "Show Examples",
+        "category": "Homebrew CLI",
+        "icon": "$(code)"
+      },
+      {
+        "command": "homebrew-cli-guide.refreshTools",
+        "title": "Refresh Tools List",
+        "category": "Homebrew CLI",
+        "icon": "$(refresh)"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "homebrewTools",
+          "name": "CLI Tools",
+          "when": "config.homebrew-cli-guide.showExplorerView"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "homebrew-cli-guide",
+          "title": "CLI Tools Guide",
+          "icon": "$(terminal)"
+        }
+      ]
+    },
+    "webviews": [
+      {
+        "viewType": "homebrew-cli-guide.toolDetails",
+        "displayName": "Tool Details"
+      }
+    ],
+    "configuration": {
+      "title": "Homebrew CLI Guide",
+      "properties": {
+        "homebrew-cli-guide.showExplorerView": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show CLI Tools view in Explorer sidebar"
+        },
+        "homebrew-cli-guide.autoInstall": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically install tools without confirmation"
+        },
+        "homebrew-cli-guide.preferredTerminal": {
+          "type": "string",
+          "enum": ["integrated", "external"],
+          "default": "integrated",
+          "description": "Preferred terminal for running commands"
+        },
+        "homebrew-cli-guide.updateInterval": {
+          "type": "number",
+          "default": 24,
+          "description": "Hours between automatic tool list updates"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "homebrew-cli-guide.searchTools",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "homebrew-cli-guide.refreshTools",
+          "when": "view == homebrewTools",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "homebrew-cli-guide.installTool",
+          "when": "view == homebrewTools && viewItem == tool",
+          "group": "inline"
+        },
+        {
+          "command": "homebrew-cli-guide.showExamples",
+          "when": "view == homebrewTools && viewItem == tool",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "homebrew-cli-guide.installTool",
+          "when": "false"
+        },
+        {
+          "command": "homebrew-cli-guide.showExamples",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "^18.x",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}

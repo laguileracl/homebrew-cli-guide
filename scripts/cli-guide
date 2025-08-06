@@ -1,0 +1,394 @@
+#!/bin/bash
+# cli-guide - Offline CLI tool for querying the homebrew guide
+
+set -euo pipefail
+
+# Configuración
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+GUIDE_DIR="$(dirname "$SCRIPT_DIR")"
+TOOLS_INDEX="$GUIDE_DIR/tools-index.json"
+VERSION="1.0.0"
+
+# Colores
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+# Funciones de utilidad
+print_header() {
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║${NC} ${BOLD}🛠️  CLI Tools Guide - Interactive Query Tool${NC} ${CYAN}║${NC}"
+    echo -e "${CYAN}║${NC} ${PURPLE}Version $VERSION${NC} - Query 200+ CLI tools from your terminal ${CYAN}║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+}
+
+print_help() {
+    cat << EOF
+${BOLD}USAGE:${NC}
+    cli-guide [COMMAND] [OPTIONS]
+
+${BOLD}COMMANDS:${NC}
+    ${GREEN}search${NC} [term]        Search tools by name, description, or tags
+    ${GREEN}category${NC} [name]      List tools in a specific category
+    ${GREEN}random${NC}               Show a random tool recommendation
+    ${GREEN}install${NC} [tool]       Show installation command for a tool
+    ${GREEN}examples${NC} [tool]      Show usage examples for a tool
+    ${GREEN}stats${NC}                Show guide statistics
+    ${GREEN}categories${NC}           List all available categories
+    ${GREEN}update${NC}               Update the tools database
+    ${GREEN}fzf${NC}                  Interactive fuzzy search (requires fzf)
+
+${BOLD}SEARCH OPTIONS:${NC}
+    ${YELLOW}--category${NC}, ${YELLOW}-c${NC}       Filter by category
+    ${YELLOW}--difficulty${NC}, ${YELLOW}-d${NC}     Filter by difficulty (beginner|intermediate|advanced)
+    ${YELLOW}--tag${NC}, ${YELLOW}-t${NC}            Filter by tag
+    ${YELLOW}--exact${NC}, ${YELLOW}-e${NC}          Exact match search
+
+${BOLD}OUTPUT OPTIONS:${NC}
+    ${YELLOW}--json${NC}, ${YELLOW}-j${NC}           Output in JSON format
+    ${YELLOW}--compact${NC}, ${YELLOW}-C${NC}        Compact output
+    ${YELLOW}--no-color${NC}          Disable colored output
+
+${BOLD}EXAMPLES:${NC}
+    cli-guide search git
+    cli-guide category desarrollo
+    cli-guide search rust --tag search
+    cli-guide install fd
+    cli-guide examples ripgrep
+    cli-guide fzf
+
+${BOLD}INTERACTIVE MODE:${NC}
+    Run without arguments to enter interactive mode
+EOF
+}
+
+# Verificar dependencias
+check_dependencies() {
+    if [[ ! -f "$TOOLS_INDEX" ]]; then
+        echo -e "${RED}Error: Tools index not found at $TOOLS_INDEX${NC}"
+        echo "Please run this from the homebrew-cli-guide directory"
+        exit 1
+    fi
+    
+    if ! command -v jq &> /dev/null; then
+        echo -e "${RED}Error: jq is required but not installed${NC}"
+        echo "Install with: brew install jq"
+        exit 1
+    fi
+}
+
+# Buscar herramientas
+search_tools() {
+    local search_term="$1"
+    local category_filter="${2:-}"
+    local difficulty_filter="${3:-}"
+    local tag_filter="${4:-}"
+    local exact_match="${5:-false}"
+    local output_format="${6:-pretty}"
+    
+    local jq_filter='.tools[]'
+    
+    # Aplicar filtros
+    if [[ -n "$category_filter" ]]; then
+        jq_filter="$jq_filter | select(.category == \"$category_filter\")"
+    fi
+    
+    if [[ -n "$difficulty_filter" ]]; then
+        jq_filter="$jq_filter | select(.difficulty == \"$difficulty_filter\")"
+    fi
+    
+    if [[ -n "$tag_filter" ]]; then
+        jq_filter="$jq_filter | select(.tags[] | contains(\"$tag_filter\"))"
+    fi
+    
+    # Búsqueda por término
+    if [[ -n "$search_term" ]]; then
+        if [[ "$exact_match" == "true" ]]; then
+            jq_filter="$jq_filter | select(.name == \"$search_term\")"
+        else
+            jq_filter="$jq_filter | select(.name | ascii_downcase | contains(\"${search_term,,}\") or .description | ascii_downcase | contains(\"${search_term,,}\") or (.tags[]? | ascii_downcase | contains(\"${search_term,,}\")))"
+        fi
+    fi
+    
+    local results
+    results=$(jq -c "$jq_filter" "$TOOLS_INDEX" 2>/dev/null)
+    
+    if [[ -z "$results" ]]; then
+        echo -e "${YELLOW}No tools found matching your criteria${NC}"
+        return 1
+    fi
+    
+    if [[ "$output_format" == "json" ]]; then
+        echo "$results" | jq -s '.'
+    else
+        format_tool_results "$results"
+    fi
+}
+
+# Formatear resultados
+format_tool_results() {
+    local results="$1"
+    local count=0
+    
+    while IFS= read -r tool; do
+        if [[ -n "$tool" ]]; then
+            ((count++))
+            local name=$(echo "$tool" | jq -r '.name')
+            local description=$(echo "$tool" | jq -r '.description')
+            local category=$(echo "$tool" | jq -r '.category')
+            local difficulty=$(echo "$tool" | jq -r '.difficulty')
+            local installation=$(echo "$tool" | jq -r '.installation')
+            local tags=$(echo "$tool" | jq -r '.tags | join(", ")')
+            
+            # Color por dificultad
+            local diff_color=""
+            case "$difficulty" in
+                "beginner") diff_color="$GREEN" ;;
+                "intermediate") diff_color="$YELLOW" ;;
+                "advanced") diff_color="$RED" ;;
+            esac
+            
+            echo -e "${BOLD}${BLUE}$name${NC} ${diff_color}[$difficulty]${NC}"
+            echo -e "  ${PURPLE}Category:${NC} $category"
+            echo -e "  ${CYAN}Description:${NC} $description"
+            echo -e "  ${GREEN}Install:${NC} $installation"
+            echo -e "  ${YELLOW}Tags:${NC} $tags"
+            echo ""
+        fi
+    done <<< "$results"
+    
+    echo -e "${BOLD}Found $count tool(s)${NC}"
+}
+
+# Mostrar ejemplos de una herramienta
+show_examples() {
+    local tool_name="$1"
+    
+    local tool_data
+    tool_data=$(jq -c ".tools[] | select(.name == \"$tool_name\")" "$TOOLS_INDEX")
+    
+    if [[ -z "$tool_data" ]]; then
+        echo -e "${RED}Tool '$tool_name' not found${NC}"
+        return 1
+    fi
+    
+    local name=$(echo "$tool_data" | jq -r '.name')
+    local description=$(echo "$tool_data" | jq -r '.description')
+    local examples=$(echo "$tool_data" | jq -r '.examples[]?')
+    
+    echo -e "${BOLD}${BLUE}$name${NC} - $description"
+    echo -e "${YELLOW}Examples:${NC}"
+    
+    if [[ -n "$examples" ]]; then
+        while IFS= read -r example; do
+            if [[ -n "$example" ]]; then
+                echo -e "  ${GREEN}$${NC} $example"
+            fi
+        done <<< "$examples"
+    else
+        echo -e "  ${YELLOW}No examples available${NC}"
+    fi
+}
+
+# Listar categorías
+list_categories() {
+    echo -e "${BOLD}Available Categories:${NC}"
+    echo ""
+    
+    jq -r '.categories | to_entries[] | "  \(.key | ascii_upcase): \(.value)"' "$TOOLS_INDEX" | \
+    while IFS=': ' read -r key value; do
+        echo -e "  ${BLUE}$key${NC}: $value"
+    done
+}
+
+# Estadísticas
+show_stats() {
+    local total_tools=$(jq '.tools | length' "$TOOLS_INDEX")
+    local total_categories=$(jq '.categories | length' "$TOOLS_INDEX")
+    
+    echo -e "${BOLD}Guide Statistics:${NC}"
+    echo -e "  ${GREEN}Total Tools:${NC} $total_tools"
+    echo -e "  ${BLUE}Categories:${NC} $total_categories"
+    echo ""
+    
+    echo -e "${BOLD}Tools by Category:${NC}"
+    jq -r '.categories | keys[]' "$TOOLS_INDEX" | while read -r category; do
+        local count=$(jq ".tools | map(select(.category == \"$category\")) | length" "$TOOLS_INDEX")
+        echo -e "  ${PURPLE}$category${NC}: $count tools"
+    done
+    
+    echo ""
+    echo -e "${BOLD}Difficulty Distribution:${NC}"
+    for difficulty in beginner intermediate advanced; do
+        local count=$(jq ".tools | map(select(.difficulty == \"$difficulty\")) | length" "$TOOLS_INDEX")
+        echo -e "  ${YELLOW}$difficulty${NC}: $count tools"
+    done
+}
+
+# Herramienta aleatoria
+random_tool() {
+    local random_tool
+    random_tool=$(jq -c '.tools | .[($RANDOM % length)]' "$TOOLS_INDEX" --argjson RANDOM "$RANDOM")
+    
+    echo -e "${BOLD}${PURPLE}🎲 Random Tool Recommendation:${NC}"
+    echo ""
+    format_tool_results "$random_tool"
+}
+
+# Búsqueda interactiva con fzf
+interactive_search() {
+    if ! command -v fzf &> /dev/null; then
+        echo -e "${RED}Error: fzf is required for interactive search${NC}"
+        echo "Install with: brew install fzf"
+        return 1
+    fi
+    
+    local tool_list
+    tool_list=$(jq -r '.tools[] | "\(.name) - \(.description) [\(.category)]"' "$TOOLS_INDEX")
+    
+    local selected
+    selected=$(echo "$tool_list" | fzf --header="🔍 Search CLI Tools" --preview='
+        tool_name=$(echo {} | cut -d" " -f1)
+        cli-guide examples "$tool_name" 2>/dev/null || echo "No examples available"
+    ')
+    
+    if [[ -n "$selected" ]]; then
+        local tool_name=$(echo "$selected" | cut -d' ' -f1)
+        echo ""
+        show_examples "$tool_name"
+    fi
+}
+
+# Modo interactivo
+interactive_mode() {
+    print_header
+    
+    while true; do
+        echo -e "${BOLD}What would you like to do?${NC}"
+        echo "1. Search tools"
+        echo "2. Browse by category"
+        echo "3. Random recommendation"
+        echo "4. Show statistics"
+        echo "5. Interactive search (fzf)"
+        echo "6. Exit"
+        echo ""
+        
+        read -p "Select option (1-6): " choice
+        echo ""
+        
+        case "$choice" in
+            1)
+                read -p "Enter search term: " term
+                search_tools "$term"
+                ;;
+            2)
+                list_categories
+                echo ""
+                read -p "Enter category name: " category
+                search_tools "" "$category"
+                ;;
+            3)
+                random_tool
+                ;;
+            4)
+                show_stats
+                ;;
+            5)
+                interactive_search
+                ;;
+            6)
+                echo -e "${GREEN}Thanks for using CLI Tools Guide!${NC}"
+                exit 0
+                ;;
+            *)
+                echo -e "${RED}Invalid option${NC}"
+                ;;
+        esac
+        
+        echo ""
+        read -p "Press Enter to continue..."
+        echo ""
+    done
+}
+
+# Función principal
+main() {
+    check_dependencies
+    
+    # Sin argumentos = modo interactivo
+    if [[ $# -eq 0 ]]; then
+        interactive_mode
+        return
+    fi
+    
+    # Parsear argumentos
+    local command="$1"
+    shift
+    
+    case "$command" in
+        "search")
+            if [[ $# -eq 0 ]]; then
+                echo -e "${RED}Error: Search term required${NC}"
+                exit 1
+            fi
+            search_tools "$@"
+            ;;
+        "category")
+            if [[ $# -eq 0 ]]; then
+                list_categories
+            else
+                search_tools "" "$1"
+            fi
+            ;;
+        "random")
+            random_tool
+            ;;
+        "install")
+            if [[ $# -eq 0 ]]; then
+                echo -e "${RED}Error: Tool name required${NC}"
+                exit 1
+            fi
+            local tool_data
+            tool_data=$(jq -c ".tools[] | select(.name == \"$1\")" "$TOOLS_INDEX")
+            if [[ -n "$tool_data" ]]; then
+                echo $(echo "$tool_data" | jq -r '.installation')
+            else
+                echo -e "${RED}Tool '$1' not found${NC}"
+            fi
+            ;;
+        "examples")
+            if [[ $# -eq 0 ]]; then
+                echo -e "${RED}Error: Tool name required${NC}"
+                exit 1
+            fi
+            show_examples "$1"
+            ;;
+        "stats")
+            show_stats
+            ;;
+        "categories")
+            list_categories
+            ;;
+        "fzf")
+            interactive_search
+            ;;
+        "help"|"--help"|"-h")
+            print_help
+            ;;
+        *)
+            echo -e "${RED}Unknown command: $command${NC}"
+            echo ""
+            print_help
+            exit 1
+            ;;
+    esac
+}
+
+# Ejecutar
+main "$@"

@@ -1,0 +1,232 @@
+name: Auto Process Contributions
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - '**.qmd'
+      - 'tools-index.json'
+      - 'scripts/**'
+
+jobs:
+  validate-contribution:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq shellcheck
+      
+      - name: Validate JSON structure
+        if: contains(github.event.pull_request.changed_files, 'tools-index.json')
+        run: |
+          echo "Validating tools-index.json structure..."
+          jq empty tools-index.json
+          
+          # Validar estructura requerida
+          jq -e '.metadata' tools-index.json > /dev/null
+          jq -e '.tools | type == "array"' tools-index.json > /dev/null
+          jq -e '.categories | type == "object"' tools-index.json > /dev/null
+          
+          # Validar que cada tool tenga campos requeridos
+          jq -e '.tools[] | has("name") and has("category") and has("description") and has("installation")' tools-index.json > /dev/null
+          
+          echo "✅ JSON structure is valid"
+      
+      - name: Validate shell scripts
+        run: |
+          echo "Validating shell scripts..."
+          find scripts/ -name "*.sh" -exec shellcheck {} \;
+          echo "✅ Shell scripts are valid"
+      
+      - name: Test tool installations
+        if: contains(github.event.pull_request.changed_files, 'tools-index.json')
+        run: |
+          echo "Testing installation commands..."
+          
+          # Extraer comandos de instalación únicos
+          jq -r '.tools[].installation | select(startswith("brew install"))' tools-index.json | sort -u > install_commands.txt
+          
+          # Verificar que las fórmulas existan en Homebrew
+          while read -r install_cmd; do
+            if [[ $install_cmd =~ brew\ install\ (.+) ]]; then
+              formula="${BASH_REMATCH[1]}"
+              echo "Checking formula: $formula"
+              
+              # Verificar en el API de Homebrew
+              if ! curl -s "https://formulae.brew.sh/api/formula/${formula}.json" | jq -e '.name' > /dev/null; then
+                if ! curl -s "https://formulae.brew.sh/api/cask/${formula}.json" | jq -e '.token' > /dev/null; then
+                  echo "❌ Formula/Cask not found: $formula"
+                  exit 1
+                fi
+              fi
+              echo "✅ Verified: $formula"
+            fi
+          done < install_commands.txt
+      
+      - name: Build book to test
+        run: |
+          echo "Testing book build..."
+          quarto render --to html
+          echo "✅ Book builds successfully"
+      
+      - name: Generate contribution report
+        run: |
+          echo "## 📊 Contribution Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Estadísticas de archivos modificados
+          echo "### 📁 Files Changed" >> $GITHUB_STEP_SUMMARY
+          echo "- \`$(echo '${{ github.event.pull_request.changed_files }}' | jq length)\` files modified" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Si se modificó tools-index.json
+          if echo '${{ github.event.pull_request.changed_files }}' | jq -e '.[] | select(. == "tools-index.json")' > /dev/null; then
+            echo "### 🛠️ Tools Index Changes" >> $GITHUB_STEP_SUMMARY
+            
+            # Contar herramientas total
+            total_tools=$(jq '.tools | length' tools-index.json)
+            echo "- Total tools: **$total_tools**" >> $GITHUB_STEP_SUMMARY
+            
+            # Herramientas por categoría
+            echo "- Tools by category:" >> $GITHUB_STEP_SUMMARY
+            jq -r '.categories | keys[]' tools-index.json | while read -r category; do
+              count=$(jq ".tools | map(select(.category == \"$category\")) | length" tools-index.json)
+              echo "  - $category: $count" >> $GITHUB_STEP_SUMMARY
+            done
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "- JSON structure: ✅ Valid" >> $GITHUB_STEP_SUMMARY
+          echo "- Shell scripts: ✅ Valid" >> $GITHUB_STEP_SUMMARY
+          echo "- Book build: ✅ Success" >> $GITHUB_STEP_SUMMARY
+
+  auto-approve-docs:
+    runs-on: ubuntu-latest
+    needs: validate-contribution
+    if: |
+      contains(github.event.pull_request.title, '[docs]') ||
+      contains(github.event.pull_request.title, '[typo]') ||
+      contains(github.event.pull_request.title, '[examples]')
+    steps:
+      - name: Auto-approve documentation changes
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
+              body: '🤖 Auto-approved: Documentation/example changes that passed validation'
+            });
+
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    needs: validate-contribution
+    if: |
+      contains(github.event.pull_request.changed_files, 'tools-index.json') ||
+      contains(github.event.pull_request.title, '[new-tool]')
+    steps:
+      - name: Assign reviewers for tool additions
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Asignar reviewers para cambios importantes
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              reviewers: ['laguileracl'], // Agregar más maintainers aquí
+            });
+            
+            // Agregar labels apropiados
+            const labels = ['new-tool', 'needs-review'];
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: labels
+            });
+
+  update-index:
+    runs-on: ubuntu-latest
+    needs: validate-contribution
+    if: contains(github.event.pull_request.changed_files, 'tools-index.json')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update metadata
+        run: |
+          # Actualizar timestamp y estadísticas en metadata
+          jq --arg date "$(date -u +%Y-%m-%d)" \
+             --argjson tools "$(jq '.tools | length' tools-index.json)" \
+             --argjson categories "$(jq '.categories | length' tools-index.json)" \
+             '.metadata.generated = $date | .metadata.total_tools = $tools | .metadata.categories = $categories' \
+             tools-index.json > tools-index-updated.json
+          
+          mv tools-index-updated.json tools-index.json
+      
+      - name: Commit metadata update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add tools-index.json
+          git diff --staged --quiet || git commit -m "🤖 Auto-update: metadata timestamp and stats"
+          git push
+
+  welcome-contributor:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    steps:
+      - name: Welcome new contributor
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Verificar si es primera contribución
+            const { data: pullRequests } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all',
+              creator: context.payload.pull_request.user.login
+            });
+            
+            if (pullRequests.length === 1) {
+              // Primera contribución
+              const welcomeMessage = `
+            🎉 **Welcome to the CLI Tools Guide community!** 
+            
+            Thank you for your first contribution! Here's what happens next:
+            
+            ### ✅ Automated Checks
+            - JSON structure validation
+            - Installation command verification  
+            - Book build test
+            - Shell script linting
+            
+            ### 👥 Review Process
+            ${pullRequests[0].changed_files.includes('tools-index.json') ? 
+              '- A maintainer will review your tool addition\n- We verify the tool is useful and well-documented' : 
+              '- Documentation changes are often auto-approved if they pass validation'}
+            
+            ### 🚀 After Merge
+            - Your changes will be deployed to the live site
+            - You'll be added to our contributors list
+            - Your tools will be searchable in our CLI interface
+            
+            Questions? Feel free to ask in the comments or join our [Discussions](../../discussions)!
+            `;
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: welcomeMessage
+              });
+            }

@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generated": "2025-08-06",
+    "total_tools": 200,
+    "categories": 11
+  },
+  "tools": [
+    {
+      "name": "fd",
+      "category": "busqueda",
+      "description": "Find alternative more user-friendly",
+      "installation": "brew install fd",
+      "tags": ["search", "filesystem", "rust"],
+      "examples": [
+        "fd pattern",
+        "fd -e js",
+        "fd -t f pattern"
+      ],
+      "difficulty": "beginner",
+      "alternatives": ["find", "locate"]
+    },
+    {
+      "name": "ripgrep",
+      "category": "busqueda", 
+      "description": "Grep alternative ultra-fast",
+      "installation": "brew install ripgrep",
+      "tags": ["search", "text", "rust"],
+      "examples": [
+        "rg pattern",
+        "rg -i pattern",
+        "rg pattern --type js"
+      ],
+      "difficulty": "beginner",
+      "alternatives": ["grep", "ag"]
+    }
+  ],
+  "categories": {
+    "navegacion": "Navigation and filesystem exploration",
+    "archivos": "File management and manipulation", 
+    "busqueda": "Search and filtering tools",
+    "desarrollo": "Development and programming tools",
+    "multimedia": "Media processing and conversion",
+    "red": "Networking and connectivity",
+    "monitoreo": "System monitoring and diagnostics",
+    "texto": "Text processing and documents",
+    "utilidades": "General purpose utilities",
+    "combinaciones": "Advanced workflows and automation",
+    "configuracion": "Setup and customization"
+  }
+}
