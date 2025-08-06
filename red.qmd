@@ -1,6 +1,6 @@
 # Red y Descargas
 
-Las herramientas de red son esenciales para interactuar con APIs, descargar archivos y transferir datos. Esta sección cubre las herramientas más potentes para comunicación HTTP y transferencia de archivos.
+Las herramientas de red son esenciales para interactuar con APIs, descargar archivos y transferir datos eficientemente. Esta sección cubre las herramientas más potentes para comunicación HTTP y transferencia de archivos.
 
 ## curl - Cliente HTTP versátil {#sec-curl}
 
