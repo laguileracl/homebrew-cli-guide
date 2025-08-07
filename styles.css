@@ -1,0 +1,72 @@
+/*= Sidebar navigation improvements =*/
+
+/* Collapse behavior for sidebar */
+.sidebar nav ul {
+  transition: all 0.3s ease;
+}
+
+/* Part titles styling */
+.sidebar nav > ul > li > .sidebar-item {
+  font-weight: 600;
+  color: #1e40af;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0;
+}
+
+/* Hide nested chapters by default */
+.sidebar nav > ul > li > ul {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+/* Show nested chapters when parent is active */
+.sidebar nav > ul > li.active > ul,
+.sidebar nav > ul > li:hover > ul {
+  max-height: 500px;
+}
+
+/* Chapter links styling */
+.sidebar nav ul ul li a {
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* Active chapter highlighting */
+.sidebar nav ul ul li.active > a,
+.sidebar nav ul ul li a:hover {
+  color: #1e40af;
+  border-left-color: #1e40af;
+  background-color: #f8fafc;
+}
+
+/* Smooth scrolling for sidebar */
+.sidebar {
+  scroll-behavior: smooth;
+}
+
+/* Better spacing */
+.sidebar nav ul li {
+  margin: 0.2rem 0;
+}
+
+/* Icons for parts */
+.sidebar nav > ul > li > a::before {
+  content: "📁";
+  margin-right: 0.5rem;
+}
+
+/* Collapse indicator */
+.sidebar nav > ul > li > a::after {
+  content: "▶";
+  float: right;
+  transition: transform 0.3s ease;
+}
+
+.sidebar nav > ul > li.active > a::after,
+.sidebar nav > ul > li:hover > a::after {
+  transform: rotate(90deg);
+}

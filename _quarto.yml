@@ -22,6 +22,12 @@ book:
   # Sidebar y navegación
   sidebar:
     search: true
+    collapse-level: 1
+    pinned: true
+    tools:
+      - icon: github
+        href: https://github.com/laguileracl/homebrew-cli-guide
+        text: "GitHub"
     
   # Footer limpio
   page-footer:
@@ -80,11 +86,16 @@ format:
       - styles.css
       - custom-interactive.css
     
+    # JavaScript personalizado y elementos interactivos
+    include-after-body: include-after.html
+    
     # Navegación y estructura
     toc: true
     toc-depth: 3
-    toc-expand: 2
+    toc-expand: 1
+    toc-location: right
     number-sections: true
+    sidebar-collapse-level: 1
     
     # Características básicas
     code-copy: true
@@ -94,9 +105,6 @@ format:
     
     # Enlaces y navegación
     link-external-newwindow: true
-    
-    # Incluir elementos interactivos
-    include-after-body: include-after.html
       
   pdf:
     documentclass: scrbook
