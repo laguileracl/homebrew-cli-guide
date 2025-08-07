@@ -21,11 +21,7 @@
     "terminal",
     "developer-tools"
   ],
-  "activationEvents": [
-    "onCommand:homebrew-cli-guide.searchTools",
-    "onCommand:homebrew-cli-guide.openGuide",
-    "onView:homebrewTools"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -63,6 +59,7 @@
         {
           "id": "homebrewTools",
           "name": "CLI Tools",
+          "icon": "$(tools)",
           "when": "config.homebrew-cli-guide.showExplorerView"
         }
       ]
