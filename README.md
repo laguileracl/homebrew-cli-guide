@@ -114,7 +114,7 @@ fd "*.json" | parallel -j8 'jq ".metrics" {}'  # Procesamiento paralelo
 ```bash
 # Automatización diaria
 brew update && brew upgrade && brew cleanup  # Mantenimiento
-neofetch && df -h && free -h  # Status del sistema
+fastfetch && df -h && free -h  # Status del sistema
 fzf-history-widget  # Búsqueda inteligente en historial
 ```
 

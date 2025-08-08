@@ -727,9 +727,9 @@ setup_homebrew_tools() {
     
     tools=(
         "bat" "eza" "ripgrep" "fzf" "zoxide" "starship"
-        "direnv" "tldr" "thefuck" "git" "gh" "node"
+        "direnv" "tealdeer" "thefuck" "git" "gh" "node"
         "ffmpeg" "imagemagick" "pandoc" "glow" "htop"
-        "neofetch" "cowsay" "jq" "curl" "wget" "aria2"
+        "fastfetch" "cowsay" "jq" "curl" "wget" "aria2"
     )
     
     for tool in "${tools[@]}"; do
@@ -781,7 +781,7 @@ setup_scripts() {
 finalize_setup() {
     echo "🎯 Finalizando configuración..."
     
-    # Actualizar tldr
+    # Actualizar tealdeer
     tldr --update
     
     # Configurar direnv para que funcione inmediatamente
@@ -850,9 +850,9 @@ Este libro ha cubierto un ecosistema completo de herramientas CLI modernas que t
 ✅ **Desarrollo moderno** con `git`, `gh` y `node`  
 ✅ **Procesamiento multimedia** con `ffmpeg`, `yt-dlp` e `imagemagick`  
 ✅ **Networking** con `curl`, `httpie` y herramientas de descarga  
-✅ **Monitoreo** con `htop` y `neofetch`  
+✅ **Monitoreo** con `htop` y `fastfetch`  
 ✅ **Documentación** con `bat`, `pandoc` y `glow`  
-✅ **Utilidades** como `tldr`, `thefuck` y `starship`  
+✅ **Utilidades** como `tealdeer`, `thefuck` y `starship`  
 ✅ **Workflows complejos** combinando múltiples herramientas  
 ✅ **Configuración completa** de un entorno productivo  
 

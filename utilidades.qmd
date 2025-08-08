@@ -2,14 +2,34 @@
 
 Esta sección cubre herramientas que mejoran significativamente la experiencia general en terminal, desde corrección automática hasta personalización avanzada del prompt.
 
-## tldr - Ejemplos prácticos de comandos {#sec-tldr}
+## tealdeer - Ejemplos prácticos de comandos {#sec-tealdeer}
 
-tldr proporciona páginas de manual simplificadas con ejemplos prácticos.
+`tealdeer` es una implementación moderna y rápida de `tldr`, compatible con las páginas tldr pero escrita en Rust.
+
+::: {.callout-warning}
+## ⚠️ Migración desde tldr
+
+La fórmula original de `tldr` en Homebrew ha sido marcada como **obsoleta**. Las alternativas recomendadas son:
+
+**Opción 1: tealdeer (recomendado para Homebrew)**
+```bash
+# Desinstalar tldr si está instalado
+brew uninstall tldr 2>/dev/null || true
+
+# Instalar tealdeer (implementación en Rust)
+brew install tealdeer
+```
+
+**Opción 2: tldr vía npm (versión oficial mantenida)**
+```bash
+npm install -g tldr
+```
+:::
 
 ### Uso básico
 
 ```bash
-# Ver ejemplos de un comando
+# Ver ejemplos de un comando (usa comando 'tldr' igual que antes)
 tldr git
 tldr curl
 tldr find
@@ -26,21 +46,37 @@ tldr -p linux tar
 tldr -p macos ls
 ```
 
-### Configuración
+### Configuración avanzada
 
 ```bash
 # Configurar tema
 tldr --theme base16
 
-# Idioma específico (si está disponible)
+# Idioma específico (si está disponible)  
 tldr -L es git
 
-# Configuración personalizada en ~/.tldrrc
-{
-    "theme": "base16",
-    "platform": "macos"
-}
+# Configuración en ~/.config/tealdeer/config.toml
+[display]
+compact = false
+use_pager = false
+
+[updates]
+auto_update = true
+auto_update_interval_hours = 24
+
+[style]
+description = "white"
+code = "green"
+parameter = "cyan"
 ```
+
+### Comparación de alternativas
+
+| Implementación | Instalación | Velocidad | Estado |
+|----------------|-------------|-----------|---------|
+| `tealdeer` | `brew install` | ⚡ Muy rápida | ✅ Mantenido |
+| `tldr` (npm) | `npm install -g` | 🚀 Rápida | ✅ Oficial |
+| `tldr` (brew) | ❌ Obsoleto | 🐌 Regular | ❌ Deprecated |
 
 ---
 
@@ -354,7 +390,7 @@ alias grep='rg'
 
 # Funciones útiles
 help() {
-    tldr "$1" 2>/dev/null || man "$1"
+    tldr "$1" 2>/dev/null || man "$1"  # tldr funciona igual con tealdeer
 }
 EOF
 }
@@ -470,7 +506,7 @@ preexec() {
 
 ::: {.callout-tip}
 ## Tips para utilidades
-- Combina `tldr` con `man` para documentación completa
+- Combina `tealdeer` (comando `tldr`) con `man` para documentación completa
 - `direnv` es perfecto para proyectos con configuraciones específicas
 - `starship` puede mostrar información contextual del proyecto actual
 - `thefuck` aprende de tus errores comunes

@@ -75,7 +75,7 @@ Herramientas para transferencia de datos, APIs y descargas de internet.
 Supervisión del rendimiento y estado del sistema.
 
 - **`htop`** - Monitor de procesos interactivo
-- **`neofetch`** - Información del sistema con estilo
+- **`fastfetch`** - Información del sistema con estilo (reemplaza neofetch)
 - **`btop`** - Monitor moderno con visualizaciones avanzadas
 
 ### Texto y Documentos
@@ -89,7 +89,7 @@ Herramientas para procesamiento, edición y análisis de texto.
 Herramientas útiles que no encajan en otras categorías.
 
 - **`thefuck`** - Corrector de comandos inteligente
-- **`tldr`** - Páginas de manual simplificadas
+- **`tealdeer`** - Páginas de manual simplificadas (reemplaza tldr)
 - **`navi`** - Hoja de comandos interactiva
 
 ## Funcionalidades Especiales
@@ -140,7 +140,7 @@ Herramientas para visualización, edición y conversión de documentos.
 ### 🛠️ [Utilidades Diversas](utilidades.qmd)
 Herramientas que mejoran la experiencia general en la terminal.
 
-- **`tldr`** - Páginas de manual simplificadas
+- **`tealdeer`** - Páginas de manual simplificadas (reemplaza tldr)
 - **`thefuck`** - Corrector automático de comandos
 - **`cowsay`** - Arte ASCII divertido
 - **`direnv`** - Variables de entorno por directorio
