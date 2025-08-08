@@ -145,14 +145,14 @@ brew list --formula | sort | while read formula; do
         "cowsay")
             examples="\`cowsay \"Hola mundo\"\`, \`fortune | cowsay\`"
             ;;
-        "neofetch")
-            examples="\`neofetch\` (muestra info del sistema con estilo)"
+        "fastfetch")
+            examples="\`fastfetch\` (muestra info del sistema con estilo - reemplaza neofetch)"
             ;;
         "starship")
             examples="Prompt personalizable - configurar en \`~/.config/starship.toml\`"
             ;;
-        "tldr")
-            examples="\`tldr git\`, \`tldr curl\` (ejemplos prácticos de comandos)"
+        "tealdeer")
+            examples="\`tldr git\`, \`tldr curl\` (ejemplos prácticos - reemplaza tldr)"
             ;;
         "ranger")
             examples="\`ranger\` (navegador de archivos en terminal)"

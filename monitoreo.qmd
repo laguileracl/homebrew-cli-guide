@@ -60,65 +60,106 @@ tree_view=1
 
 ---
 
-## neofetch - Información del sistema {#sec-neofetch}
+## fastfetch - Información del sistema moderna {#sec-fastfetch}
 
-neofetch muestra información del sistema de manera visualmente atractiva.
+`fastfetch` es el sucesor oficial y moderno de `neofetch`, ofreciendo mejor rendimiento y más opciones de personalización.
+
+::: {.callout-warning}
+## ⚠️ Migración desde neofetch
+
+`neofetch` ha sido marcado como **obsoleto** y ya no recibe actualizaciones. `fastfetch` es el reemplazo oficial recomendado por la comunidad.
+
+```bash
+# Desinstalar neofetch si está instalado
+brew uninstall neofetch 2>/dev/null || true
+
+# Instalar fastfetch (el reemplazo moderno)
+brew install fastfetch
+```
+:::
 
 ### Uso básico
 
 ```bash
 # Información completa del sistema
-neofetch
+fastfetch
 
 # Solo información específica
-neofetch --disable packages shell resolution de wm theme icons cursor
+fastfetch --disable packages shell resolution de wm theme icons cursor
 
-# Con imagen personalizada
-neofetch --image /path/to/image.png
+# Con logo personalizado
+fastfetch --logo /path/to/image.png
 
 # ASCII distro específico
-neofetch --ascii_distro arch
+fastfetch --logo arch
 ```
 
 ### Configuración personalizada
 
-Archivo `~/.config/neofetch/config.conf`:
+Archivo `~/.config/fastfetch/config.jsonc`:
 
-```bash
-# Información a mostrar
-print_info() {
-    info title
-    info underline
-    info "OS" distro
-    info "Host" model
-    info "Kernel" kernel
-    info "Uptime" uptime
-    info "Packages" packages
-    info "Shell" shell
-    info "Resolution" resolution
-    info "Terminal" term
-    info "CPU" cpu
-    info "GPU" gpu
-    info "Memory" memory
+```json
+{
+    "logo": {
+        "source": "macos",
+        "padding": {
+            "top": 2,
+            "left": 4
+        }
+    },
+    "display": {
+        "separator": " -> ",
+        "key": {
+            "width": 10
+        }
+    },
+    "modules": [
+        "title",
+        "separator",
+        "os",
+        "host", 
+        "kernel",
+        "uptime",
+        "packages",
+        "shell",
+        "terminal",
+        "cpu",
+        "gpu",
+        "memory",
+        "disk"
+    ]
 }
-
-# Configuraciones
-image_backend="ascii"
-ascii_distro="auto"
-ascii_colors=(distro)
-image_size="auto"
 ```
 
-### Scripts con neofetch
+### Comparación de rendimiento
 
-#### System info script
+| Herramienta | Estado | Velocidad | Memoria | Mantenimiento |
+|-------------|--------|-----------|---------|---------------|
+| `fastfetch` | ✅ Activo | ~50ms | Bajo | Activo |
+| `neofetch` | ❌ Obsoleto | ~200ms | Alto | Abandonado |
+| `screenfetch` | ⚠️ Inactivo | ~150ms | Medio | Mínimo |
+
+### Scripts con fastfetch
+
+#### System info script moderno
 
 ```bash
 #!/bin/bash
 # system-report.sh
 
 echo "=== SYSTEM REPORT $(date) ==="
-neofetch --stdout
+fastfetch --format json > /tmp/system_info.json
+
+# Extraer información específica con jq
+OS=$(jq -r '.os.name' /tmp/system_info.json)
+KERNEL=$(jq -r '.kernel.release' /tmp/system_info.json)
+CPU=$(jq -r '.cpu.name' /tmp/system_info.json)
+MEMORY=$(jq -r '.memory.used + " / " + .memory.total' /tmp/system_info.json)
+
+echo "OS: $OS"
+echo "Kernel: $KERNEL" 
+echo "CPU: $CPU"
+echo "Memory: $MEMORY"
 
 echo -e "\n=== DISK USAGE ==="
 df -h | grep -E '^(/dev/)'
@@ -222,7 +263,7 @@ log_message "System check completed"
 ::: {.callout-tip}
 ## Tips de monitoreo
 - Usa htop para debugging de rendimiento en tiempo real
-- neofetch es útil para screenshots y reportes de sistema
+- fastfetch es útil para screenshots y reportes de sistema (reemplaza neofetch)
 - Combina estas herramientas con scripts para monitoreo automatizado
 :::
 

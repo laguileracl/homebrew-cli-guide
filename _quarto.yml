@@ -74,6 +74,7 @@ book:
     - part: "Recursos Adicionales"
       chapters:
         - combinaciones.qmd
+        - homebrew-management.qmd
         - configuracion.qmd
         - ecosystem-integration.qmd
 
