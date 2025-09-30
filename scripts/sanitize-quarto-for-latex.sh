@@ -12,15 +12,19 @@ rsync -a --include='*/' --include='*.qmd' --include='*.yml' --include='*.yaml' -
 
 # Replace common emoji and special unicode that breaks LaTeX
 # Add mappings here as needed (hex codepoints)
-perl -CSD -pe '\
-    s/\x{1F4DD}/[NOTE]/g; # 📝
-    s/\x{1F4D6}/[BOOK]/g; # 📖
-    s/\x{1F4D1}/[MARK]/g; # 📑
-' -i $(find "$TMPDIR" -name '*.qmd')
+perl -CSD -pe 's/[\x{1F300}-\x{1F6FF}\x{1F900}-\x{1F9FF}\x{2600}-\x{26FF}\x{FE0F}]//g' -i $(find "$TMPDIR" -name '*.qmd')
+perl -CSD -pe 's/\p{So}//g' -i $(find "$TMPDIR" -name '*.qmd')
 
 # Render PDF in tmpdir
 cd "$TMPDIR"
-quarto render --to pdf --no-execute
+echo "Attempting PDF render with xelatex (more Unicode-friendly)"
+if quarto render --to pdf --pdf-engine=xelatex --no-execute; then
+  echo "PDF render succeeded with xelatex"
+else
+  echo "xelatex render failed; sanitizing symbols and retrying with pdflatex"
+  perl -CSD -pe 's/\p{S}//g; s/\x{FE0F}//g' -i $(find "$TMPDIR" -name '*.qmd')
+  quarto render --to pdf --no-execute
+fi
 
 # Move artifacts back if successful (only _book/pdf)
 if [ -d "_book" ]; then
@@ -28,4 +32,4 @@ if [ -d "_book" ]; then
   rsync -a _book "$REPO_ROOT/"
 fi
 
-echo "Sanitized Quarto PDF render completed." 
+echo "Sanitized Quarto PDF render completed."
