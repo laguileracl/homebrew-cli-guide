@@ -30,7 +30,7 @@
 # Fork el repositorio en GitHub
 # Luego clona tu fork
 
-git clone https://github.com/TU-USUARIO/homebrew-cli-guide.git
+git clone https://github.com/laguileracl/homebrew-cli-guide.git
 cd homebrew-cli-guide
 
 # Instala Quarto si no lo tienes
@@ -225,14 +225,14 @@ refactor: reorganizar capítulo de herramientas de red
 
 - 💬 **Discussions**: Para preguntas generales
 - 🐛 **Issues**: Para reportar problemas
-- 📧 **Email**: [maintainer@ejemplo.com](mailto:maintainer@ejemplo.com)
+- 📧 **Email**: Usa el sistema de Issues para contactar a los mantenedores: https://github.com/laguileracl/homebrew-cli-guide/issues
 - 🐦 **Twitter**: [@homebrew_guide](https://twitter.com/homebrew_guide)
 
 ## 🙏 Reconocimientos
 
 Todos los contribuidores aparecen en:
-- [Contributors](https://github.com/tu-usuario/homebrew-cli-guide/graphs/contributors)
-- [Página de reconocimientos](https://tu-usuario.github.io/homebrew-cli-guide/contributors.html)
+- [Contributors](https://github.com/laguileracl/homebrew-cli-guide/graphs/contributors)
+- [Página de reconocimientos](https://laguileracl.github.io/homebrew-cli-guide/contributors.html)
 - [Archivo AUTHORS](AUTHORS.md)
 
 ¡Tu contribución, sin importar el tamaño, es valiosa y será reconocida! 🎉

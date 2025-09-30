@@ -216,3 +216,9 @@ El proyecto ahora ofrece **6 formas diferentes** de acceder al contenido:
 6. 🐳 **Docker deployment** (Self-hosted)
 
 ¡La guía de CLI tools más completa y avanzada del ecosistema Homebrew! 🚀
+
+## 2025-09-30 — Actualización menor
+
+- Actualizados placeholders de owner a `laguileracl` en documentación y scripts.
+- Bumped engines: Node a >=18.0.0 (api-server) y VS Code a ^1.80.0 (vscode-extension).
+- Correcciones menores de documentación y scripts para reflejar el owner real.
