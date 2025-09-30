@@ -25,3 +25,11 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
+
+# Automerge configuration: enable safe automerge for patch semantic updates
+automerged_updates:
+  enabled: true
+  semver_level: patch
+  # Security updates should also be automerged when CI passes
+  types:
+    - "security"
