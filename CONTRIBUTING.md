@@ -236,3 +236,12 @@ Todos los contribuidores aparecen en:
 - [Archivo AUTHORS](AUTHORS.md)
 
 ¡Tu contribución, sin importar el tamaño, es valiosa y será reconocida! 🎉
+
+## Código de Conducta
+
+Por favor lee el `CODE_OF_CONDUCT.md` antes de contribuir. Se espera que todas las interacciones sigan un comportamiento respetuoso y colaborativo. Cualquier comportamiento no conforme puede ser reportado en [Issues](https://github.com/laguileracl/homebrew-cli-guide/issues).
+
+## ¿Por dónde empezar?
+
+- Revisa las etiquetas `good first issue` y `help wanted` para tareas amigables para nuevos contribuyentes.
+- Si es tu primera contribución, crea una rama descriptiva y abre un PR siguiendo las indicaciones de este documento.

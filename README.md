@@ -5,6 +5,13 @@
 ![CLI Tools](https://img.shields.io/badge/CLI%20Tools-000000?style=for-the-badge&logo=terminal&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
+[![CI](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/ci.yml/badge.svg)](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/laguileracl/homebrew-cli-guide)](https://github.com/laguileracl/homebrew-cli-guide/releases)
+[![Pages](https://img.shields.io/website?url=https://laguileracl.github.io/homebrew-cli-guide)](https://laguileracl.github.io/homebrew-cli-guide)
+[![Discussions](https://img.shields.io/badge/Discussions-%23open-blue)](https://github.com/laguileracl/homebrew-cli-guide/discussions)
+[![Issues](https://img.shields.io/github/issues/laguileracl/homebrew-cli-guide)](https://github.com/laguileracl/homebrew-cli-guide/issues)
+[![License](https://img.shields.io/github/license/laguileracl/homebrew-cli-guide)](LICENSE)
+
 > Note: This repository received a maintenance and tooling update on 2025-09-30. See the latest release: https://github.com/laguileracl/homebrew-cli-guide/releases/tag/v1.1.0
 
 ## 🎯 ¿Por qué este proyecto?
