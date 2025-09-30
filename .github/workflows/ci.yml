@@ -93,3 +93,31 @@ jobs:
         with:
           name: rendered-book
           path: _book
+
+  quarto-pdf:
+    name: Quarto PDF (attempt)
+    runs-on: ubuntu-latest
+    needs: quarto-render
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Quarto and try PDF render
+        uses: quarto-dev/quarto-actions@v2
+        with:
+          command: render
+          args: --no-execute --to pdf
+        continue-on-error: true
+
+      - name: Fallback: sanitize and re-render if previous step failed
+        if: failure()
+        run: |
+          chmod +x ./scripts/sanitize-quarto-for-latex.sh
+          ./scripts/sanitize-quarto-for-latex.sh
+
+      - name: Upload PDF artifact (if produced)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-pdf
+          path: _book
