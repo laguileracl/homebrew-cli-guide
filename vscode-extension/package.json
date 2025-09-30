@@ -147,7 +147,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "echo \"No TypeScript sources to compile; skipping.\"",
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
