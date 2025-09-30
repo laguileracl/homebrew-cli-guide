@@ -217,8 +217,21 @@ El proyecto ahora ofrece **6 formas diferentes** de acceder al contenido:
 
 ¡La guía de CLI tools más completa y avanzada del ecosistema Homebrew! 🚀
 
-## 2025-09-30 — Actualización menor
+## 2025-09-30 — Consolidated maintenance (final)
 
-- Actualizados placeholders de owner a `laguileracl` en documentación y scripts.
-- Bumped engines: Node a >=18.0.0 (api-server) y VS Code a ^1.80.0 (vscode-extension).
-- Correcciones menores de documentación y scripts para reflejar el owner real.
+Actividad final realizada:
+
+- Fusionados y cerrados PRs de mantenimiento y dependabot relacionados con esta actualización: #1, #2, #3, #4, #5, #6, #7, #11, #13, #14, #15.
+- PRs con conflictos fueron cerrados sin merge: #8, #9, #10, #12 (dependabot) — estos serán reevaluados automáticamente por Dependabot en próximas ejecuciones o podrán reabrirse si se requiere una atención específica.
+- Se creó la release `v1.1.0` (tag) para marcar este punto de mantenimiento.
+
+Estado del repositorio:
+- Todas las ramas temporales y de feature han sido eliminadas; sólo queda la rama principal `main` activa.
+- Dependabot configurado para abrir PRs semanales para actualizaciones minor/patch.
+
+Archivos relevantes:
+- `CHANGELOG.md` — Registro resumido de la release
+- `RELEASE_NOTES.md` — Notas de release y resumen de cambios
+- `CHANGELOG.md` y `RELEASE_NOTES.md` incluyen los detalles técnicos y pasos realizados para reproducir las comprobaciones.
+
+Si prefieres que reabra o reintente mergear alguno de los PRs cerrados (#8, #9, #10, #12) en lugar de cerrarlos, indícalo y lo gestiono de forma selectiva.

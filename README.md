@@ -5,6 +5,8 @@
 ![CLI Tools](https://img.shields.io/badge/CLI%20Tools-000000?style=for-the-badge&logo=terminal&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
+> Note: This repository received a maintenance and tooling update on 2025-09-30. See the latest release: https://github.com/laguileracl/homebrew-cli-guide/releases/tag/v1.1.0
+
 ## 🎯 ¿Por qué este proyecto?
 
 En el ecosistema moderno de desarrollo y administración de sistemas, las herramientas de línea de comandos (CLI) han evolucionado dramáticamente. **Homebrew**, el gestor de paquetes para macOS y Linux, proporciona acceso a más de **6,000 herramientas** que pueden transformar radicalmente tu productividad.
