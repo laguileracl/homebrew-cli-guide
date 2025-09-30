@@ -252,6 +252,12 @@ fzf-history-widget  # Búsqueda inteligente en historial
 - **Funcionalidad**: Deployment completo con API, Nginx, Redis
 - **Uso**: `docker-compose up -d`
 
+## 📚 Recetas prácticas y scripts
+He agregado una sección con recetas prácticas y scripts de ejemplo para tareas comunes (descarga responsable de vídeos, conversión con ffmpeg, benchmarks con hyperfine, etc.). Revisa `practical-recipes.qmd` y la carpeta `scripts/`.
+
+- Ver recetas: `practical-recipes.qmd`
+- Scripts: `scripts/media-download.sh`, `scripts/convert-video.sh`, `scripts/bench-tools.sh`
+
 ## 📄 **Licencia y Reconocimientos**
 
 ### **Licencia MIT**

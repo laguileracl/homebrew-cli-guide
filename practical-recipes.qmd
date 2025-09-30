@@ -1,0 +1,95 @@
+---
+title: "Recetas Prácticas"
+format: html
+---
+
+# Recetas prácticas para sacar el máximo partido a Homebrew
+
+Este documento reúne ejemplos concretos ("recipes") y scripts útiles para trabajar con herramientas instaladas vía Homebrew. Cada receta incluye el objetivo, por qué es útil y ejemplos de comandos o scripts.
+
+## 1) Descarga responsable de vídeos (ejemplo)
+
+Advertencia legal: antes de descargar contenido de plataformas como YouTube u otras, asegúrate de tener derecho a hacerlo (propietario del contenido o permiso explícito). No facilites la infracción de derechos de autor. La receta siguiente muestra cómo usar `yt-dlp` de forma responsable — el script requiere confirmación explícita antes de ejecutar la descarga.
+
+- Instalar herramientas (Homebrew):
+
+```bash
+brew install yt-dlp ffmpeg
+```
+
+- Script recomendado: `scripts/media-download.sh` (ver scripts/)
+
+### Ejemplo de uso (solo para contenidos con permiso):
+
+```bash
+# Muestra el comando sugerido sin ejecutar
+./scripts/media-download.sh https://example.com/video
+
+# Ejecuta la descarga (debes confirmar derechos y pasar --allow-download)
+./scripts/media-download.sh https://example.com/video --allow-download
+```
+
+## 2) Conversión y optimización de vídeo (ffmpeg)
+
+Convierte y optimiza un vídeo para web con `ffmpeg`.
+
+- Instalar:
+
+```bash
+brew install ffmpeg
+```
+
+- Script recomendado: `scripts/convert-video.sh`
+
+### Ejemplo de uso:
+
+```bash
+./scripts/convert-video.sh input.mov output.mp4
+```
+
+## 3) Benchmarks rápidos con `hyperfine`
+
+Medir el tiempo de ejecución de comandos y comparar alternativas.
+
+- Instalar:
+
+```bash
+brew install hyperfine
+```
+
+- Uso directo:
+
+```bash
+hyperfine "curl -s https://example.com" "httpx -silent https://example.com"
+```
+
+- Script recomendado: `scripts/bench-tools.sh`
+
+## 4) Flujos de trabajo combinados: búsqueda + preview
+
+Herramientas: `fd`, `ripgrep (rg)`, `bat`.
+
+```bash
+brew install fd ripgrep bat
+
+# Buscar archivos y ver primer resultado con highlight
+fd -e md TODOs | head -n1 | xargs bat --style=numbers --color=always
+```
+
+## 5) Otros "one-liners" útiles
+
+- Actualizar Homebrew, fórmulas y limpiar en una sola línea:
+
+```bash
+brew update && brew upgrade && brew cleanup
+```
+
+- Generar un Brewfile con las fórmulas actualmente instaladas:
+
+```bash
+brew bundle dump --file=Brewfile --describe --force
+```
+
+---
+
+Contribuye con tus propias recetas en `practical-recipes.qmd` o añade scripts en `scripts/`.
