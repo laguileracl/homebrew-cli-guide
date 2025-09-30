@@ -4,7 +4,7 @@
 
 1. Clona o descarga este repositorio:
 ```bash
-git clone <tu-repo> homebrew-config
+git clone https://github.com/laguileracl/homebrew-cli-guide.git homebrew-config
 cd homebrew-config
 ```
 

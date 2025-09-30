@@ -210,7 +210,7 @@ create_github_repo() {
         echo -e "${YELLOW}2. Crea un repositorio llamado 'homebrew-cli-guide'${NC}"
         echo -e "${YELLOW}3. No inicialices con README, .gitignore o license${NC}"
         echo -e "${YELLOW}4. Luego ejecuta:${NC}"
-        echo -e "${BLUE}   git remote add origin https://github.com/TU-USUARIO/homebrew-cli-guide.git${NC}"
+        echo -e "${BLUE}   git remote add origin https://github.com/laguileracl/homebrew-cli-guide.git${NC}"
         echo ""
         log_info "Presiona Enter cuando hayas creado el repositorio..."
         read -r
@@ -225,7 +225,7 @@ push_code() {
     if ! git remote get-url origin >/dev/null 2>&1; then
         log_error "No hay remote 'origin' configurado"
         log_info "Configura el remote manualmente:"
-        echo -e "${BLUE}git remote add origin https://github.com/TU-USUARIO/REPO-NAME.git${NC}"
+        echo -e "${BLUE}git remote add origin https://github.com/laguileracl/REPO-NAME.git${NC}"
         exit 1
     fi
     

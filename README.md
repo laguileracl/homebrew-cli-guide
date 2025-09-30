@@ -263,11 +263,9 @@ Este proyecto está bajo licencia MIT, permitiendo uso libre, modificación y di
 
 ## 🔗 **Enlaces Importantes**
 
-- 📖 **Libro Online**: [Leer la guía completa](https://tu-usuario.github.io/homebrew-cli-guide)
-- 🍺 **Homebrew**: https://brew.sh/
-- 📑 **Documentación Quarto**: https://quarto.org/
-- 🐛 **Issues**: [Reportar problemas](https://github.com/tu-usuario/homebrew-cli-guide/issues)
-- 💬 **Discussions**: [Discusiones de la comunidad](https://github.com/tu-usuario/homebrew-cli-guide/discussions)
+- 📖 **Libro Online**: [Leer la guía completa](https://laguileracl.github.io/homebrew-cli-guide)
+- 🐛 **Issues**: [Reportar problemas](https://github.com/laguileracl/homebrew-cli-guide/issues)
+- 💬 **Discussions**: [Discusiones de la comunidad](https://github.com/laguileracl/homebrew-cli-guide/discussions)
 
 ---
 
@@ -278,7 +276,7 @@ Este proyecto está bajo licencia MIT, permitiendo uso libre, modificación y di
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Clona este repositorio
-git clone https://github.com/tu-usuario/homebrew-cli-guide.git
+git clone https://github.com/laguileracl/homebrew-cli-guide.git
 cd homebrew-cli-guide
 
 # Genera el libro localmente
@@ -294,6 +292,6 @@ quarto preview
 
 <div align="center">
 
-**[⭐ Star este repo](https://github.com/tu-usuario/homebrew-cli-guide)** • **[🍴 Fork it](https://github.com/tu-usuario/homebrew-cli-guide/fork)** • **[📝 Contribuir](CONTRIBUTING.md)** • **[💬 Discutir](https://github.com/tu-usuario/homebrew-cli-guide/discussions)**
+**[⭐ Star este repo](https://github.com/laguileracl/homebrew-cli-guide)** • **[🍴 Fork it](https://github.com/laguileracl/homebrew-cli-guide/fork)** • **[📝 Contribuir](CONTRIBUTING.md)** • **[💬 Discutir](https://github.com/laguileracl/homebrew-cli-guide/discussions)**
 
 </div>

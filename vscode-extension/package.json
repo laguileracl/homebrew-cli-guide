@@ -9,7 +9,7 @@
     "url": "https://github.com/laguileracl/homebrew-cli-guide"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
@@ -148,14 +148,18 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint . --ext .ts,.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
-    "@types/node": "^18.x",
-    "typescript": "^4.9.4"
+    "@types/vscode": "^1.104.0",
+    "@types/node": "^20.19.18",
+    "typescript": "5.9.2",
+    "eslint": "^8.57.1",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0"
   },
   "dependencies": {
-    "axios": "^1.4.0"
+    "axios": "^1.12.2"
   }
 }

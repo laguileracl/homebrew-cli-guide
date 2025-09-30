@@ -32,7 +32,7 @@ git init
 git add .
 git commit -m "🎉 Initial commit: Guía Práctica CLI con Homebrew"
 git branch -M main
-git remote add origin https://github.com/TU-USUARIO/homebrew-cli-guide.git
+git remote add origin https://github.com/laguileracl/homebrew-cli-guide.git
 git push -u origin main
 ```
 
@@ -43,12 +43,12 @@ git push -u origin main
 2. Source: **GitHub Actions**
 3. El workflow automáticamente publicará el libro
 
-**URL final:** `https://TU-USUARIO.github.io/homebrew-cli-guide`
+**URL final:** `https://laguileracl.github.io/homebrew-cli-guide`
 
 ### 🏷️ Configuración del Repositorio
 
 #### **About Section:**
-- Website: `https://TU-USUARIO.github.io/homebrew-cli-guide`
+- Website: `https://laguileracl.github.io/homebrew-cli-guide`
 - Topics: `homebrew`, `cli-tools`, `documentation`, `macos`, `linux`, `terminal`, `productivity`, `quarto`, `spanish`
 
 #### **Features a Habilitar:**
@@ -115,11 +115,11 @@ git push -u origin main
 
 #### **GitHub Badges para README:**
 ```markdown
-![GitHub stars](https://img.shields.io/github/stars/TU-USUARIO/homebrew-cli-guide)
-![GitHub forks](https://img.shields.io/github/forks/TU-USUARIO/homebrew-cli-guide)
-![GitHub issues](https://img.shields.io/github/issues/TU-USUARIO/homebrew-cli-guide)
-![GitHub last commit](https://img.shields.io/github/last-commit/TU-USUARIO/homebrew-cli-guide)
-![Website](https://img.shields.io/website?url=https%3A//TU-USUARIO.github.io/homebrew-cli-guide)
+![GitHub stars](https://img.shields.io/github/stars/laguileracl/homebrew-cli-guide)
+![GitHub forks](https://img.shields.io/github/forks/laguileracl/homebrew-cli-guide)
+![GitHub issues](https://img.shields.io/github/issues/laguileracl/homebrew-cli-guide)
+![GitHub last commit](https://img.shields.io/github/last-commit/laguileracl/homebrew-cli-guide)
+![Website](https://img.shields.io/website?url=https%3A//laguileracl.github.io/homebrew-cli-guide)
 ```
 
 #### **Promoción Inicial:**
