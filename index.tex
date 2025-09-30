@@ -216,7 +216,7 @@
 \makeatletter
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, enhanced, interior hidden, breakable, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, frame hidden, interior hidden, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -296,7 +296,7 @@ interactivas}\label{caracteruxedsticas-interactivas}
 
 \markright{Características interactivas}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6]
 
 Esta guía incluye funcionalidades interactivas que te permiten:
 
@@ -652,26 +652,26 @@ Herramientas que mejoran la experiencia general en la terminal.
 
 \markright{Convenciones}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Nota}, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Nota}, titlerule=0mm, opacitybacktitle=0.6]
 
 Las notas contienen información adicional útil.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, titlerule=0mm, opacitybacktitle=0.6]
 
 Los tips incluyen trucos y atajos para ser más productivo.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Advertencia}, colbacktitle=quarto-callout-warning-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Advertencia}, titlerule=0mm, opacitybacktitle=0.6]
 
 Las advertencias indican comandos que pueden ser destructivos o requerir
 precaución.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Importante}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Importante}, titlerule=0mm, opacitybacktitle=0.6]
 
 Información crítica que debes recordar.
 
@@ -704,7 +704,7 @@ Información crítica que debes recordar.
 
 \chapter{🚀 Playground Interactivo}\label{playground-interactivo-1}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{¡Bienvenido al Playground Interactivo!}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{¡Bienvenido al Playground Interactivo!}, titlerule=0mm, opacitybacktitle=0.6]
 
 Esta sección te permite \textbf{experimentar directamente} con las
 herramientas CLI sin salir del navegador. Aquí puedes:
@@ -892,7 +892,7 @@ Desarrollo}\label{configuraciuxf3n-de-desarrollo}
 
 \section{🎯 Consejos de Uso}\label{consejos-de-uso}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Mejores Prácticas}, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Mejores Prácticas}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -959,7 +959,7 @@ Una vez que domines el playground:
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{¡Importante!}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{¡Importante!}, titlerule=0mm, opacitybacktitle=0.6]
 
 Este playground funciona mejor con:
 
@@ -1011,7 +1011,7 @@ configuración}\label{instalaciuxf3n-y-configuraciuxf3n}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, titlerule=0mm, opacitybacktitle=0.6]
 
 \texttt{eza} muestra colores e iconos por defecto, making it much more
 readable than traditional \texttt{ls}.
@@ -1548,7 +1548,7 @@ directorios}\label{anuxe1lisis-ruxe1pido-de-directorios}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Importante para nuevos usuarios}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Importante para nuevos usuarios}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -2009,7 +2009,7 @@ bidireccional}\label{sincronizaciuxf3n-bidireccional}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Advertencia importante}, colbacktitle=quarto-callout-warning-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Advertencia importante}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -2027,7 +2027,7 @@ bidireccional}\label{sincronizaciuxf3n-bidireccional}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para gestión de archivos}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para gestión de archivos}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -2716,7 +2716,7 @@ universal}\label{buxfasqueda-interactiva-universal}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para búsqueda eficiente}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para búsqueda eficiente}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -2735,7 +2735,7 @@ universal}\label{buxfasqueda-interactiva-universal}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Rendimiento}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Rendimiento}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -3611,7 +3611,7 @@ automatización}\label{script-de-automatizaciuxf3n}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para desarrollo eficiente}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para desarrollo eficiente}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -3629,7 +3629,7 @@ automatización}\label{script-de-automatizaciuxf3n}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Mejores prácticas}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Mejores prácticas}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -4136,7 +4136,7 @@ medios}\label{optimizaciuxf3n-automuxe1tica-de-medios}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para multimedia}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para multimedia}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -4154,7 +4154,7 @@ medios}\label{optimizaciuxf3n-automuxe1tica-de-medios}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Consideraciones de rendimiento}, colbacktitle=quarto-callout-warning-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Consideraciones de rendimiento}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -4635,7 +4635,7 @@ más.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para herramientas de red}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para herramientas de red}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -4653,7 +4653,7 @@ más.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Seguridad en red}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Seguridad en red}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -4760,7 +4760,7 @@ moderna}\label{sec-fastfetch}
 \texttt{fastfetch} es el sucesor oficial y moderno de \texttt{neofetch},
 ofreciendo mejor rendimiento y más opciones de personalización.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{⚠️ Migración desde neofetch}, colbacktitle=quarto-callout-warning-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{⚠️ Migración desde neofetch}, titlerule=0mm, opacitybacktitle=0.6]
 
 \texttt{neofetch} ha sido marcado como \textbf{obsoleto} y ya no recibe
 actualizaciones. \texttt{fastfetch} es el reemplazo oficial recomendado
@@ -4986,7 +4986,7 @@ completo}\label{monitoring-script-completo}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips de monitoreo}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips de monitoreo}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -5373,7 +5373,7 @@ documentación}\label{workflow-completo-de-documentaciuxf3n}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para documentación}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para documentación}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -5405,7 +5405,7 @@ personalización avanzada del prompt.
 \texttt{tealdeer} es una implementación moderna y rápida de
 \texttt{tldr}, compatible con las páginas tldr pero escrita en Rust.
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{⚠️ Migración desde tldr}, colbacktitle=quarto-callout-warning-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{⚠️ Migración desde tldr}, titlerule=0mm, opacitybacktitle=0.6]
 
 La fórmula original de \texttt{tldr} en Homebrew ha sido marcada como
 \textbf{obsoleta}. Las alternativas recomendadas son:
@@ -5959,7 +5959,7 @@ inteligente}\label{sistema-de-notificaciones-inteligente}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para utilidades}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para utilidades}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -6608,7 +6608,7 @@ automático}\label{generador-de-reportes-automuxe1tico}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para workflows avanzados}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips para workflows avanzados}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -6625,7 +6625,7 @@ automático}\label{generador-de-reportes-automuxe1tico}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Consideraciones para automatización}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Consideraciones para automatización}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -6981,7 +6981,7 @@ instalados}\label{backup-de-paquetes-instalados}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Recordatorio importante}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Recordatorio importante}, titlerule=0mm, opacitybacktitle=0.6]
 
 Siempre realiza un backup de tus configuraciones importantes antes de
 realizar cambios mayores en tu instalación de Homebrew. El comando
@@ -7835,7 +7835,7 @@ entorno}\label{instalaciuxf3n-completa-del-entorno}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips finales de configuración}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tips finales de configuración}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -7853,7 +7853,7 @@ entorno}\label{instalaciuxf3n-completa-del-entorno}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Mantenimiento del entorno}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Mantenimiento del entorno}, titlerule=0mm, opacitybacktitle=0.6]
 
 \begin{itemize}
 \tightlist
@@ -7926,7 +7926,7 @@ más eficiente y productivo! 🚀
 \chapter{🌐 Integración del
 Ecosistema}\label{integraciuxf3n-del-ecosistema-1}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Un Ecosistema Completo y Conectado}, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Un Ecosistema Completo y Conectado}, titlerule=0mm, opacitybacktitle=0.6]
 
 La \textbf{Guía CLI de Homebrew} es más que un libro - es un ecosistema
 completo de herramientas interconectadas que puedes usar de múltiples
@@ -8247,7 +8247,7 @@ Bienvenidas}\label{contribuciones-bienvenidas}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomrule=.15mm, opacityback=0, coltitle=black, rightrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, opacitybacktitle=0.6, left=2mm, colback=white, bottomtitle=1mm, arc=.35mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{¡Importante!}, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, arc=.35mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, opacityback=0, colback=white, bottomtitle=1mm, bottomrule=.15mm, rightrule=.15mm, left=2mm, toptitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{¡Importante!}, titlerule=0mm, opacitybacktitle=0.6]
 
 Para la \textbf{mejor experiencia posible}, recomendamos usar:
 
