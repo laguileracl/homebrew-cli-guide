@@ -147,13 +147,17 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "echo \"No TypeScript sources to compile; skipping.\"",
-    "watch": "tsc -watch -p ./"
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint . --ext .ts,.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.81.0",
     "@types/node": "^20.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "eslint": "^8.50.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0"
   },
   "dependencies": {
     "axios": "^1.4.0"

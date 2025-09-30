@@ -47,6 +47,34 @@ jobs:
         working-directory: ./vscode-extension
         run: npm run compile
 
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies (vscode-extension)
+        working-directory: ./vscode-extension
+        run: npm ci
+
+      - name: Run ESLint (vscode-extension)
+        working-directory: ./vscode-extension
+        run: npm run lint
+
+      - name: Install dependencies (api-server)
+        working-directory: ./api-server
+        run: npm ci
+
+      - name: Run ESLint (api-server)
+        working-directory: ./api-server
+        run: npx eslint . --ext .js
+
   quarto-render:
     name: Quarto Render (docs)
     runs-on: ubuntu-latest
