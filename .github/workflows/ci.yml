@@ -58,7 +58,7 @@ jobs:
         uses: quarto-dev/quarto-actions@v2
         with:
           command: render
-          args: --no-execute
+          args: --no-execute --to html
 
       - name: Upload HTML book as artifact
         uses: actions/upload-artifact@v4

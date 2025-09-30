@@ -68,3 +68,5 @@ wheels/
 .Ruserdata
 
 /.quarto/
+
+**/*.quarto_ipynb
