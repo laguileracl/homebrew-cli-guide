@@ -1,43 +1,4210 @@
 {
   "metadata": {
-    "version": "1.0.0",
-    "generated": "2025-08-06",
-    "total_tools": 200,
-    "categories": 11
+    "version": "2.0.0",
+    "generated": "2026-01-01",
+    "total_tools": 72,
+    "categories": 12
   },
   "tools": [
     {
-      "name": "fd",
-      "category": "busqueda",
-      "description": "Find alternative more user-friendly",
-      "installation": "brew install fd",
-      "tags": ["search", "filesystem", "rust"],
+      "name": "eza",
+      "displayName": "eza",
+      "category": "navegacion",
+      "subcategory": "listado",
+      "description": {
+        "short": "Listado moderno de archivos con iconos y colores",
+        "long": "Reemplazo de ls con mejor formato, soporte git y vistas en árbol."
+      },
+      "installation": {
+        "homebrew": "brew install eza"
+      },
+      "metadata": {
+        "version": "0.23.4",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 21152,
+        "homepage": "https://github.com/eza-community/eza",
+        "license": "MIT",
+        "maintainer": "eza-community",
+        "githubForks": 427,
+        "githubWatchers": 38
+      },
+      "performance": {
+        "benchmark": "Más rápido que ls con --color",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
       "examples": [
-        "fd pattern",
-        "fd -e js",
-        "fd -t f pattern"
+        "eza -la",
+        "eza --tree --level=2",
+        "eza -la --git"
+      ],
+      "alternatives": [
+        "ls",
+        "exa"
+      ],
+      "relatedTools": [
+        "zoxide",
+        "ranger"
+      ],
+      "tags": [
+        "navigation",
+        "filesystem",
+        "git",
+        "rust"
       ],
       "difficulty": "beginner",
-      "alternatives": ["find", "locate"]
+      "useCases": [
+        "project-audit",
+        "git-status-view",
+        "tree-view"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "zoxide",
+      "displayName": "zoxide",
+      "category": "navegacion",
+      "subcategory": "jump",
+      "description": {
+        "short": "cd inteligente basado en frecuencia y recencia",
+        "long": "Permite saltar entre directorios usando patrones, con modo interactivo y scores."
+      },
+      "installation": {
+        "homebrew": "brew install zoxide"
+      },
+      "metadata": {
+        "version": "0.9.9",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 35488,
+        "homepage": "https://github.com/ajeetdsouza/zoxide",
+        "license": "MIT",
+        "maintainer": "Ajeet D'Souza",
+        "githubForks": 785,
+        "githubWatchers": 72
+      },
+      "performance": {
+        "benchmark": "Jump O(1) por score",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "z proj",
+        "zi",
+        "zoxide query --list"
+      ],
+      "alternatives": [
+        "autojump",
+        "fasd"
+      ],
+      "relatedTools": [
+        "eza",
+        "fzf"
+      ],
+      "tags": [
+        "navigation",
+        "cd",
+        "productivity"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "project-switch",
+        "deep-paths",
+        "shell-automation"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "ranger",
+      "displayName": "ranger",
+      "category": "navegacion",
+      "subcategory": "file-manager",
+      "description": {
+        "short": "Navegador de archivos en terminal con vista previa",
+        "long": "Gestor de archivos modal con bindings tipo vim, previsualización y extensiones."
+      },
+      "installation": {
+        "homebrew": "brew install ranger"
+      },
+      "metadata": {
+        "version": "1.9.4",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 17112,
+        "homepage": "https://github.com/ranger/ranger",
+        "license": "GPL-3.0",
+        "maintainer": "ranger-team",
+        "githubForks": 927,
+        "githubWatchers": 145
+      },
+      "performance": {
+        "benchmark": "Árbol rápido en terminal",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "ranger",
+        "ranger --selectfile README.md",
+        "ranger --cmd=zf"
+      ],
+      "alternatives": [
+        "nnn",
+        "lf"
+      ],
+      "relatedTools": [
+        "eza",
+        "bat"
+      ],
+      "tags": [
+        "file-manager",
+        "vim",
+        "preview"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "repo-browse",
+        "media-preview",
+        "quick-ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "broot",
+      "displayName": "broot",
+      "category": "navegacion",
+      "subcategory": "tree-finder",
+      "description": {
+        "short": "Árbol navegable con fuzzy search",
+        "long": "Explora directorios con vista en árbol y búsqueda difusa integrada."
+      },
+      "installation": {
+        "homebrew": "brew install broot"
+      },
+      "metadata": {
+        "version": "1.56.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 12586,
+        "homepage": "https://github.com/Canop/broot",
+        "license": "MIT",
+        "maintainer": "Canop",
+        "githubForks": 284,
+        "githubWatchers": 58
+      },
+      "performance": {
+        "benchmark": "Árbol interactivo instantáneo",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "br",
+        "br --only-folders",
+        "br --hidden"
+      ],
+      "alternatives": [
+        "tree",
+        "ranger"
+      ],
+      "relatedTools": [
+        "fd",
+        "fzf"
+      ],
+      "tags": [
+        "tree",
+        "fuzzy",
+        "navigation",
+        "rust"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "repo-mapping",
+        "cleanup",
+        "file-discovery"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "lf",
+      "displayName": "lf",
+      "category": "navegacion",
+      "subcategory": "file-manager",
+      "description": {
+        "short": "Gestor de archivos minimalista estilo ranger",
+        "long": "File manager rápido con keybindings vi y preview extensible."
+      },
+      "installation": {
+        "homebrew": "brew install lf"
+      },
+      "metadata": {
+        "version": "41",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 9206,
+        "homepage": "https://github.com/gokcehan/lf",
+        "license": "MIT",
+        "maintainer": "gokcehan",
+        "githubForks": 366,
+        "githubWatchers": 60
+      },
+      "performance": {
+        "benchmark": "Muy ligero",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "lf",
+        "LF_ICONS=1 lf",
+        "lf -command 'set previewer sh'"
+      ],
+      "alternatives": [
+        "ranger",
+        "nnn"
+      ],
+      "relatedTools": [
+        "bat",
+        "fd"
+      ],
+      "tags": [
+        "file-manager",
+        "vim",
+        "lightweight"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "dotfiles",
+        "servers",
+        "remote"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "nnn",
+      "displayName": "nnn",
+      "category": "navegacion",
+      "subcategory": "file-manager",
+      "description": {
+        "short": "Explorador de archivos ultraligero",
+        "long": "CLI file manager extensible con plugins, soporte de preview y acciones rápidas."
+      },
+      "installation": {
+        "homebrew": "brew install nnn"
+      },
+      "metadata": {
+        "version": "5.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 21469,
+        "homepage": "https://github.com/jarun/nnn",
+        "license": "BSD-2-Clause",
+        "maintainer": "jarun",
+        "githubForks": 798,
+        "githubWatchers": 139
+      },
+      "performance": {
+        "benchmark": "Muy veloz en directorios grandes",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "nnn",
+        "nnn -de",
+        "NNN_OPTS='-a' nnn"
+      ],
+      "alternatives": [
+        "ranger",
+        "lf"
+      ],
+      "relatedTools": [
+        "fzf",
+        "bat"
+      ],
+      "tags": [
+        "file-manager",
+        "plugin",
+        "fast"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "servers",
+        "ssh",
+        "low-spec"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "rsync",
+      "displayName": "rsync",
+      "category": "archivos",
+      "subcategory": "sync",
+      "description": {
+        "short": "Sincronización eficiente de archivos",
+        "long": "Sincroniza directorios con delta transfer, compresión y filtros."
+      },
+      "installation": {
+        "homebrew": "brew install rsync"
+      },
+      "metadata": {
+        "version": "3.4.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://rsync.samba.org/",
+        "license": "GPL-3.0",
+        "maintainer": "Wayne Davison"
+      },
+      "performance": {
+        "benchmark": "Delta transfer minimiza ancho de banda",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "rsync -avh src/ dst/",
+        "rsync -avz --progress host:/data .",
+        "rsync -av --delete src/ dst/"
+      ],
+      "alternatives": [
+        "scp",
+        "rclone"
+      ],
+      "relatedTools": [
+        "rclone",
+        "syncthing"
+      ],
+      "tags": [
+        "sync",
+        "backup",
+        "incremental"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "backups",
+        "deploy",
+        "mirror"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "rclone",
+      "displayName": "rclone",
+      "category": "archivos",
+      "subcategory": "cloud-sync",
+      "description": {
+        "short": "Sincroniza con 60+ nubes",
+        "long": "CLI para copiar, montar y sincronizar con proveedores cloud (S3, GDrive, etc)."
+      },
+      "installation": {
+        "homebrew": "brew install rclone"
+      },
+      "metadata": {
+        "version": "1.73.4",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 56581,
+        "homepage": "https://github.com/rclone/rclone",
+        "license": "MIT",
+        "maintainer": "Nick Craig-Wood",
+        "githubForks": 5015,
+        "githubWatchers": 568
+      },
+      "performance": {
+        "benchmark": "Multihilo y checksums",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "rclone config",
+        "rclone sync . remote:backup --progress",
+        "rclone mount remote:bucket /mnt/bucket"
+      ],
+      "alternatives": [
+        "aws s3 cp",
+        "rsync"
+      ],
+      "relatedTools": [
+        "syncthing",
+        "aria2"
+      ],
+      "tags": [
+        "cloud",
+        "sync",
+        "backup"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "cloud-backup",
+        "rclone-mount",
+        "migration"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "rename",
+      "displayName": "renameutils",
+      "category": "archivos",
+      "subcategory": "batch-rename",
+      "description": {
+        "short": "Renombrado masivo con patrones",
+        "long": "Permite renombrar archivos en lote con expresiones y edición en bloque."
+      },
+      "installation": {
+        "homebrew": "brew install renameutils"
+      },
+      "metadata": {
+        "version": "1.601",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 1200,
+        "homepage": "https://www.nongnu.org/renameutils/",
+        "license": "GPL-2.0",
+        "maintainer": "renameutils"
+      },
+      "performance": {
+        "benchmark": "Operaciones en lote rápidas",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "qmv '*.txt'",
+        "rename foo bar *.txt",
+        "imv file1 file2"
+      ],
+      "alternatives": [
+        "mmv",
+        "perl-rename"
+      ],
+      "relatedTools": [
+        "fd",
+        "sd"
+      ],
+      "tags": [
+        "rename",
+        "batch",
+        "files"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "photo-batch",
+        "log-cleanup",
+        "refactor"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "mmv",
+      "displayName": "mmv",
+      "category": "archivos",
+      "subcategory": "batch-move",
+      "description": {
+        "short": "Mover/copiar múltiples archivos con patrones",
+        "long": "Usa globs y patrones para renombrar y mover en bloque."
+      },
+      "installation": {
+        "homebrew": "brew install mmv"
+      },
+      "metadata": {
+        "version": "2.10",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 950,
+        "homepage": "https://linux.die.net/man/1/mmv",
+        "license": "GPL-3.0",
+        "maintainer": "mmv"
+      },
+      "performance": {
+        "benchmark": "Operaciones en lote ligeras",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "mmv '*.txt' 'archivos/#1.txt'",
+        "mmv 'img#1.jpg' 'gallery/#1.jpg'",
+        "mmv '*.*' '#1.bak'"
+      ],
+      "alternatives": [
+        "renameutils",
+        "perl-rename"
+      ],
+      "relatedTools": [
+        "fd",
+        "rename"
+      ],
+      "tags": [
+        "move",
+        "copy",
+        "batch"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "media-organize",
+        "log-archive",
+        "bulk-ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "syncthing",
+      "displayName": "syncthing",
+      "category": "archivos",
+      "subcategory": "p2p-sync",
+      "description": {
+        "short": "Sincronización P2P cifrada y continua",
+        "long": "Replica carpetas entre dispositivos sin servidor central, con UI web."
+      },
+      "installation": {
+        "homebrew": "brew install syncthing"
+      },
+      "metadata": {
+        "version": "2.0.16",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 81608,
+        "homepage": "https://github.com/syncthing/syncthing",
+        "license": "MPL-2.0",
+        "maintainer": "Syncthing Foundation",
+        "githubForks": 4993,
+        "githubWatchers": 1039
+      },
+      "performance": {
+        "benchmark": "Eficiente con cambios incrementales",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "syncthing",
+        "syncthing -no-browser",
+        "syncthing -home ~/.config/syncthing"
+      ],
+      "alternatives": [
+        "rsync",
+        "rclone"
+      ],
+      "relatedTools": [
+        "tailscale",
+        "wireguard"
+      ],
+      "tags": [
+        "sync",
+        "p2p",
+        "encryption"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "multi-device",
+        "secure-sync",
+        "self-host"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "gdu",
+      "displayName": "gdu",
+      "category": "archivos",
+      "subcategory": "disk-usage",
+      "description": {
+        "short": "Uso de disco interactivo ultrarápido",
+        "long": "Analiza espacio en disco con interfaz ncurses y ordenamiento por tamaño."
+      },
+      "installation": {
+        "homebrew": "brew install gdu"
+      },
+      "metadata": {
+        "version": "5.35.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 5546,
+        "homepage": "https://github.com/dundee/gdu",
+        "license": "MIT",
+        "maintainer": "Dusan Klinec",
+        "githubForks": 196,
+        "githubWatchers": 27
+      },
+      "performance": {
+        "benchmark": "Más rápido que du en discos grandes",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gdu",
+        "gdu -p /tmp",
+        "gdu -i .git"
+      ],
+      "alternatives": [
+        "ncdu",
+        "du"
+      ],
+      "relatedTools": [
+        "dust",
+        "duf"
+      ],
+      "tags": [
+        "disk",
+        "ncurses",
+        "analysis"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "cleanup",
+        "audit",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
     },
     {
       "name": "ripgrep",
-      "category": "busqueda", 
-      "description": "Grep alternative ultra-fast",
-      "installation": "brew install ripgrep",
-      "tags": ["search", "text", "rust"],
+      "displayName": "ripgrep (rg)",
+      "category": "busqueda",
+      "subcategory": "text-search",
+      "description": {
+        "short": "Búsqueda de texto ultrarrápida",
+        "long": "Recorre recursivamente directorios con regex, respetando .gitignore y formatos."
+      },
+      "installation": {
+        "homebrew": "brew install ripgrep"
+      },
+      "metadata": {
+        "version": "15.1.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 62222,
+        "homepage": "https://github.com/BurntSushi/ripgrep",
+        "license": "MIT",
+        "maintainer": "Andrew Gallant",
+        "githubForks": 2474,
+        "githubWatchers": 284
+      },
+      "performance": {
+        "benchmark": "10x grep en repos medianos",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
       "examples": [
-        "rg pattern",
-        "rg -i pattern",
-        "rg pattern --type js"
+        "rg error src",
+        "rg 'TODO' --type rust",
+        "rg --files --hidden"
+      ],
+      "alternatives": [
+        "grep",
+        "ag"
+      ],
+      "relatedTools": [
+        "fd",
+        "fzf"
+      ],
+      "tags": [
+        "search",
+        "regex",
+        "gitignore",
+        "rust"
       ],
       "difficulty": "beginner",
-      "alternatives": ["grep", "ag"]
+      "useCases": [
+        "code-search",
+        "log-analysis",
+        "refactor"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "fd",
+      "displayName": "fd",
+      "category": "busqueda",
+      "subcategory": "file-search",
+      "description": {
+        "short": "Find moderno con búsqueda recursiva rápida",
+        "long": "Reemplazo de find con sintaxis simple, ignore por defecto y soporte regex."
+      },
+      "installation": {
+        "homebrew": "brew install fd"
+      },
+      "metadata": {
+        "version": "10.4.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 42464,
+        "homepage": "https://github.com/sharkdp/fd",
+        "license": "Apache-2.0",
+        "maintainer": "sharkdp",
+        "githubForks": 1027,
+        "githubWatchers": 152
+      },
+      "performance": {
+        "benchmark": "8x find para patrones comunes",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "fd pattern",
+        "fd -e js src",
+        "fd -t f -H .gitignore"
+      ],
+      "alternatives": [
+        "find",
+        "broot"
+      ],
+      "relatedTools": [
+        "ripgrep",
+        "fzf"
+      ],
+      "tags": [
+        "search",
+        "files",
+        "rust"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "file-discovery",
+        "cleanup",
+        "batch-ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "fzf",
+      "displayName": "fzf",
+      "category": "busqueda",
+      "subcategory": "fuzzy",
+      "description": {
+        "short": "Filtro difuso interactivo para todo",
+        "long": "Búsqueda difusa en listas, integración con shell, git y editor."
+      },
+      "installation": {
+        "homebrew": "brew install fzf"
+      },
+      "metadata": {
+        "version": "0.71.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 79379,
+        "homepage": "https://github.com/junegunn/fzf",
+        "license": "MIT",
+        "maintainer": "Junegunn Choi",
+        "githubForks": 2762,
+        "githubWatchers": 396
+      },
+      "performance": {
+        "benchmark": "Busca millones de líneas interactivo",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "fzf",
+        "rg error | fzf",
+        "fzf --preview 'bat --style=numbers {}'"
+      ],
+      "alternatives": [
+        "peco",
+        "skim"
+      ],
+      "relatedTools": [
+        "ripgrep",
+        "fd"
+      ],
+      "tags": [
+        "fuzzy",
+        "interactive",
+        "shell"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "history-search",
+        "git-files",
+        "picker"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "ag",
+      "displayName": "The Silver Searcher (ag)",
+      "category": "busqueda",
+      "subcategory": "text-search",
+      "description": {
+        "short": "Grep rápido inspirado en ack",
+        "long": "Busca código ignorando binarios y respetando .gitignore, predecesor de ripgrep."
+      },
+      "installation": {
+        "homebrew": "brew install the_silver_searcher"
+      },
+      "metadata": {
+        "version": "2.2.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 27105,
+        "homepage": "https://github.com/ggreer/the_silver_searcher",
+        "license": "Apache-2.0",
+        "maintainer": "ggreer",
+        "githubForks": 1440,
+        "githubWatchers": 414
+      },
+      "performance": {
+        "benchmark": "Más rápido que grep clásico",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "ag pattern",
+        "ag --python foo",
+        "ag -g '*.md'"
+      ],
+      "alternatives": [
+        "ripgrep",
+        "ack"
+      ],
+      "relatedTools": [
+        "fzf",
+        "fd"
+      ],
+      "tags": [
+        "search",
+        "code",
+        "gitignore"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "code-search",
+        "legacy",
+        "server"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "ack",
+      "displayName": "ack",
+      "category": "busqueda",
+      "subcategory": "text-search",
+      "description": {
+        "short": "Grep mejorado para programadores",
+        "long": "Filtra por extensiones y respeta VCS ignore; sintaxis simple para equipos."
+      },
+      "installation": {
+        "homebrew": "brew install ack"
+      },
+      "metadata": {
+        "version": "3.9.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 3400,
+        "homepage": "https://beyondgrep.com/",
+        "license": "Artistic-2.0",
+        "maintainer": "beyondgrep"
+      },
+      "performance": {
+        "benchmark": "Más rápido que grep en repos",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "ack TODO",
+        "ack --js function",
+        "ack --ignore-dir=node_modules"
+      ],
+      "alternatives": [
+        "ripgrep",
+        "ag"
+      ],
+      "relatedTools": [
+        "fd",
+        "fzf"
+      ],
+      "tags": [
+        "search",
+        "code",
+        "perl"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "code-search",
+        "docs",
+        "training"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "findutils",
+      "displayName": "GNU findutils",
+      "category": "busqueda",
+      "subcategory": "file-search",
+      "description": {
+        "short": "Suite GNU para búsqueda de archivos",
+        "long": "Incluye gfind, gxargs y glocate para búsquedas y pipelines POSIX en árboles grandes."
+      },
+      "installation": {
+        "homebrew": "brew install findutils"
+      },
+      "metadata": {
+        "version": "4.10.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://www.gnu.org/software/findutils/",
+        "license": "GPL-3.0",
+        "maintainer": "GNU Project"
+      },
+      "performance": {
+        "benchmark": "Herramientas POSIX con extensiones GNU",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gfind . -name '*.log'",
+        "gfind /tmp -mtime -1",
+        "gxargs -0 -n4 echo"
+      ],
+      "alternatives": [
+        "fd",
+        "ripgrep"
+      ],
+      "relatedTools": [
+        "xargs",
+        "locate"
+      ],
+      "tags": [
+        "find",
+        "files",
+        "gnu"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "scripting",
+        "legacy",
+        "posix"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "git",
+      "displayName": "Git",
+      "category": "desarrollo",
+      "subcategory": "vcs",
+      "description": {
+        "short": "Control de versiones distribuido",
+        "long": "Sistema VCS dominante para proyectos de software y colaboración."
+      },
+      "installation": {
+        "homebrew": "brew install git"
+      },
+      "metadata": {
+        "version": "2.53.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://git-scm.com/",
+        "license": "GPL-2.0",
+        "maintainer": "git"
+      },
+      "performance": {
+        "benchmark": "Optimizado para repos grandes",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "git status",
+        "git switch -c feature/x",
+        "git rebase -i HEAD~5"
+      ],
+      "alternatives": [
+        "hg",
+        "pijul"
+      ],
+      "relatedTools": [
+        "gh",
+        "delta"
+      ],
+      "tags": [
+        "vcs",
+        "collaboration",
+        "cli"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "teams",
+        "open-source",
+        "backups"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "gh",
+      "displayName": "GitHub CLI (gh)",
+      "category": "desarrollo",
+      "subcategory": "github",
+      "description": {
+        "short": "CLI oficial para GitHub",
+        "long": "Gestiona issues, PRs, releases y Actions desde la terminal."
+      },
+      "installation": {
+        "homebrew": "brew install gh"
+      },
+      "metadata": {
+        "version": "2.89.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 43732,
+        "homepage": "https://github.com/cli/cli",
+        "license": "MIT",
+        "maintainer": "GitHub",
+        "githubForks": 8236,
+        "githubWatchers": 1023
+      },
+      "performance": {
+        "benchmark": "API calls con caché",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gh pr create",
+        "gh issue list",
+        "gh repo sync"
+      ],
+      "alternatives": [
+        "hub",
+        "glab"
+      ],
+      "relatedTools": [
+        "git",
+        "jq"
+      ],
+      "tags": [
+        "github",
+        "workflow",
+        "api"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "pr-flow",
+        "triage",
+        "automation"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "node",
+      "displayName": "Node.js",
+      "category": "desarrollo",
+      "subcategory": "runtime",
+      "description": {
+        "short": "Runtime JavaScript/V8",
+        "long": "Ecosistema de JS server-side con npm/yarn/pnpm y tooling masivo."
+      },
+      "installation": {
+        "homebrew": "brew install node"
+      },
+      "metadata": {
+        "version": "25.9.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 99000,
+        "homepage": "https://nodejs.org/",
+        "license": "MIT",
+        "maintainer": "OpenJS"
+      },
+      "performance": {
+        "benchmark": "V8 JIT con soporte async",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "node app.js",
+        "node --inspect app.js",
+        "npm init -y"
+      ],
+      "alternatives": [
+        "deno",
+        "bun"
+      ],
+      "relatedTools": [
+        "pnpm",
+        "typescript"
+      ],
+      "tags": [
+        "javascript",
+        "runtime",
+        "npm"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "apis",
+        "cli-tools",
+        "scripts"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "pnpm",
+      "displayName": "pnpm",
+      "category": "desarrollo",
+      "subcategory": "package-manager",
+      "description": {
+        "short": "Gestor de paquetes JS rápido y eficiente",
+        "long": "Usa store global con enlaces duros, ahorra espacio y acelera installs."
+      },
+      "installation": {
+        "homebrew": "brew install pnpm"
+      },
+      "metadata": {
+        "version": "10.33.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 34577,
+        "homepage": "https://github.com/pnpm/pnpm",
+        "license": "MIT",
+        "maintainer": "pnpm",
+        "githubForks": 1383,
+        "githubWatchers": 146
+      },
+      "performance": {
+        "benchmark": "Instalaciones 2-3x más rápidas",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "pnpm install",
+        "pnpm dlx create-next-app",
+        "pnpm run dev"
+      ],
+      "alternatives": [
+        "npm",
+        "yarn"
+      ],
+      "relatedTools": [
+        "node",
+        "corepack"
+      ],
+      "tags": [
+        "javascript",
+        "packages",
+        "workspace"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "monorepo",
+        "web",
+        "cli"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "deno",
+      "displayName": "Deno",
+      "category": "desarrollo",
+      "subcategory": "runtime",
+      "description": {
+        "short": "Runtime JS/TS seguro por defecto",
+        "long": "Incluye TypeScript, bundling y permisos explícitos para IO/red."
+      },
+      "installation": {
+        "homebrew": "brew install deno"
+      },
+      "metadata": {
+        "version": "2.7.12",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 93000,
+        "homepage": "https://deno.com/",
+        "license": "MIT",
+        "maintainer": "Deno Land"
+      },
+      "performance": {
+        "benchmark": "Rápido con V8 y Rust ops",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "deno run --allow-read mod.ts",
+        "deno task dev",
+        "deno fmt"
+      ],
+      "alternatives": [
+        "node",
+        "bun"
+      ],
+      "relatedTools": [
+        "oak",
+        "fresh"
+      ],
+      "tags": [
+        "deno",
+        "typescript",
+        "security"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "apis",
+        "edge",
+        "scripting"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "go",
+      "displayName": "Go",
+      "category": "desarrollo",
+      "subcategory": "language",
+      "description": {
+        "short": "Lenguaje compilado para servicios y CLI",
+        "long": "Go ofrece binarios estáticos, GC rápido y concurrencia con goroutines."
+      },
+      "installation": {
+        "homebrew": "brew install go"
+      },
+      "metadata": {
+        "version": "1.26.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 120000,
+        "homepage": "https://go.dev/",
+        "license": "BSD-3-Clause",
+        "maintainer": "Go Team"
+      },
+      "performance": {
+        "benchmark": "Binarios rápidos y livianos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "go run main.go",
+        "go test ./...",
+        "go install github.com/cli/cli/v2/cmd/gh@latest"
+      ],
+      "alternatives": [
+        "rust",
+        "node"
+      ],
+      "relatedTools": [
+        "delve",
+        "gopls"
+      ],
+      "tags": [
+        "go",
+        "compiler",
+        "cli"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "cli-tools",
+        "services",
+        "infra"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "ffmpeg",
+      "displayName": "FFmpeg",
+      "category": "multimedia",
+      "subcategory": "video-audio",
+      "description": {
+        "short": "Suite completa de procesamiento multimedia",
+        "long": "Convierte, filtra, transmux y procesa audio/video en casi cualquier formato."
+      },
+      "installation": {
+        "homebrew": "brew install ffmpeg"
+      },
+      "metadata": {
+        "version": "8.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://ffmpeg.org/",
+        "license": "LGPL-2.1",
+        "maintainer": "FFmpeg"
+      },
+      "performance": {
+        "benchmark": "Depende de codecs; usa aceleración HW",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "ffmpeg -i input.mov output.mp4",
+        "ffmpeg -i in.mp4 -vf scale=1280:-1 out.mp4",
+        "ffmpeg -i video.mp4 -vn audio.mp3"
+      ],
+      "alternatives": [
+        "handbrakecli",
+        "avconv"
+      ],
+      "relatedTools": [
+        "yt-dlp",
+        "sox"
+      ],
+      "tags": [
+        "video",
+        "audio",
+        "convert",
+        "stream"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "transcoding",
+        "thumbnails",
+        "streaming"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "yt-dlp",
+      "displayName": "yt-dlp",
+      "category": "multimedia",
+      "subcategory": "download",
+      "description": {
+        "short": "Descargador universal de video/audio",
+        "long": "Fork mejorado de youtube-dl con más extractores y opciones de formato."
+      },
+      "installation": {
+        "homebrew": "brew install yt-dlp"
+      },
+      "metadata": {
+        "version": "2026.3.17",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 156149,
+        "homepage": "https://github.com/yt-dlp/yt-dlp",
+        "license": "Unlicense",
+        "maintainer": "yt-dlp",
+        "githubForks": 12828,
+        "githubWatchers": 756
+      },
+      "performance": {
+        "benchmark": "Paraleliza fragmentos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "yt-dlp URL",
+        "yt-dlp -f 'best[height<=1080]' URL",
+        "yt-dlp -x --audio-format mp3 URL"
+      ],
+      "alternatives": [
+        "youtube-dl",
+        "aria2"
+      ],
+      "relatedTools": [
+        "ffmpeg",
+        "aria2"
+      ],
+      "tags": [
+        "download",
+        "video",
+        "audio"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "offline",
+        "podcasts",
+        "archival"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "imagemagick",
+      "displayName": "ImageMagick",
+      "category": "multimedia",
+      "subcategory": "images",
+      "description": {
+        "short": "Edición y conversión de imágenes CLI",
+        "long": "Procesa imágenes en lote: resize, filtros, GIFs y composiciones."
+      },
+      "installation": {
+        "homebrew": "brew install imagemagick"
+      },
+      "metadata": {
+        "version": "7.1.2-18",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://imagemagick.org/",
+        "license": "ImageMagick",
+        "maintainer": "ImageMagick"
+      },
+      "performance": {
+        "benchmark": "Depende de filtros; usa multi-core",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "convert in.png out.jpg",
+        "mogrify -resize 50% *.jpg",
+        "montage *.jpg -tile 3x3 -geometry +2+2 collage.jpg"
+      ],
+      "alternatives": [
+        "graphicsmagick",
+        "vips"
+      ],
+      "relatedTools": [
+        "ffmpeg",
+        "exiftool"
+      ],
+      "tags": [
+        "images",
+        "convert",
+        "batch"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "thumbnails",
+        "optimization",
+        "automation"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "exiftool",
+      "displayName": "ExifTool",
+      "category": "multimedia",
+      "subcategory": "metadata",
+      "description": {
+        "short": "Lectura/escritura de metadatos",
+        "long": "Manipula EXIF/IPTC/XMP en fotos, videos y audio; ideal para archivado."
+      },
+      "installation": {
+        "homebrew": "brew install exiftool"
+      },
+      "metadata": {
+        "version": "13.55",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://exiftool.org/",
+        "license": "Perl-5",
+        "maintainer": "Phil Harvey"
+      },
+      "performance": {
+        "benchmark": "Rápido en batch mediano",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "exiftool image.jpg",
+        "exiftool -all= image.jpg",
+        "exiftool '-DateTimeOriginal>FileModifyDate' *.jpg"
+      ],
+      "alternatives": [
+        "exiv2",
+        "mdls"
+      ],
+      "relatedTools": [
+        "imagemagick",
+        "ffmpeg"
+      ],
+      "tags": [
+        "metadata",
+        "photo",
+        "batch"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "digital-asset",
+        "privacy",
+        "bulk-edit"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "sox",
+      "displayName": "SoX",
+      "category": "multimedia",
+      "subcategory": "audio",
+      "description": {
+        "short": "Swiss-army knife de audio",
+        "long": "Convierte y procesa audio: normaliza, concatena, efectos y análisis."
+      },
+      "installation": {
+        "homebrew": "brew install sox"
+      },
+      "metadata": {
+        "version": "14.4.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "http://sox.sourceforge.net/",
+        "license": "GPL-2.0",
+        "maintainer": "SoX"
+      },
+      "performance": {
+        "benchmark": "Rápido en audio PCM",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "sox input.wav output.mp3",
+        "sox input.wav output.wav trim 0 10",
+        "sox -m a.wav b.wav mix.wav"
+      ],
+      "alternatives": [
+        "ffmpeg",
+        "audacity"
+      ],
+      "relatedTools": [
+        "ffmpeg",
+        "exiftool"
+      ],
+      "tags": [
+        "audio",
+        "effects",
+        "convert"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "podcast",
+        "batch-audio",
+        "analysis"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "gifsicle",
+      "displayName": "gifsicle",
+      "category": "multimedia",
+      "subcategory": "gif",
+      "description": {
+        "short": "Optimización y edición de GIFs",
+        "long": "Crea, optimiza y divide GIFs animados desde CLI con control de frames."
+      },
+      "installation": {
+        "homebrew": "brew install gifsicle"
+      },
+      "metadata": {
+        "version": "1.96",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 4204,
+        "homepage": "https://github.com/kohler/gifsicle",
+        "license": "GPL-2.0",
+        "maintainer": "Eddie Kohler",
+        "githubForks": 252,
+        "githubWatchers": 65
+      },
+      "performance": {
+        "benchmark": "Optimiza frames rápidamente",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gifsicle input.gif --optimize=3 -o output.gif",
+        "gifsicle --split input.gif",
+        "gifsicle --delay=5 --loop *.gif > anim.gif"
+      ],
+      "alternatives": [
+        "ffmpeg",
+        "imagemagick"
+      ],
+      "relatedTools": [
+        "ffmpeg",
+        "imagemagick"
+      ],
+      "tags": [
+        "gif",
+        "optimize",
+        "animation"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "webperf",
+        "memes",
+        "previews"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "curl",
+      "displayName": "curl",
+      "category": "red",
+      "subcategory": "http",
+      "description": {
+        "short": "Cliente HTTP/FTP versátil",
+        "long": "Transfiere datos con soporte de cientos de protocolos y autenticación."
+      },
+      "installation": {
+        "homebrew": "brew install curl"
+      },
+      "metadata": {
+        "version": "8.19.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 34000,
+        "homepage": "https://curl.se/",
+        "license": "curl",
+        "maintainer": "Daniel Stenberg"
+      },
+      "performance": {
+        "benchmark": "HTTP/3 soportado",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "curl -I https://example.com",
+        "curl -X POST -d 'a=1' https://api",
+        "curl -O https://example.com/file.zip"
+      ],
+      "alternatives": [
+        "httpie",
+        "wget"
+      ],
+      "relatedTools": [
+        "jq",
+        "aria2"
+      ],
+      "tags": [
+        "http",
+        "https",
+        "cli"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "api-test",
+        "downloads",
+        "automation"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "httpie",
+      "displayName": "HTTPie",
+      "category": "red",
+      "subcategory": "http",
+      "description": {
+        "short": "Cliente HTTP amigable",
+        "long": "Sintaxis intuitiva, colores y JSON pretty-print para probar APIs."
+      },
+      "installation": {
+        "homebrew": "brew install httpie"
+      },
+      "metadata": {
+        "version": "3.2.4",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 37902,
+        "homepage": "https://github.com/httpie/cli",
+        "license": "BSD-3-Clause",
+        "maintainer": "HTTPie",
+        "githubForks": 3884,
+        "githubWatchers": 109
+      },
+      "performance": {
+        "benchmark": "Usa requests; enfocado en UX",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "http GET https://api.github.com",
+        "echo '{\\\"foo\\\":1}' | http POST https://api",
+        "http -f POST example.com name=cli"
+      ],
+      "alternatives": [
+        "curl",
+        "wget"
+      ],
+      "relatedTools": [
+        "jq",
+        "gron"
+      ],
+      "tags": [
+        "http",
+        "api",
+        "json"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "api-debug",
+        "demos",
+        "docs"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "wget",
+      "displayName": "wget",
+      "category": "red",
+      "subcategory": "download",
+      "description": {
+        "short": "Descargador web no interactivo",
+        "long": "Soporta HTTP/HTTPS/FTP, recursion y reintentos para espejos."
+      },
+      "installation": {
+        "homebrew": "brew install wget"
+      },
+      "metadata": {
+        "version": "1.25.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://www.gnu.org/software/wget/",
+        "license": "GPL-3.0",
+        "maintainer": "GNU"
+      },
+      "performance": {
+        "benchmark": "Estable y probado",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "wget https://example.com/file.zip",
+        "wget -r -np https://site/docs/",
+        "wget --mirror --convert-links https://site"
+      ],
+      "alternatives": [
+        "curl",
+        "aria2"
+      ],
+      "relatedTools": [
+        "httrack",
+        "yt-dlp"
+      ],
+      "tags": [
+        "download",
+        "mirror",
+        "http"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "mirror",
+        "offline",
+        "backup"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "aria2",
+      "displayName": "aria2",
+      "category": "red",
+      "subcategory": "download",
+      "description": {
+        "short": "Descargador multi-protocolo y multi-fuente",
+        "long": "HTTP(S), FTP, SFTP, BitTorrent; soporta múltiples conexiones y metalinks."
+      },
+      "installation": {
+        "homebrew": "brew install aria2"
+      },
+      "metadata": {
+        "version": "1.37.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 40573,
+        "homepage": "https://github.com/aria2/aria2",
+        "license": "GPL-2.0",
+        "maintainer": "aria2",
+        "githubForks": 3839,
+        "githubWatchers": 734
+      },
+      "performance": {
+        "benchmark": "Segmenta descargas en paralelo",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "aria2c https://example.com/file.iso",
+        "aria2c -x 16 -s 16 URL",
+        "aria2c --follow-torrent=true file.torrent"
+      ],
+      "alternatives": [
+        "wget",
+        "curl"
+      ],
+      "relatedTools": [
+        "yt-dlp",
+        "rclone"
+      ],
+      "tags": [
+        "download",
+        "torrent",
+        "http"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "large-files",
+        "mirrors",
+        "multi-source"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "tcpdump",
+      "displayName": "tcpdump",
+      "category": "red",
+      "subcategory": "packet-capture",
+      "description": {
+        "short": "Sniffer de paquetes CLI",
+        "long": "Captura y filtra tráfico de red con expresiones BPF para debugging."
+      },
+      "installation": {
+        "homebrew": "brew install tcpdump"
+      },
+      "metadata": {
+        "version": "4.99.6",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://www.tcpdump.org/",
+        "license": "BSD-3-Clause",
+        "maintainer": "tcpdump"
+      },
+      "performance": {
+        "benchmark": "Captura a línea rate limitado por NIC",
+        "memoryUsage": "low",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "sudo tcpdump -i any",
+        "sudo tcpdump -nn port 443",
+        "sudo tcpdump -w capture.pcap"
+      ],
+      "alternatives": [
+        "wireshark",
+        "tshark"
+      ],
+      "relatedTools": [
+        "nmap",
+        "iftop"
+      ],
+      "tags": [
+        "network",
+        "capture",
+        "security"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "debug",
+        "incident",
+        "traffic-analysis"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "nmap",
+      "displayName": "Nmap",
+      "category": "red",
+      "subcategory": "scanner",
+      "description": {
+        "short": "Escáner de red y puertos",
+        "long": "Descubre hosts/servicios, detecta SO y ejecuta scripts NSE para auditorías."
+      },
+      "installation": {
+        "homebrew": "brew install nmap"
+      },
+      "metadata": {
+        "version": "7.99",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://nmap.org/",
+        "license": "Nmap",
+        "maintainer": "Gordon Lyon"
+      },
+      "performance": {
+        "benchmark": "Escaneo paralelo y ajustable",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "nmap -sV 192.168.1.0/24",
+        "nmap -p 1-1024 example.com",
+        "nmap -sC -sV -oA scan target"
+      ],
+      "alternatives": [
+        "masscan",
+        "rustscan"
+      ],
+      "relatedTools": [
+        "tcpdump",
+        "trivy"
+      ],
+      "tags": [
+        "scan",
+        "security",
+        "network"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "inventory",
+        "pentest",
+        "exposure"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "htop",
+      "displayName": "htop",
+      "category": "monitoreo",
+      "subcategory": "process",
+      "description": {
+        "short": "Monitor de procesos interactivo",
+        "long": "Visualiza CPU, memoria y procesos con filtros y kill interactivo."
+      },
+      "installation": {
+        "homebrew": "brew install htop"
+      },
+      "metadata": {
+        "version": "3.5.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 7975,
+        "homepage": "https://github.com/htop-dev/htop",
+        "license": "GPL-2.0",
+        "maintainer": "htop",
+        "githubForks": 573,
+        "githubWatchers": 63
+      },
+      "performance": {
+        "benchmark": "Refresco rápido",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "htop",
+        "htop -s PERCENT_MEM",
+        "htop -u $USER"
+      ],
+      "alternatives": [
+        "top",
+        "btop"
+      ],
+      "relatedTools": [
+        "iotop",
+        "nethogs"
+      ],
+      "tags": [
+        "monitor",
+        "process",
+        "interactive"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "debug",
+        "ops",
+        "perf"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "btop",
+      "displayName": "btop",
+      "category": "monitoreo",
+      "subcategory": "process",
+      "description": {
+        "short": "Monitor moderno con visuales avanzadas",
+        "long": "CPU, RAM, disco y red con gráficos, ordenamiento y tema configurable."
+      },
+      "installation": {
+        "homebrew": "brew install btop"
+      },
+      "metadata": {
+        "version": "1.4.6",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 31520,
+        "homepage": "https://github.com/aristocratos/btop",
+        "license": "Apache-2.0",
+        "maintainer": "aristocratos",
+        "githubForks": 976,
+        "githubWatchers": 121
+      },
+      "performance": {
+        "benchmark": "UI fluida con bajo consumo",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "btop",
+        "btop --utf-force",
+        "btop --preset minimal"
+      ],
+      "alternatives": [
+        "htop",
+        "glances"
+      ],
+      "relatedTools": [
+        "duf",
+        "fastfetch"
+      ],
+      "tags": [
+        "monitor",
+        "graphs",
+        "tui"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "ops",
+        "desktop",
+        "demo"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "glances",
+      "displayName": "glances",
+      "category": "monitoreo",
+      "subcategory": "system",
+      "description": {
+        "short": "Monitor de sistema multipropósito",
+        "long": "Resumen de CPU, memoria, disco, red y contenedores; API JSON."
+      },
+      "installation": {
+        "homebrew": "brew install glances"
+      },
+      "metadata": {
+        "version": "4.5.3",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 32210,
+        "homepage": "https://github.com/nicolargo/glances",
+        "license": "LGPL-3.0",
+        "maintainer": "nicolargo",
+        "githubForks": 1716,
+        "githubWatchers": 501
+      },
+      "performance": {
+        "benchmark": "Bajo overhead en modo curses",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "glances",
+        "glances -w",
+        "glances --export-csv stats.csv"
+      ],
+      "alternatives": [
+        "htop",
+        "btop"
+      ],
+      "relatedTools": [
+        "psutil",
+        "netdata"
+      ],
+      "tags": [
+        "monitor",
+        "api",
+        "export"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "servers",
+        "dashboards",
+        "remote"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "fastfetch",
+      "displayName": "fastfetch",
+      "category": "monitoreo",
+      "subcategory": "system-info",
+      "description": {
+        "short": "Info del sistema rápida y estilizada",
+        "long": "Alternativa moderna a neofetch con módulos configurables y caché."
+      },
+      "installation": {
+        "homebrew": "brew install fastfetch"
+      },
+      "metadata": {
+        "version": "2.61.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 21835,
+        "homepage": "https://github.com/fastfetch-cli/fastfetch",
+        "license": "MIT",
+        "maintainer": "fastfetch",
+        "githubForks": 735,
+        "githubWatchers": 54
+      },
+      "performance": {
+        "benchmark": "Inicio instantáneo",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "fastfetch",
+        "fastfetch --logo none",
+        "fastfetch --config ~/.config/fastfetch/config.jsonc"
+      ],
+      "alternatives": [
+        "neofetch",
+        "paleofetch"
+      ],
+      "relatedTools": [
+        "btop",
+        "duf"
+      ],
+      "tags": [
+        "system",
+        "info",
+        "ascii"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "support",
+        "showcase",
+        "dotfiles"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "duf",
+      "displayName": "duf",
+      "category": "monitoreo",
+      "subcategory": "disk-usage",
+      "description": {
+        "short": "df moderno con TUI",
+        "long": "Muestra puntos de montaje con barras, filtros y JSON output."
+      },
+      "installation": {
+        "homebrew": "brew install duf"
+      },
+      "metadata": {
+        "version": "0.9.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 14939,
+        "homepage": "https://github.com/muesli/duf",
+        "license": "MIT",
+        "maintainer": "muesli",
+        "githubForks": 456,
+        "githubWatchers": 87
+      },
+      "performance": {
+        "benchmark": "Lectura rápida de FS",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "duf",
+        "duf -only local",
+        "duf --json"
+      ],
+      "alternatives": [
+        "df",
+        "gdu"
+      ],
+      "relatedTools": [
+        "btop",
+        "fastfetch"
+      ],
+      "tags": [
+        "disk",
+        "monitor",
+        "tui"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "capacity",
+        "ops",
+        "reports"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "iotop",
+      "displayName": "iotop",
+      "category": "monitoreo",
+      "subcategory": "io",
+      "description": {
+        "short": "Monitor de IO por proceso",
+        "long": "Muestra lecturas/escrituras en disco por proceso en tiempo real."
+      },
+      "installation": {
+        "homebrew": "brew install iotop"
+      },
+      "metadata": {
+        "version": "1.26",
+        "lastUpdated": "2025-07-15",
+        "githubStars": 0,
+        "homepage": "https://linux.die.net/man/1/iotop",
+        "license": "GPL-2.0",
+        "maintainer": "iotop"
+      },
+      "performance": {
+        "benchmark": "Requiere permisos elevados",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "sudo iotop",
+        "sudo iotop -o",
+        "sudo iotop -P -k"
+      ],
+      "alternatives": [
+        "dstat",
+        "glances"
+      ],
+      "relatedTools": [
+        "htop",
+        "btop"
+      ],
+      "tags": [
+        "io",
+        "monitor",
+        "disk"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "bottlenecks",
+        "ops",
+        "perf"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "bat",
+      "displayName": "bat",
+      "category": "texto",
+      "subcategory": "viewer",
+      "description": {
+        "short": "cat con resaltado y git",
+        "long": "Muestra archivos con sintaxis, numeración y diff integrado."
+      },
+      "installation": {
+        "homebrew": "brew install bat"
+      },
+      "metadata": {
+        "version": "0.26.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 58099,
+        "homepage": "https://github.com/sharkdp/bat",
+        "license": "Apache-2.0",
+        "maintainer": "sharkdp",
+        "githubForks": 1508,
+        "githubWatchers": 209
+      },
+      "performance": {
+        "benchmark": "Rápido incluso en archivos grandes",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "bat README.md",
+        "bat -pp file.txt",
+        "git diff | bat --paging=always"
+      ],
+      "alternatives": [
+        "cat",
+        "less"
+      ],
+      "relatedTools": [
+        "delta",
+        "fd"
+      ],
+      "tags": [
+        "viewer",
+        "syntax",
+        "git"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "code-review",
+        "docs",
+        "diff"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "pandoc",
+      "displayName": "pandoc",
+      "category": "texto",
+      "subcategory": "convert",
+      "description": {
+        "short": "Convertidor universal de documentos",
+        "long": "Convierte entre docx, pdf, html, markdown y más con filtros."
+      },
+      "installation": {
+        "homebrew": "brew install pandoc"
+      },
+      "metadata": {
+        "version": "3.9.0.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 43259,
+        "homepage": "https://github.com/jgm/pandoc",
+        "license": "GPL-2.0",
+        "maintainer": "John MacFarlane",
+        "githubForks": 3809,
+        "githubWatchers": 522
+      },
+      "performance": {
+        "benchmark": "Rápido en lotes medianos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "pandoc file.md -o file.pdf",
+        "pandoc -s -o out.docx in.md",
+        "pandoc -t revealjs slides.md -o slides.html"
+      ],
+      "alternatives": [
+        "md-to-pdf",
+        "asciidoctor"
+      ],
+      "relatedTools": [
+        "quarto",
+        "latex"
+      ],
+      "tags": [
+        "documents",
+        "convert",
+        "markdown"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "reports",
+        "slides",
+        "docs"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "vale",
+      "displayName": "Vale",
+      "category": "texto",
+      "subcategory": "lint",
+      "description": {
+        "short": "Linter de estilo editorial",
+        "long": "Valida gramática, tono y consistencia en documentación técnica."
+      },
+      "installation": {
+        "homebrew": "brew install vale"
+      },
+      "metadata": {
+        "version": "3.14.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 5335,
+        "homepage": "https://github.com/errata-ai/vale",
+        "license": "MIT",
+        "maintainer": "Errata AI",
+        "githubForks": 194,
+        "githubWatchers": 30
+      },
+      "performance": {
+        "benchmark": "Lint rápido en Markdown",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "vale docs/",
+        "vale README.md",
+        "vale --config .vale.ini content"
+      ],
+      "alternatives": [
+        "write-good",
+        "languagetool"
+      ],
+      "relatedTools": [
+        "pandoc",
+        "markdownlint"
+      ],
+      "tags": [
+        "writing",
+        "style",
+        "lint"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "docs-quality",
+        "guides",
+        "blogs"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "glow",
+      "displayName": "glow",
+      "category": "texto",
+      "subcategory": "markdown-viewer",
+      "description": {
+        "short": "Visor Markdown TUI",
+        "long": "Renderiza Markdown en terminal con tema y sincronización a repos."
+      },
+      "installation": {
+        "homebrew": "brew install glow"
+      },
+      "metadata": {
+        "version": "2.1.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 24322,
+        "homepage": "https://github.com/charmbracelet/glow",
+        "license": "MIT",
+        "maintainer": "Charm",
+        "githubForks": 645,
+        "githubWatchers": 81
+      },
+      "performance": {
+        "benchmark": "Rápido y offline",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "glow README.md",
+        "glow -p docs/guide.md",
+        "glow -s dark"
+      ],
+      "alternatives": [
+        "bat",
+        "mdcat"
+      ],
+      "relatedTools": [
+        "charm",
+        "gum"
+      ],
+      "tags": [
+        "markdown",
+        "tui",
+        "viewer"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "docs",
+        "presentations",
+        "notes"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "sd",
+      "displayName": "sd",
+      "category": "texto",
+      "subcategory": "find-replace",
+      "description": {
+        "short": "Find & replace amigable",
+        "long": "Reemplazo rápido con sintaxis inspirada en sed/awk pero más legible."
+      },
+      "installation": {
+        "homebrew": "brew install sd"
+      },
+      "metadata": {
+        "version": "1.1.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 7041,
+        "homepage": "https://github.com/chmln/sd",
+        "license": "MIT",
+        "maintainer": "chmln",
+        "githubForks": 155,
+        "githubWatchers": 31
+      },
+      "performance": {
+        "benchmark": "Rápido en archivos medianos",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "sd foo bar file.txt",
+        "rg -l foo | xargs sd foo bar",
+        "sd 'foo(\\d+)' 'bar$1' file.txt"
+      ],
+      "alternatives": [
+        "sed",
+        "perl"
+      ],
+      "relatedTools": [
+        "ripgrep",
+        "awk"
+      ],
+      "tags": [
+        "replace",
+        "regex",
+        "rust"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "refactor",
+        "cleanup",
+        "scripts"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "yq",
+      "displayName": "yq",
+      "category": "texto",
+      "subcategory": "yaml-json",
+      "description": {
+        "short": "Procesador YAML/JSON/TOML",
+        "long": "Manipula YAML como jq, con soporte para JSON y TOML bidireccional."
+      },
+      "installation": {
+        "homebrew": "brew install yq"
+      },
+      "metadata": {
+        "version": "4.52.5",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 15201,
+        "homepage": "https://github.com/mikefarah/yq",
+        "license": "MIT",
+        "maintainer": "Mike Farah",
+        "githubForks": 760,
+        "githubWatchers": 63
+      },
+      "performance": {
+        "benchmark": "Rápido en configuraciones medianas",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "yq '.version' config.yaml",
+        "yq '.items[] | select(.enabled==true)' data.yaml",
+        "yq -o=json eval '.' file.yaml"
+      ],
+      "alternatives": [
+        "jq",
+        "dasel"
+      ],
+      "relatedTools": [
+        "jq",
+        "dasel"
+      ],
+      "tags": [
+        "yaml",
+        "json",
+        "config"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "devops",
+        "config",
+        "templating"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "thefuck",
+      "displayName": "thefuck",
+      "category": "utilidades",
+      "subcategory": "productivity",
+      "description": {
+        "short": "Corrige comandos fallidos automáticamente",
+        "long": "Sugiere y ejecuta el comando correcto basado en historial y patrones."
+      },
+      "installation": {
+        "homebrew": "brew install thefuck"
+      },
+      "metadata": {
+        "version": "3.32",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 96404,
+        "homepage": "https://github.com/nvbn/thefuck",
+        "license": "MIT",
+        "maintainer": "nvbn",
+        "githubForks": 3906,
+        "githubWatchers": 816
+      },
+      "performance": {
+        "benchmark": "Corre en <100ms",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "git brnch -> fuck",
+        "sl -> fuck",
+        "kubectl get podz -> fuck"
+      ],
+      "alternatives": [
+        "please",
+        "alias-corrections"
+      ],
+      "relatedTools": [
+        "zsh",
+        "bash"
+      ],
+      "tags": [
+        "productivity",
+        "typo",
+        "shell"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "daily",
+        "training",
+        "pairing"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "tealdeer",
+      "displayName": "tealdeer (tldr)",
+      "category": "utilidades",
+      "subcategory": "docs",
+      "description": {
+        "short": "Páginas TL;DR rápidas",
+        "long": "Versiones resumidas de manpages con ejemplos claros y cache local."
+      },
+      "installation": {
+        "homebrew": "brew install tealdeer"
+      },
+      "metadata": {
+        "version": "1.8.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 6116,
+        "homepage": "https://github.com/dbrgn/tealdeer",
+        "license": "MIT",
+        "maintainer": "Daniel Brugnara",
+        "githubForks": 142,
+        "githubWatchers": 20
+      },
+      "performance": {
+        "benchmark": "Respuestas instantáneas",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "tldr tar",
+        "tldr --update",
+        "tldr --list"
+      ],
+      "alternatives": [
+        "tldr-node",
+        "man"
+      ],
+      "relatedTools": [
+        "navi",
+        "cheat"
+      ],
+      "tags": [
+        "docs",
+        "examples",
+        "offline"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "learning",
+        "quickref",
+        "workshops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "navi",
+      "displayName": "navi",
+      "category": "utilidades",
+      "subcategory": "cheatsheet",
+      "description": {
+        "short": "Hoja de comandos interactiva con fzf",
+        "long": "Muestra snippets y los rellena con placeholders, integrable con fzf."
+      },
+      "installation": {
+        "homebrew": "brew install navi"
+      },
+      "metadata": {
+        "version": "2.24.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 16999,
+        "homepage": "https://github.com/denisidoro/navi",
+        "license": "Apache-2.0",
+        "maintainer": "Denis Idoro",
+        "githubForks": 545,
+        "githubWatchers": 111
+      },
+      "performance": {
+        "benchmark": "Interfaz instantánea",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "navi",
+        "navi --print",
+        "navi repo add owner/repo"
+      ],
+      "alternatives": [
+        "cheat",
+        "tldr"
+      ],
+      "relatedTools": [
+        "fzf",
+        "thefuck"
+      ],
+      "tags": [
+        "cheatsheet",
+        "interactive",
+        "fzf"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "onboarding",
+        "ops-runbooks",
+        "demos"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "direnv",
+      "displayName": "direnv",
+      "category": "utilidades",
+      "subcategory": "env",
+      "description": {
+        "short": "Variables de entorno por directorio",
+        "long": "Carga automática de entornos al entrar a un directorio (.envrc)."
+      },
+      "installation": {
+        "homebrew": "brew install direnv"
+      },
+      "metadata": {
+        "version": "2.37.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 14941,
+        "homepage": "https://github.com/direnv/direnv",
+        "license": "MIT",
+        "maintainer": "direnv",
+        "githubForks": 773,
+        "githubWatchers": 79
+      },
+      "performance": {
+        "benchmark": "Hook ligero",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "echo 'export NODE_ENV=dev' > .envrc && direnv allow",
+        "direnv reload",
+        "direnv deny"
+      ],
+      "alternatives": [
+        "dotenv",
+        "autoenv"
+      ],
+      "relatedTools": [
+        "nix",
+        "asdf"
+      ],
+      "tags": [
+        "environment",
+        "shell",
+        "automation"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "per-project-env",
+        "secrets",
+        "toolchains"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "starship",
+      "displayName": "starship",
+      "category": "utilidades",
+      "subcategory": "prompt",
+      "description": {
+        "short": "Prompt minimal, rápido y bonito",
+        "long": "Prompt universal en Rust con módulos para git, kube, tiempo, etc."
+      },
+      "installation": {
+        "homebrew": "brew install starship"
+      },
+      "metadata": {
+        "version": "1.24.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 56200,
+        "homepage": "https://github.com/starship/starship",
+        "license": "ISC",
+        "maintainer": "starship",
+        "githubForks": 2461,
+        "githubWatchers": 195
+      },
+      "performance": {
+        "benchmark": "Prompt en <10ms",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "starship init zsh",
+        "starship preset nerd-font-symbols",
+        "starship explain"
+      ],
+      "alternatives": [
+        "powerlevel10k",
+        "oh-my-posh"
+      ],
+      "relatedTools": [
+        "zoxide",
+        "direnv"
+      ],
+      "tags": [
+        "prompt",
+        "rust",
+        "theme"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "productivity",
+        "observability",
+        "context"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "entr",
+      "displayName": "entr",
+      "category": "utilidades",
+      "subcategory": "watch",
+      "description": {
+        "short": "Ejecuta comandos al cambiar archivos",
+        "long": "Monitorea archivos/directorios y dispara comandos automáticamente."
+      },
+      "installation": {
+        "homebrew": "brew install entr"
+      },
+      "metadata": {
+        "version": "5.8",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 1400,
+        "homepage": "https://eradman.com/entrproject/",
+        "license": "ISC",
+        "maintainer": "eradman"
+      },
+      "performance": {
+        "benchmark": "Ligero para watchers pequeños",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "ls *.go | entr go test",
+        "find src -type f | entr -r npm test",
+        "ls *.md | entr -s 'quarto render'"
+      ],
+      "alternatives": [
+        "watchexec",
+        "fswatch"
+      ],
+      "relatedTools": [
+        "make",
+        "npm"
+      ],
+      "tags": [
+        "watch",
+        "automation",
+        "dev"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "tests",
+        "build",
+        "docs-live"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "trivy",
+      "displayName": "Trivy",
+      "category": "seguridad",
+      "subcategory": "scanner",
+      "description": {
+        "short": "Escáner de vulnerabilidades para contenedores y IaC",
+        "long": "Detecta CVEs en imágenes, repos, SBOM y configuraciones."
+      },
+      "installation": {
+        "homebrew": "brew install trivy"
+      },
+      "metadata": {
+        "version": "0.69.3",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 34455,
+        "homepage": "https://github.com/aquasecurity/trivy",
+        "license": "Apache-2.0",
+        "maintainer": "Aqua Security",
+        "githubForks": 251,
+        "githubWatchers": 205
+      },
+      "performance": {
+        "benchmark": "DB local con caché",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "trivy image nginx:latest",
+        "trivy fs .",
+        "trivy config ."
+      ],
+      "alternatives": [
+        "grype",
+        "clair"
+      ],
+      "relatedTools": [
+        "syft",
+        "docker"
+      ],
+      "tags": [
+        "security",
+        "vuln",
+        "containers"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "ci",
+        "supply-chain",
+        "audit"
+      ],
+      "platforms": [
+        "macos",
+        "linux"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "gitleaks",
+      "displayName": "gitleaks",
+      "category": "seguridad",
+      "subcategory": "secrets",
+      "description": {
+        "short": "Detecta secretos en repos Git",
+        "long": "Escanea commits y ramas para credenciales, tokens y claves."
+      },
+      "installation": {
+        "homebrew": "brew install gitleaks"
+      },
+      "metadata": {
+        "version": "8.30.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 25896,
+        "homepage": "https://github.com/gitleaks/gitleaks",
+        "license": "MIT",
+        "maintainer": "Gitleaks",
+        "githubForks": 1988,
+        "githubWatchers": 168
+      },
+      "performance": {
+        "benchmark": "Rápido en repos medianos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gitleaks detect",
+        "gitleaks protect --staged",
+        "gitleaks detect --source . --report-path report.json"
+      ],
+      "alternatives": [
+        "trufflehog",
+        "detect-secrets"
+      ],
+      "relatedTools": [
+        "git",
+        "gh"
+      ],
+      "tags": [
+        "secrets",
+        "security",
+        "ci"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "pre-commit",
+        "ci",
+        "audits"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "lynis",
+      "displayName": "Lynis",
+      "category": "seguridad",
+      "subcategory": "audit",
+      "description": {
+        "short": "Auditoría de seguridad en sistemas",
+        "long": "Escanea configuración, permisos y servicios para hardening."
+      },
+      "installation": {
+        "homebrew": "brew install lynis"
+      },
+      "metadata": {
+        "version": "3.1.6",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 15502,
+        "homepage": "https://github.com/CISOfy/lynis",
+        "license": "GPL-3.0",
+        "maintainer": "CISOfy",
+        "githubForks": 1582,
+        "githubWatchers": 342
+      },
+      "performance": {
+        "benchmark": "Escaneo completo en minutos",
+        "memoryUsage": "low",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "sudo lynis audit system",
+        "sudo lynis show categories",
+        "sudo lynis update info"
+      ],
+      "alternatives": [
+        "osquery",
+        "trivy"
+      ],
+      "relatedTools": [
+        "auditd",
+        "osquery"
+      ],
+      "tags": [
+        "audit",
+        "hardening",
+        "compliance"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "servers",
+        "compliance",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "bsd"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "hashcat",
+      "displayName": "hashcat",
+      "category": "seguridad",
+      "subcategory": "password",
+      "description": {
+        "short": "Cracker de contraseñas de alto rendimiento",
+        "long": "Soporta GPUs y múltiples algoritmos para pruebas de fortaleza."
+      },
+      "installation": {
+        "homebrew": "brew install hashcat"
+      },
+      "metadata": {
+        "version": "7.1.2",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 25734,
+        "homepage": "https://github.com/hashcat/hashcat",
+        "license": "MIT",
+        "maintainer": "hashcat",
+        "githubForks": 3401,
+        "githubWatchers": 512
+      },
+      "performance": {
+        "benchmark": "Aprovecha GPU",
+        "memoryUsage": "high",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "hashcat -m 0 hash.txt wordlist.txt",
+        "hashcat -I",
+        "hashcat -m 1000 -a 0 hash.txt rockyou.txt"
+      ],
+      "alternatives": [
+        "john",
+        "hydra"
+      ],
+      "relatedTools": [
+        "trivy",
+        "gitleaks"
+      ],
+      "tags": [
+        "security",
+        "password",
+        "gpu"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "pentest",
+        "audit",
+        "research"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "yara",
+      "displayName": "YARA",
+      "category": "seguridad",
+      "subcategory": "malware-detection",
+      "description": {
+        "short": "Patrones para detección de malware",
+        "long": "Define reglas para identificar archivos maliciosos en escaneos."
+      },
+      "installation": {
+        "homebrew": "brew install yara"
+      },
+      "metadata": {
+        "version": "4.5.5",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 9534,
+        "homepage": "https://github.com/VirusTotal/yara",
+        "license": "BSD-3-Clause",
+        "maintainer": "VirusTotal",
+        "githubForks": 1556,
+        "githubWatchers": 313
+      },
+      "performance": {
+        "benchmark": "Escaneo rápido por reglas",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "yara rules.yar files/",
+        "yara -r rules.yar /tmp",
+        "yara -w rule.yar file.bin"
+      ],
+      "alternatives": [
+        "clamav",
+        "osquery"
+      ],
+      "relatedTools": [
+        "trivy",
+        "lynis"
+      ],
+      "tags": [
+        "malware",
+        "detection",
+        "rules"
+      ],
+      "difficulty": "advanced",
+      "useCases": [
+        "ir",
+        "soc",
+        "forensics"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "bandit",
+      "displayName": "Bandit",
+      "category": "seguridad",
+      "subcategory": "sast",
+      "description": {
+        "short": "SAST para código Python",
+        "long": "Analiza vulnerabilidades comunes en código Python con reglas AST."
+      },
+      "installation": {
+        "homebrew": "brew install bandit"
+      },
+      "metadata": {
+        "version": "1.9.4",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 7922,
+        "homepage": "https://github.com/PyCQA/bandit",
+        "license": "Apache-2.0",
+        "maintainer": "PyCQA",
+        "githubForks": 747,
+        "githubWatchers": 71
+      },
+      "performance": {
+        "benchmark": "Rápido en proyectos medianos",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "bandit -r src",
+        "bandit -ll -r app",
+        "bandit -r src -f json -o report.json"
+      ],
+      "alternatives": [
+        "semgrep",
+        "pysa"
+      ],
+      "relatedTools": [
+        "trivy",
+        "gitleaks"
+      ],
+      "tags": [
+        "sast",
+        "python",
+        "security"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "ci",
+        "code-review",
+        "compliance"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "awscli",
+      "displayName": "AWS CLI",
+      "category": "cloud",
+      "subcategory": "aws",
+      "description": {
+        "short": "CLI oficial para AWS",
+        "long": "Gestiona servicios AWS, perfiles, STS y SSO desde terminal."
+      },
+      "installation": {
+        "homebrew": "brew install awscli"
+      },
+      "metadata": {
+        "version": "2.34.29",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 16873,
+        "homepage": "https://github.com/aws/aws-cli",
+        "license": "Apache-2.0",
+        "maintainer": "AWS",
+        "githubForks": 4515,
+        "githubWatchers": 560
+      },
+      "performance": {
+        "benchmark": "Depende de API AWS",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "aws sts get-caller-identity",
+        "aws s3 cp file s3://bucket",
+        "aws eks update-kubeconfig --name cluster"
+      ],
+      "alternatives": [
+        "awless",
+        "saws"
+      ],
+      "relatedTools": [
+        "kubectl",
+        "terraform"
+      ],
+      "tags": [
+        "aws",
+        "cloud",
+        "devops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "deploy",
+        "automation",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "azure-cli",
+      "displayName": "Azure CLI",
+      "category": "cloud",
+      "subcategory": "azure",
+      "description": {
+        "short": "CLI oficial para Azure",
+        "long": "Administra recursos Azure, login SSO, despliegues y configuraciones."
+      },
+      "installation": {
+        "homebrew": "brew install azure-cli"
+      },
+      "metadata": {
+        "version": "2.85.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 4503,
+        "homepage": "https://github.com/Azure/azure-cli",
+        "license": "MIT",
+        "maintainer": "Microsoft",
+        "githubForks": 3374,
+        "githubWatchers": 174
+      },
+      "performance": {
+        "benchmark": "Depende de API Azure",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "az login",
+        "az group create -n rg -l eastus",
+        "az webapp up --runtime NODE:18LTS"
+      ],
+      "alternatives": [
+        "terraform",
+        "pulumi"
+      ],
+      "relatedTools": [
+        "kubectl",
+        "bicep"
+      ],
+      "tags": [
+        "azure",
+        "cloud",
+        "devops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "deploy",
+        "iac",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "google-cloud-sdk",
+      "displayName": "gcloud",
+      "category": "cloud",
+      "subcategory": "gcp",
+      "description": {
+        "short": "CLI oficial para GCP",
+        "long": "Administra recursos de Google Cloud, IAM, kubectl auth y deploys."
+      },
+      "installation": {
+        "homebrew": "brew install google-cloud-sdk"
+      },
+      "metadata": {
+        "version": "564.0.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 0,
+        "homepage": "https://cloud.google.com/sdk",
+        "license": "Apache-2.0",
+        "maintainer": "Google"
+      },
+      "performance": {
+        "benchmark": "Depende de API GCP",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "gcloud auth login",
+        "gcloud run deploy",
+        "gcloud container clusters get-credentials cluster"
+      ],
+      "alternatives": [
+        "terraform",
+        "pulumi"
+      ],
+      "relatedTools": [
+        "kubectl",
+        "k9s"
+      ],
+      "tags": [
+        "gcp",
+        "cloud",
+        "devops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "deploy",
+        "iac",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "terraform",
+      "displayName": "Terraform",
+      "category": "cloud",
+      "subcategory": "iac",
+      "description": {
+        "short": "Infraestructura como código declarativa",
+        "long": "Provisiona múltiples nubes con plan/apply y state remoto."
+      },
+      "installation": {
+        "homebrew": "brew install terraform"
+      },
+      "metadata": {
+        "version": "1.5.7",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 48121,
+        "homepage": "https://github.com/hashicorp/terraform",
+        "license": "BUSL",
+        "maintainer": "HashiCorp",
+        "githubForks": 10280,
+        "githubWatchers": 1132
+      },
+      "performance": {
+        "benchmark": "Plan rápido en configs medianas",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "terraform init",
+        "terraform plan",
+        "terraform apply -auto-approve"
+      ],
+      "alternatives": [
+        "pulumi",
+        "bicep"
+      ],
+      "relatedTools": [
+        "terragrunt",
+        "tfenv"
+      ],
+      "tags": [
+        "iac",
+        "cloud",
+        "ops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "multi-cloud",
+        "modules",
+        "ci"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "kubectl",
+      "displayName": "kubectl",
+      "category": "cloud",
+      "subcategory": "kubernetes",
+      "description": {
+        "short": "CLI oficial para Kubernetes",
+        "long": "Gestiona objetos, contextos, kubeconfigs y operaciones de clúster."
+      },
+      "installation": {
+        "homebrew": "brew install kubectl"
+      },
+      "metadata": {
+        "version": "1.35.3",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 97000,
+        "homepage": "https://kubernetes.io/",
+        "license": "Apache-2.0",
+        "maintainer": "CNCF"
+      },
+      "performance": {
+        "benchmark": "Depende del API server",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "kubectl get pods",
+        "kubectl apply -f deploy.yaml",
+        "kubectl config use-context prod"
+      ],
+      "alternatives": [
+        "k9s",
+        "oc"
+      ],
+      "relatedTools": [
+        "k9s",
+        "helm"
+      ],
+      "tags": [
+        "k8s",
+        "cloud",
+        "devops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "deploy",
+        "troubleshoot",
+        "ops"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "k9s",
+      "displayName": "k9s",
+      "category": "cloud",
+      "subcategory": "kubernetes",
+      "description": {
+        "short": "TUI para Kubernetes",
+        "long": "UI en terminal para navegar pods, logs y ejecutar acciones en clusters."
+      },
+      "installation": {
+        "homebrew": "brew install k9s"
+      },
+      "metadata": {
+        "version": "0.50.18",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 33349,
+        "homepage": "https://github.com/derailed/k9s",
+        "license": "Apache-2.0",
+        "maintainer": "derailed",
+        "githubForks": 2141,
+        "githubWatchers": 154
+      },
+      "performance": {
+        "benchmark": "Depende del API server",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "k9s",
+        "k9s -A",
+        "k9s --context staging"
+      ],
+      "alternatives": [
+        "kubectl",
+        "lens"
+      ],
+      "relatedTools": [
+        "kubectl",
+        "stern"
+      ],
+      "tags": [
+        "k8s",
+        "tui",
+        "ops"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "troubleshoot",
+        "observability",
+        "dash"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "csvkit",
+      "displayName": "csvkit",
+      "category": "data",
+      "subcategory": "csv",
+      "description": {
+        "short": "Suite para CSV en CLI",
+        "long": "Manipula, convierte y analiza CSV/Excel con múltiples utilidades."
+      },
+      "installation": {
+        "homebrew": "brew install csvkit"
+      },
+      "metadata": {
+        "version": "2.2.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 6367,
+        "homepage": "https://github.com/wireservice/csvkit",
+        "license": "MIT",
+        "maintainer": "wireservice",
+        "githubForks": 675,
+        "githubWatchers": 127
+      },
+      "performance": {
+        "benchmark": "OK en archivos medianos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "csvstat file.csv",
+        "csvcut -c 1,3 file.csv",
+        "in2csv file.xlsx | csvlook"
+      ],
+      "alternatives": [
+        "xsv",
+        "miller"
+      ],
+      "relatedTools": [
+        "jq",
+        "xsv"
+      ],
+      "tags": [
+        "csv",
+        "data",
+        "excel"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "data-clean",
+        "reporting",
+        "conversion"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "miller",
+      "displayName": "Miller (mlr)",
+      "category": "data",
+      "subcategory": "csv-json",
+      "description": {
+        "short": "awk para CSV/JSON/TSV",
+        "long": "Procesa datos estructurados con filtros, joins y stats en streaming."
+      },
+      "installation": {
+        "homebrew": "brew install miller"
+      },
+      "metadata": {
+        "version": "6.17.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 9836,
+        "homepage": "https://github.com/johnkerl/miller",
+        "license": "BSD-2-Clause",
+        "maintainer": "John Kerl",
+        "githubForks": 233,
+        "githubWatchers": 63
+      },
+      "performance": {
+        "benchmark": "Muy rápido en streaming",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "mlr --csv cut -f name,age file.csv",
+        "mlr --json filter '$status==\\\"active\\\"' data.json",
+        "mlr --icsv --ojson cat file.csv"
+      ],
+      "alternatives": [
+        "awk",
+        "xsv"
+      ],
+      "relatedTools": [
+        "jq",
+        "xsv"
+      ],
+      "tags": [
+        "data",
+        "csv",
+        "stream"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "etl",
+        "logs",
+        "metrics"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "duckdb",
+      "displayName": "DuckDB",
+      "category": "data",
+      "subcategory": "analytics",
+      "description": {
+        "short": "OLAP in-process super rápido",
+        "long": "Motor analítico columnar que corre local con SQL y formatos Parquet."
+      },
+      "installation": {
+        "homebrew": "brew install duckdb"
+      },
+      "metadata": {
+        "version": "1.5.1",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 37355,
+        "homepage": "https://github.com/duckdb/duckdb",
+        "license": "MIT",
+        "maintainer": "DuckDB Foundation",
+        "githubForks": 3132,
+        "githubWatchers": 266
+      },
+      "performance": {
+        "benchmark": "OLAP rápido en archivos locales",
+        "memoryUsage": "medium",
+        "cpuIntensive": true
+      },
+      "examples": [
+        "duckdb -c 'SELECT * FROM read_csv_auto(''file.csv'') LIMIT 5'",
+        "duckdb -c 'CREATE TABLE t AS SELECT * FROM read_parquet(''data.parquet'')'",
+        "duckdb -c 'SELECT count(*) FROM t'"
+      ],
+      "alternatives": [
+        "sqlite",
+        "clickhouse-local"
+      ],
+      "relatedTools": [
+        "sqlite-utils",
+        "xsv"
+      ],
+      "tags": [
+        "sql",
+        "analytics",
+        "parquet"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "analytics",
+        "ad-hoc",
+        "local-warehouse"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "sqlite-utils",
+      "displayName": "sqlite-utils",
+      "category": "data",
+      "subcategory": "database",
+      "description": {
+        "short": "Administra SQLite con CLI y Python",
+        "long": "Crea tablas, ingesta CSV/JSON y ejecuta consultas fácilmente."
+      },
+      "installation": {
+        "homebrew": "brew install sqlite-utils"
+      },
+      "metadata": {
+        "version": "3.39",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 2031,
+        "homepage": "https://github.com/simonw/sqlite-utils",
+        "license": "Apache-2.0",
+        "maintainer": "Simon Willison",
+        "githubForks": 130,
+        "githubWatchers": 21
+      },
+      "performance": {
+        "benchmark": "Depende de SQLite; ingesta rápida",
+        "memoryUsage": "low",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "sqlite-utils insert db.db table data.json --pk id",
+        "sqlite-utils query db.db 'select count(*) from table'",
+        "sqlite-utils transform db.db table --drop-column old"
+      ],
+      "alternatives": [
+        "sqlite3",
+        "duckdb"
+      ],
+      "relatedTools": [
+        "datasette",
+        "xsv"
+      ],
+      "tags": [
+        "sqlite",
+        "data",
+        "ingest"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "prototyping",
+        "local-db",
+        "datasets"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "xsv",
+      "displayName": "xsv",
+      "category": "data",
+      "subcategory": "csv",
+      "description": {
+        "short": "CSV ultrarrápido en Rust",
+        "long": "Filtra, selecciona y perfila archivos CSV grandes en segundos."
+      },
+      "installation": {
+        "homebrew": "brew install xsv"
+      },
+      "metadata": {
+        "version": "0.13.0",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 10760,
+        "homepage": "https://github.com/BurntSushi/xsv",
+        "license": "MIT",
+        "maintainer": "Andrew Gallant",
+        "githubForks": 330,
+        "githubWatchers": 95
+      },
+      "performance": {
+        "benchmark": "Muy rápido en gigabytes",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "xsv table file.csv",
+        "xsv select name,age file.csv",
+        "xsv stats file.csv"
+      ],
+      "alternatives": [
+        "miller",
+        "csvkit"
+      ],
+      "relatedTools": [
+        "ripgrep",
+        "jq"
+      ],
+      "tags": [
+        "csv",
+        "rust",
+        "fast"
+      ],
+      "difficulty": "beginner",
+      "useCases": [
+        "profiling",
+        "etl",
+        "preview"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
+    },
+    {
+      "name": "visidata",
+      "displayName": "VisiData",
+      "category": "data",
+      "subcategory": "exploration",
+      "description": {
+        "short": "Exploración de datos en TUI",
+        "long": "Hoja de cálculo en terminal para CSV, JSON, SQL y más."
+      },
+      "installation": {
+        "homebrew": "brew install visidata"
+      },
+      "metadata": {
+        "version": "3.3",
+        "lastUpdated": "2026-04-11",
+        "githubStars": 9009,
+        "homepage": "https://github.com/saulpw/visidata",
+        "license": "GPL-3.0",
+        "maintainer": "Saul Pwanson",
+        "githubForks": 344,
+        "githubWatchers": 64
+      },
+      "performance": {
+        "benchmark": "Interactivo en datasets medianos",
+        "memoryUsage": "medium",
+        "cpuIntensive": false
+      },
+      "examples": [
+        "vd file.csv",
+        "vd data.json",
+        "vd db.sqlite"
+      ],
+      "alternatives": [
+        "csvlens",
+        "datasette"
+      ],
+      "relatedTools": [
+        "xsv",
+        "miller"
+      ],
+      "tags": [
+        "tui",
+        "data",
+        "explore"
+      ],
+      "difficulty": "intermediate",
+      "useCases": [
+        "eda",
+        "data-wrangling",
+        "qa"
+      ],
+      "platforms": [
+        "macos",
+        "linux",
+        "windows"
+      ],
+      "verified": true,
+      "lastVerified": "2026-01-01"
     }
   ],
   "categories": {
     "navegacion": "Navigation and filesystem exploration",
-    "archivos": "File management and manipulation", 
+    "archivos": "File management and manipulation",
     "busqueda": "Search and filtering tools",
     "desarrollo": "Development and programming tools",
     "multimedia": "Media processing and conversion",
@@ -45,7 +4212,8 @@
     "monitoreo": "System monitoring and diagnostics",
     "texto": "Text processing and documents",
     "utilidades": "General purpose utilities",
-    "combinaciones": "Advanced workflows and automation",
-    "configuracion": "Setup and customization"
+    "seguridad": "Security and auditing",
+    "cloud": "Cloud and Kubernetes tooling",
+    "data": "Data processing and analytics"
   }
 }
