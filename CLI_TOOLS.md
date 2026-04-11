@@ -44,44 +44,27 @@ eza -la --sort=size
 eza -la --git
 ```
 
-### `tree` - Estructura de directorios
-Muestra la estructura de carpetas en formato árbol.
+### `yazi` - Navegador de archivos en terminal
+Navegador de archivos async escrito en Rust. Reemplaza a `ranger` con mejor rendimiento.
 
 ```bash
-# Árbol básico del directorio actual
-tree
+# Abrir yazi
+yazi
 
-# Limitar a 2 niveles de profundidad
-tree -L 2
-
-# Ignorar node_modules y .git
-tree -I 'node_modules|.git'
-
-# Mostrar archivos ocultos
-tree -a
-
-# Solo directorios
-tree -d
-
-# Generar HTML
-tree -H . -o tree.html
-```
-
-### `ranger` - Navegador de archivos en terminal
-Navegador visual de archivos con vista previa.
-
-```bash
-# Abrir ranger
-ranger
-
-# Comandos dentro de ranger:
+# Comandos dentro de yazi:
 # h, j, k, l - navegación (como vim)
 # Enter - abrir archivo/directorio
 # q - salir
 # S - abrir shell en directorio actual
-# r - abrir con aplicación
-# zh - mostrar archivos ocultos
+# . - mostrar archivos ocultos
+# / - buscar
+# Tab - seleccionar múltiples archivos
 ```
+
+> **Nota:** `eza --tree` reemplaza a `tree` para ver estructura de directorios:
+> ```bash
+> eza --tree --level=2 --icons --git
+> ```
 
 ### `zoxide` - Navegación inteligente
 Comando `cd` inteligente que recuerda directorios frecuentes.
@@ -105,21 +88,21 @@ zoxide query --stats
 
 ## 📁 Gestión de Archivos
 
-### `rename` / `renameutils` - Renombrado masivo
-Herramientas para renombrar múltiples archivos.
+### `mmv` - Renombrado masivo
+Herramienta para renombrar múltiples archivos con patrones. Reemplaza a `rename` y `renameutils`.
 
 ```bash
-# Renombrar archivos con patrón
-rename 's/\.jpeg$/\.jpg/' *.jpeg
+# Renombrar extensión
+mmv '*.jpeg' '#1.jpg'
 
-# Cambiar espacios por guiones bajos
-rename 's/ /_/g' *.txt
+# Cambiar patrón en nombres
+mmv 'foto_*.png' 'imagen_#1.png'
 
-# Cambiar a minúsculas
-rename 'y/A-Z/a-z/' *.TXT
+# Mover archivos a subdirectorio
+mmv '*.log' 'logs/#1.log'
 
-# Con mmv (más visual)
-mmv '*.jpeg' '*.jpg'
+# Preview sin ejecutar
+mmv -n '*.jpeg' '#1.jpg'
 ```
 
 ### `rsync` (via coreutils) - Sincronización de archivos
