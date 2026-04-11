@@ -90,6 +90,29 @@ brew update && brew upgrade && brew cleanup
 brew bundle dump --file=Brewfile --describe --force
 ```
 
+## 6) Verificación rápida del índice de herramientas
+
+Comprueba que todas las herramientas del índice existen en Homebrew antes de mergear cambios.
+
+- Requisitos: `brew`, `jq`.
+- Script: `scripts/verify-homebrew-tools.sh`
+
+### Ejemplo de uso (modo estricto)
+
+```bash
+./scripts/verify-homebrew-tools.sh --strict
+```
+
+### Actualizar metadatos y estadísticas
+
+```bash
+# Actualizar versiones desde Homebrew
+./scripts/update-tool-metadata.sh
+
+# Actualizar estrellas/forks desde GitHub (requiere gh login)
+./scripts/fetch-github-stats.sh
+```
+
 ---
 
 Contribuye con tus propias recetas en `practical-recipes.qmd` o añade scripts en `scripts/`.

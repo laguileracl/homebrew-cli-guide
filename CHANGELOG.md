@@ -1,5 +1,16 @@
 # Changelog
 
+# Changelog
+
+## 2026-01-01 — Fase 1: Índice y Automatización
+
+- Ampliación del `tools-index.json` con 70+ herramientas, metadatos enriquecidos y categorías nuevas (seguridad, cloud, data). Créditos: @laguileracl.
+- Nuevos scripts de mantenimiento: `verify-homebrew-tools.sh`, `update-tool-metadata.sh`, `fetch-github-stats.sh`.
+- Workflow de GitHub Actions `verify-tools.yml` para validar el índice contra Homebrew y asegurar JSON válido.
+- Plantilla de issue `Tool Request` para capturar propuestas de nuevas herramientas con criterios claros.
+- Documentación propuesta de API v2 en `docs/api-v2.md` y actualización de reconocimientos.
+- Archivos de autoría y contribución (`AUTHORS.md`, `CONTRIBUTORS.md`) para dar visibilidad a la comunidad.
+
 ## 2025-09-30 — Maintenance release
 
 This release contains repository maintenance and modernization work:
