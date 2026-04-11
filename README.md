@@ -6,6 +6,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 [![CI](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/ci.yml/badge.svg)](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/ci.yml)
+[![Verify Tools](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/verify-tools.yml/badge.svg)](https://github.com/laguileracl/homebrew-cli-guide/actions/workflows/verify-tools.yml)
 [![Release](https://img.shields.io/github/v/release/laguileracl/homebrew-cli-guide)](https://github.com/laguileracl/homebrew-cli-guide/releases)
 [![Pages](https://img.shields.io/website?url=https://laguileracl.github.io/homebrew-cli-guide)](https://laguileracl.github.io/homebrew-cli-guide)
 [![Discussions](https://img.shields.io/badge/Discussions-%23open-blue)](https://github.com/laguileracl/homebrew-cli-guide/discussions)
@@ -166,9 +167,9 @@ fzf-history-widget  # Búsqueda inteligente en historial
 ## 📊 **Impacto y Métricas**
 
 ### **Herramientas Cubiertas**
-- **200+ herramientas** CLI documentadas
+- **70+ herramientas** CLI documentadas (fase 1 ampliada)
 - **50+ workflows** integrados
-- **100+ ejemplos** prácticos reales
+- **120+ ejemplos** prácticos reales
 - **Configuraciones** optimizadas para cada herramienta
 
 ### **Beneficios Medibles**
@@ -274,6 +275,7 @@ Este proyecto está bajo licencia MIT, permitiendo uso libre, modificación y di
 - **Homebrew Team** - Por crear y mantener el ecosistema que hace esto posible
 - **Quarto Development Team** - Por la plataforma de publicación moderna
 - **Rust Community** - Por muchas de las herramientas CLI modernas destacadas
+- **Luis Aguilera (@laguileracl)** - Curaduría del índice ampliado, automatización de verificación y documentación de Fase 1 (2026)
 - **Contribuidores** - Por mejorar continuamente este recurso
 
 ## 🔗 **Enlaces Importantes**

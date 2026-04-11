@@ -1,0 +1,64 @@
+name: Tool Request
+description: Proponer una nueva herramienta para documentar en la guía
+labels: ["documentation", "enhancement"]
+title: "tool: <nombre de la herramienta>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por proponer una nueva herramienta. Completa los campos para evaluarla rápido.
+
+  - type: input
+    id: name
+    attributes:
+      label: Nombre de la herramienta
+      description: Nombre exacto como aparece en Homebrew (formula o cask)
+      placeholder: "ripgrep"
+    validations:
+      required: true
+
+  - type: input
+    id: category
+    attributes:
+      label: Categoría sugerida
+      description: Usa una de las categorías del libro (navegacion, archivos, busqueda, desarrollo, multimedia, red, monitoreo, texto, utilidades, seguridad, cloud, data)
+      placeholder: "busqueda"
+    validations:
+      required: true
+
+  - type: input
+    id: homepage
+    attributes:
+      label: URL oficial o repo
+      description: Página oficial o GitHub
+      placeholder: "https://github.com/BurntSushi/ripgrep"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Por qué es valiosa
+      description: Casos de uso concretos y por qué mejora el stack actual
+      placeholder: "Búsqueda de texto 10x más rápida que grep, respeta .gitignore, ideal para repos grandes"
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Ejemplos propuestos
+      description: Comandos mínimos y avanzados
+      placeholder: |
+        rg "error" src
+        rg "TODO" --type rust
+
+  - type: checkboxes
+    id: availability
+    attributes:
+      label: Disponibilidad
+      options:
+        - label: La herramienta está en Homebrew (formula o cask)
+          required: true
+        - label: Probé al menos 2 comandos y funcionan
+          required: false
