@@ -170,24 +170,38 @@ export HOMEBREW_CACHE=/path/to/custom/cache
 
 ### Mantenimiento regular
 
+El ecosistema cuenta con un script canónico de mantenimiento en `tools/homebrew-maintenance/brew_full_upgrade.sh` que va mucho más allá del básico `update + upgrade + cleanup`. Es el que debes usar para el mantenimiento semanal:
+
 ```bash
-#!/bin/bash
-# Script de mantenimiento semanal de Homebrew
+# Mantenimiento completo (recomendado)
+~/Projects/tools/homebrew-maintenance/brew_full_upgrade.sh
 
-echo "🔄 Actualizando Homebrew..."
-brew update
+# Con salida detallada
+~/Projects/tools/homebrew-maintenance/brew_full_upgrade.sh --verbose
 
-echo "📦 Actualizando paquetes instalados..."
-brew upgrade
+# Guardar log de la ejecución en ~/.cache/brew_full_upgrade/
+~/Projects/tools/homebrew-maintenance/brew_full_upgrade.sh --log
 
-echo "🧹 Limpiando archivos temporales..."
-brew cleanup
-
-echo "🩺 Verificando integridad del sistema..."
-brew doctor
-
-echo "✅ Mantenimiento completado"
+# Desanclar todos los paquetes y reintentar el upgrade
+~/Projects/tools/homebrew-maintenance/brew_full_upgrade.sh --unpin-all
 ```
+
+Qué hace el script:
+
+1. **Actualización integral**: `brew update`, `brew upgrade` para fórmulas CLI y `brew upgrade --cask --greedy` para casks (incluyendo apps con auto-updater).
+2. **Retry inteligente de casks**: detecta los casks que quedaron pendientes y los reintenta limpiando caché. Clasifica los fallos en tres categorías:
+    - `SUDO`: requieren permisos de administrador (ej. google-drive). Reporta el comando exacto para ejecutar manualmente.
+    - `CHECKSUM`: mismatch upstream porque el binario cambió antes de que Homebrew actualice la fórmula (ej. telegram). Se resuelve solo.
+    - `FALLO`: errores desconocidos que requieren revisión manual.
+3. **Reinicio de servicios**: reinicia automáticamente los servicios de Homebrew que estén activos.
+4. **Limpieza y salud**: `brew cleanup -s`, `brew doctor` y eliminación de cachés con más de 30 días.
+5. **Snapshots y diff**: guarda listados antes/después y muestra qué versiones cambiaron.
+6. **Resumen final**: contadores de paquetes actualizados, pendientes, anclados y detalle de fallos clasificados.
+
+::: {.callout-tip}
+### No reinventes la rueda
+Antes de escribir tu propio script de mantenimiento, revisa el documento `tools/homebrew-maintenance/brew_full_upgrade.md` que describe en detalle todas las opciones soportadas. Si necesitas auditar qué herramientas tienes dentro y fuera de Homebrew, usa `tools/homebrew-maintenance/brew_audit.sh`.
+:::
 
 ### Backup de paquetes instalados
 

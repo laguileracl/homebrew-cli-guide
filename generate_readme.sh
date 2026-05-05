@@ -51,17 +51,26 @@ Esta guía incluye ejemplos específicos y casos de uso para cada herramienta qu
 Para mantener tu sistema actualizado, ejecuta:
 
 ```bash
-# Mantenimiento básico
+# Mantenimiento básico (delega en homebrew-maintenance/brew_full_upgrade.sh)
 ./brew_maintenance.sh
 
-# Mantenimiento + actualizar este README
+# Mantenimiento + regenerar este README
 ./brew_maintenance.sh --with-readme
+
+# Opciones avanzadas
+./brew_maintenance.sh --verbose    # Salida detallada
+./brew_maintenance.sh --log        # Guardar log de ejecución
+./brew_maintenance.sh --unpin-all  # Desanclar y reintentar upgrade
 ```
 
-El script realiza:
-1. `brew update` - Actualiza las fórmulas
-2. `brew upgrade` - Actualiza los paquetes instalados  
-3. `brew cleanup` - Limpia archivos antiguos
+El script canónico (`tools/homebrew-maintenance/brew_full_upgrade.sh`) realiza:
+1. `brew update` y `brew upgrade` (fórmulas CLI)
+2. `brew upgrade --cask --greedy` (incluye casks con auto-updater)
+3. Retry inteligente de casks pendientes con clasificación de fallos (sudo / checksum / desconocido)
+4. Reinicio de servicios de Homebrew activos
+5. `brew cleanup -s` y `brew doctor`
+6. Eliminación de cachés con más de 30 días
+7. Reporte final con diff de versiones y resumen
 
 ## 📊 Estadísticas
 
@@ -334,7 +343,7 @@ brew list --cask > my_casks.txt
 
 ---
 
-📝 **Nota:** Este README se regenera automáticamente con el script `generate_readme.sh` o ejecutando `./brew_maintenance.sh --with-readme`.
+📝 **Nota:** Este README se regenera automáticamente con el script `generate_readme.sh` o ejecutando `./brew_maintenance.sh --with-readme` (que delega el upgrade en `tools/homebrew-maintenance/brew_full_upgrade.sh`).
 
 🔄 **Última actualización:** Ejecuta `./generate_readme.sh` para actualizar la fecha.
 EOF

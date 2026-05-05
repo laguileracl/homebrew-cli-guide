@@ -1,4 +1,4 @@
-# 🛠️ Instrucciones de Uso
+# Instrucciones de Uso
 
 ## Instalación
 
@@ -14,9 +14,11 @@ chmod +x brew_maintenance.sh
 chmod +x generate_readme.sh
 ```
 
+> **Nota:** El mantenimiento real lo realiza el script canónico del ecosistema, ubicado en `tools/homebrew-maintenance/brew_full_upgrade.sh`. El script `brew_maintenance.sh` de esta guía es un wrapper que delega allí y agrega la opción de regenerar el README. Ver `tools/homebrew-maintenance/brew_full_upgrade.md` para todas las opciones soportadas.
+
 ## Uso
 
-### 🔄 Mantenimiento Regular
+### Mantenimiento Regular
 
 Para actualizar todo tu sistema Homebrew:
 ```bash
@@ -28,14 +30,28 @@ Para actualizar el sistema Y regenerar el README:
 ./brew_maintenance.sh --with-readme
 ```
 
-### 📚 Actualizar Documentación
+Opciones avanzadas (se reenvían al script canónico):
+```bash
+./brew_maintenance.sh --verbose            # Salida detallada
+./brew_maintenance.sh --log                # Guardar log en ~/.cache/brew_full_upgrade/
+./brew_maintenance.sh --unpin-all          # Desanclar y reintentar upgrade
+```
+
+### Auditoría rápida del entorno
+
+Para revisar qué herramientas tienes dentro y fuera de Homebrew:
+```bash
+../homebrew-maintenance/brew_audit.sh
+```
+
+### Actualizar Documentación
 
 Si instalas nuevos programas y quieres actualizar solo el README:
 ```bash
 ./generate_readme.sh
 ```
 
-### ⏰ Automatización
+### Automatización
 
 Para ejecutar el mantenimiento automáticamente, puedes crear un cron job:
 ```bash
@@ -43,7 +59,7 @@ Para ejecutar el mantenimiento automáticamente, puedes crear un cron job:
 crontab -e
 
 # Agregar línea para ejecutar cada domingo a las 10:00 AM
-0 10 * * 0 /ruta/completa/al/script/brew_maintenance.sh
+0 10 * * 0 /ruta/completa/al/script/brew_maintenance.sh --log
 
 # O crear un alias en tu shell (.zshrc, .bashrc)
 alias brewup='/ruta/completa/al/script/brew_maintenance.sh'
@@ -53,29 +69,46 @@ alias brewup='/ruta/completa/al/script/brew_maintenance.sh'
 
 ```
 homebrew-config/
-├── brew_maintenance.sh    # Script principal de mantenimiento
+├── brew_maintenance.sh    # Wrapper que delega en homebrew-maintenance/brew_full_upgrade.sh
 ├── generate_readme.sh     # Generador de documentación
-├── README.md             # Documentación completa (auto-generada)
-└── INSTALL.md            # Este archivo
+├── README.md              # Documentación completa (auto-generada)
+└── INSTALL.md             # Este archivo
+```
+
+Y en paralelo (otro repo del ecosistema):
+```
+tools/homebrew-maintenance/
+├── brew_full_upgrade.sh   # Script canónico de mantenimiento
+├── brew_full_upgrade.md   # Documentación detallada
+└── brew_audit.sh          # Auditoría de herramientas dentro/fuera de brew
 ```
 
 ## Funcionalidades
 
-### Script de Mantenimiento (`brew_maintenance.sh`)
-- ✅ Actualiza las fórmulas de Homebrew (`brew update`)
-- ✅ Actualiza todos los paquetes instalados (`brew upgrade`)
-- ✅ Limpia archivos antiguos y cache (`brew cleanup`)
-- ✅ Muestra estadísticas del sistema
-- ✅ Verifica el estado del sistema (`brew doctor`)
-- ✅ Opción para regenerar README automáticamente
+### Wrapper de Mantenimiento (`brew_maintenance.sh`)
+Reenvía todas las opciones al script canónico `brew_full_upgrade.sh`, que realiza:
+- `brew update` y `brew upgrade` (fórmulas CLI)
+- `brew upgrade --cask --greedy` (incluye casks con auto-updater)
+- Retry inteligente de casks pendientes con clasificación de fallos:
+  - `SUDO`: casks que requieren permisos de administrador
+  - `CHECKSUM`: mismatch upstream que se resolverá automáticamente
+  - `FALLO`: errores desconocidos
+- Reinicio automático de servicios de Homebrew activos
+- `brew cleanup -s` y `brew doctor`
+- Eliminación de cachés con más de 30 días
+- Snapshots antes/después con diff de versiones
+- Resumen final con contadores y detalle de fallos
+- Logging opcional con `--log`
+
+Adicionalmente, con `--with-readme`, regenera el README de esta guía tras el upgrade.
 
 ### Generador de README (`generate_readme.sh`)
-- ✅ Lista completa de fórmulas y casks instalados
-- ✅ Descripción automática de cada programa
-- ✅ Ejemplos de uso específicos para programas comunes
-- ✅ Categorización de aplicaciones
-- ✅ Estadísticas actualizadas
-- ✅ Comandos útiles de Homebrew
+- Lista completa de fórmulas y casks instalados
+- Descripción automática de cada programa
+- Ejemplos de uso específicos para programas comunes
+- Categorización de aplicaciones
+- Estadísticas actualizadas
+- Comandos útiles de Homebrew
 
 ## Personalización
 
@@ -119,4 +152,7 @@ echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-¡Disfruta de tu sistema Homebrew bien mantenido y documentado! 🎉
+### Wrapper no encuentra el script canónico
+Si `brew_maintenance.sh` reporta que no encuentra `brew_full_upgrade.sh`, verifica que el directorio `tools/homebrew-maintenance/` esté presente al mismo nivel que `tools/homebrew-guide/`.
+
+¡Disfruta de tu sistema Homebrew bien mantenido y documentado!
