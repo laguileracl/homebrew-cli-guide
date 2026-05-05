@@ -237,6 +237,27 @@ git stash pop
 git stash list
 ```
 
+### `lazygit` - TUI para Git
+Interfaz de terminal interactiva para operaciones Git frecuentes.
+
+```bash
+# Instalación
+brew install lazygit
+
+# Uso básico
+lazygit                    # abre en el repo actual
+lazygit --path /ruta/repo  # apuntar a otro repo
+
+# Atajos clave dentro de la TUI
+# space  → stage / unstage archivo o hunk
+# c      → commit
+# P / p  → push / pull
+# b      → menú de branches
+# s      → stash
+# z      → undo
+# ?      → ayuda contextual
+```
+
 ### `gh` - GitHub CLI
 Herramienta oficial de GitHub para terminal.
 

@@ -252,6 +252,66 @@ git merge --no-ff release/1.2.0
 
 ---
 
+## lazygit - TUI para Git {#sec-lazygit}
+
+Interfaz de terminal interactiva para Git que permite ejecutar las operaciones más comunes (stage, commit, branch, rebase, stash, cherry-pick) sin memorizar comandos.
+
+```bash
+# Instalación
+brew install lazygit
+
+# Abrir en el repositorio actual
+lazygit
+
+# Abrir apuntando a otra ruta
+lazygit --path /ruta/al/repo
+```
+
+### Atajos esenciales
+
+| Tecla | Acción |
+|-------|--------|
+| `space` | Stage / unstage del archivo o hunk |
+| `c` | Commit (abre editor para el mensaje) |
+| `C` | Commit usando el editor de Git configurado |
+| `P` | Push |
+| `p` | Pull |
+| `b` | Menú de branches |
+| `s` | Stash de los cambios actuales |
+| `z` | Undo (revierte la última acción de lazygit) |
+| `?` | Ayuda contextual del panel actual |
+| `q` | Salir |
+
+### Casos de uso típicos
+
+```bash
+# Revisar y stagear hunks selectivos antes de commit
+lazygit  # → tab al panel "Files" → enter sobre archivo → space por hunk
+
+# Rebase interactivo sin recordar la sintaxis
+lazygit  # → tab al panel "Commits" → e sobre el commit base → reorder/squash con M/S
+
+# Resolver merge conflicts visualmente
+lazygit  # → al haber conflicto, panel central muestra "ours/theirs/both"
+```
+
+### Configuración
+
+Archivo: `~/Library/Application Support/lazygit/config.yml` (macOS).
+
+```yaml
+# Ejemplo mínimo
+gui:
+  theme:
+    activeBorderColor: [green, bold]
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+```
+
+---
+
 ## gh - GitHub CLI {#sec-gh}
 
 La CLI oficial de GitHub permite gestionar repositorios, pull requests, issues y más desde terminal.
