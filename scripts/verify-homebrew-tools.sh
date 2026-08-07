@@ -43,6 +43,18 @@ fi
 
 missing=()
 validated=0
+fuera_de_core=0
+
+# Las marcadas `homebrewCore: false` no se verifican contra brew: que no estén en
+# homebrew-core no es un error del índice, es su realidad (terraform vive en el
+# tap de HashiCorp desde el cambio de licencia; iotop es una utilidad de Linux
+# que se instala con el gestor del sistema). El motivo va en `homebrewNote`, y se
+# listan aparte para que se vean, no para que rompan el CI.
+while IFS= read -r name; do
+  [[ -z "$name" ]] && continue
+  printf "[FUERA DE CORE] %s\n" "$name"
+  fuera_de_core=$((fuera_de_core + 1))
+done < <(jq -r '.tools[] | select(.homebrewCore == false) | .name' "$FILE")
 
 while IFS= read -r name; do
   [[ -z "$name" ]] && continue
@@ -53,9 +65,10 @@ while IFS= read -r name; do
     printf "[MISSING] %s\n" "$name"
     missing+=("$name")
   fi
-done < <(jq -r '.tools[].name' "$FILE")
+done < <(jq -r '.tools[] | select(.homebrewCore != false) | .name' "$FILE")
 
 echo "---"
+echo "Fuera de homebrew-core (no se verifican): $fuera_de_core"
 echo "Herramientas validadas: $validated"
 echo "Faltantes: ${#missing[@]}"
 

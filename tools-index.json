@@ -2394,7 +2394,8 @@
         "long": "Muestra lecturas/escrituras en disco por proceso en tiempo real."
       },
       "installation": {
-        "homebrew": "brew install iotop"
+        "apt": "sudo apt install iotop",
+        "dnf": "sudo dnf install iotop"
       },
       "metadata": {
         "version": "1.26",
@@ -2434,11 +2435,12 @@
         "perf"
       ],
       "platforms": [
-        "macos",
         "linux"
       ],
-      "verified": true,
-      "lastVerified": "2026-01-01"
+      "verified": false,
+      "lastVerified": "2026-08-07",
+      "homebrewCore": false,
+      "homebrewNote": "No está en Homebrew: es una utilidad de Linux que se instala con el gestor del sistema. En macOS, alternativas: btop o bottom."
     },
     {
       "name": "bat",
@@ -3682,7 +3684,7 @@
         "long": "Provisiona múltiples nubes con plan/apply y state remoto."
       },
       "installation": {
-        "homebrew": "brew install terraform"
+        "homebrew": "brew tap hashicorp/tap && brew install hashicorp/tap/terraform"
       },
       "metadata": {
         "version": "1.5.7",
@@ -3728,8 +3730,10 @@
         "linux",
         "windows"
       ],
-      "verified": true,
-      "lastVerified": "2026-01-01"
+      "verified": false,
+      "lastVerified": "2026-08-07",
+      "homebrewCore": false,
+      "homebrewNote": "Salió de homebrew-core cuando HashiCorp cambió a licencia BSL; se instala desde el tap oficial hashicorp/tap."
     },
     {
       "name": "kubectl",
