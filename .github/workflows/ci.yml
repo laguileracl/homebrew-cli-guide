@@ -82,11 +82,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Quarto and Render
-        uses: quarto-dev/quarto-actions@v2
-        with:
-          command: render
-          args: --no-execute --to html
+      # `quarto-dev/quarto-actions@v2` no existe: ese repo publica subacciones
+      # (`/setup`, `/render`). Se instala con setup y se renderiza con el CLI,
+      # que además conserva los argumentos originales tal cual.
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render (HTML)
+        run: quarto render --no-execute --to html
 
       - name: Upload HTML book as artifact
         uses: actions/upload-artifact@v4
@@ -102,11 +105,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Quarto and try PDF render
-        uses: quarto-dev/quarto-actions@v2
-        with:
-          command: render
-          args: --no-execute --to pdf
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Try PDF render
+        run: quarto render --no-execute --to pdf
         continue-on-error: true
 
       - name: "Fallback: sanitize and re-render if previous step failed"
