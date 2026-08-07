@@ -48,7 +48,7 @@ while IFS= read -r name; do
   [[ -z "$name" ]] && continue
   if brew info --json=v2 "$name" >/dev/null 2>&1; then
     printf "[OK] %s\n" "$name"
-    ((validated++))
+    validated=$((validated + 1))
   else
     printf "[MISSING] %s\n" "$name"
     missing+=("$name")
