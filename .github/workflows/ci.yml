@@ -73,7 +73,7 @@ jobs:
 
       - name: Run ESLint (api-server)
         working-directory: ./api-server
-        run: npx eslint . --ext .js
+        run: npx eslint .
 
   quarto-render:
     name: Quarto Render (docs)

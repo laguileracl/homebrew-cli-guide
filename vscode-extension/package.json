@@ -94,7 +94,10 @@
         },
         "homebrew-cli-guide.preferredTerminal": {
           "type": "string",
-          "enum": ["integrated", "external"],
+          "enum": [
+            "integrated",
+            "external"
+          ],
           "default": "integrated",
           "description": "Preferred terminal for running commands"
         },
@@ -149,15 +152,17 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "eslint . --ext .ts,.js"
+    "lint": "eslint ."
   },
   "devDependencies": {
-    "@types/vscode": "^1.104.0",
+    "@eslint/js": "^9.39.5",
     "@types/node": "^24.6.0",
-    "typescript": "5.9.2",
-    "eslint": "^9.36.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "@typescript-eslint/eslint-plugin": "^6.21.0"
+    "@types/vscode": "^1.104.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.66.0"
   },
   "dependencies": {
     "axios": "^1.12.2"
