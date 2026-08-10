@@ -116,7 +116,7 @@ jobs:
       contains(github.event.pull_request.title, '[examples]')
     steps:
       - name: Auto-approve documentation changes
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.pulls.createReview({
@@ -135,7 +135,7 @@ jobs:
       contains(github.event.pull_request.title, '[new-tool]')
     steps:
       - name: Assign reviewers for tool additions
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             // Asignar reviewers para cambios importantes
@@ -186,7 +186,7 @@ jobs:
     if: github.event.action == 'opened'
     steps:
       - name: Welcome new contributor
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             // Verificar si es primera contribución
