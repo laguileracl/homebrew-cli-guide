@@ -12,7 +12,7 @@ jobs:
   validate-contribution:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -160,7 +160,7 @@ jobs:
     needs: validate-contribution
     if: contains(github.event.pull_request.changed_files, 'tools-index.json')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Update metadata
         run: |
