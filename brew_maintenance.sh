@@ -45,7 +45,13 @@ for arg in "$@"; do
   esac
 done
 
-"$CANONICAL_SCRIPT" "${PASSTHROUGH_ARGS[@]}"
+# El canónico sale con 1 cuando el mantenimiento termina con problemas
+# accionables (casks pendientes de sudo, receipts viejos, fallos sueltos) y con 2
+# cuando aborta por Xcode/CLT obsoletos. Se captura el código en vez de dejar que
+# 'set -e' corte aquí: el README debe regenerarse igual, y el estado se propaga
+# al final para que quien invoque este wrapper lo vea.
+CANONICAL_STATUS=0
+"$CANONICAL_SCRIPT" ${PASSTHROUGH_ARGS[@]+"${PASSTHROUGH_ARGS[@]}"} || CANONICAL_STATUS=$?
 
 if $WITH_README; then
   printf '\n==> Regenerando README.md...\n'
@@ -56,3 +62,5 @@ if $WITH_README; then
     echo "WARNING: generate_readme.sh no encontrado o no ejecutable." >&2
   fi
 fi
+
+exit "$CANONICAL_STATUS"
