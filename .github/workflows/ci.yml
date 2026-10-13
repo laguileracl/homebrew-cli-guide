@@ -92,7 +92,7 @@ jobs:
         run: quarto render --no-execute --to html
 
       - name: Upload HTML book as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rendered-book
           path: _book
@@ -120,7 +120,7 @@ jobs:
 
       - name: Upload PDF artifact (if produced)
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rendered-pdf
           path: _book

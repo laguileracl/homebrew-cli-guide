@@ -21,7 +21,7 @@ jobs:
           ./scripts/bench-tools.sh "echo foo" "printf foo" || true
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: bench-results
           path: bench-results.json
